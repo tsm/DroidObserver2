@@ -1,6 +1,18 @@
 package bullteam.droidobserver;
 
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,13 +32,16 @@ import android.widget.Toast;
 
 public class DroidObserverActivity extends Activity {
 	private TextView tv=null;
-	
+	HttpClient client = new DefaultHttpClient();
+    HttpPost post = new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php"); //TODO: adres serwera z ustawieñ
+    
     /** Called when the activity is first created. */
 	 public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
 	       /* TextView tv = new TextView(this);
 	        tv.setText("Lubie placki z serem");
 	        setContentView(tv);*/
+	        
 	        LocationManager locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 			LocationListener locListener = new LocationListener()
 			{
@@ -37,6 +52,25 @@ public class DroidObserverActivity extends Activity {
 					{
 						Toast.makeText(getBaseContext(), "Nowa lokalizacja: szerokœæ [" + location.getLatitude()
 								+"] d³ugoœæ [" +location.getLongitude()+"]",Toast.LENGTH_SHORT).show();
+						List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+						 pairs.add(new BasicNameValuePair("patient_id", "1"));
+						 pairs.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
+						 pairs.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
+						 try {
+							post.setEntity(new UrlEncodedFormEntity(pairs));
+						} catch (UnsupportedEncodingException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						 try {
+							HttpResponse response = client.execute(post);
+						} catch (ClientProtocolException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				}
 				
