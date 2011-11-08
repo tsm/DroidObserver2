@@ -15,6 +15,7 @@ import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.Toast;
 
 public class CameraActivity extends Activity {
 
@@ -23,15 +24,44 @@ public class CameraActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// Sprawdza czy istnieja kamery
+		setContentView(R.layout.main);
+
 		boolean isCamera = checkCameraHardware(getBaseContext());
+		Toast.makeText(this, "isCamera=" + isCamera, Toast.LENGTH_LONG).show();
 		if (isCamera != true)
 			return;
 		// Otwiera kamere
 		cam = getCameraInstance();
+		Toast.makeText(this, "Otwarto kamere:" + cam.toString(),
+				Toast.LENGTH_LONG).show();
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		CameraPreview preview = new CameraPreview(context, camera);
 		// Robi zdjêcie
 		cam.takePicture(null, null, myPhoto);
+		Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Zwalnia kamerê
 		releaseCamera(cam);
+		Toast.makeText(this, "zwolniono kamere", Toast.LENGTH_LONG).show();
+
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Jeœli wszystko wykonalo sie poprawnie zwraca true
 		finish();
 	}
@@ -60,9 +90,9 @@ public class CameraActivity extends Activity {
 
 		private File getOutputMediaFile() {
 			File mediaStorageDir = new File(
-					Environment.getExternalStorageDirectory()+ "/droidobserver/",
+					Environment.getExternalStorageDirectory() + "",
 					"DroidObserver");
-			
+
 			// Create the storage directory if it does not exist
 			if (!mediaStorageDir.exists()) {
 				if (!mediaStorageDir.mkdirs()) {

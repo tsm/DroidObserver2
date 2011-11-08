@@ -23,8 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SendFileActivity extends Activity {
-	String path = Environment.getExternalStorageDirectory()
-			+ "/droidobserver/";
+	String path = Environment.getExternalStorageDirectory()+"";
 	String urlServer = "http://192.168.1.1/handle_upload.php";
 	String result = "result:";
 
@@ -34,17 +33,19 @@ public class SendFileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		TextView tv = new TextView(this);
 		try {
-			boolean isDone = captureImage1();
-			tv.setText(result + " " + isDone);
+			//boolean isDone = captureImage1();
+			boolean isDone2 = captureImage();
+			tv.setText(result + " " + //isDone + 
+					" " + isDone2);
 		} catch (Exception e) {
-			tv.setText("Wyst¹pi³ b³¹d");
+			tv.setText("Wyst¹pi³ b³¹d" + e.getMessage());
 		}
 		setContentView(tv);
 		// finish();
 	}
 
 	public boolean captureImage1() {
-		File file = new File(path,"DroidObserver");
+		File file = new File(path, "DroidObserver");
 		// Create the storage directory if it does not exist
 		if (!file.exists()) {
 			if (!file.mkdirs()) {
@@ -72,6 +73,8 @@ public class SendFileActivity extends Activity {
 					Toast.LENGTH_LONG).show();
 			result = sendFile(urlServer, path);
 		} else {
+			Toast.makeText(this, "Wystapil blad w aktywnosci",
+					Toast.LENGTH_LONG).show();
 			result = "Wyst¹pi³ b³¹d w aktywnoœci";
 		}
 	}
