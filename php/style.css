@@ -1,0 +1,163 @@
+/* Podstawowe elementy strony: */
+
+body
+{
+  background-color:#FFF;
+  font-family:Verdana;
+  font-size:10pt;
+  color:black;
+  text-align: center;
+}
+
+
+a
+{
+  text-decoration:none;
+}
+
+a:link, a:visited
+{color:#06C;}
+
+a:hover
+{color:#000;}
+
+a:active
+{color:red;}
+
+
+h1
+{
+  text-align:center;
+}
+
+form
+{
+  display:inline; /* sprawia, że po formularzu nie ma dodatkowej spacji (wszystko w linii)*/
+  margin:0;
+  padding:0;
+}
+
+div.strona
+{
+  background-color:#FFF;
+  width:800px;
+  height: auto;
+  text-align:left;
+  margin: 0 auto auto auto;
+}
+
+div.tresc
+{
+  width: 778px;
+  border: 1px solid #D4E0EE;
+  padding: 10px;
+}
+
+.stopka { 
+  text-align: center;
+  height:20px;  
+  clear:both;
+}
+
+
+img.logo{
+  float: left;
+  vertical-align: middle;
+}
+
+*.error
+{
+  color:red;
+}
+
+/* Menu: */
+
+ul#menu { width: 100%; height: 43px; background: #FFF url("img/menu-bg.gif") top left repeat-x; font-size: 0.8em; font-family: "Lucida Grande", Verdana, sans-serif; font-weight: bold; list-style-type: none; margin: 0; padding: 0; }
+ul#menu li { display: block; float: left; margin: 0 0 0 5px; }
+
+ul#menu li a { height: 43px; color: #777; text-decoration: none; display: block; float: left; line-height: 200%; padding: 8px 15px 0; }
+ul#menu li a:hover { color: #333; }
+ul#menu li a.current{ color: #FFF; background: #FFF url("img/current-bg.gif") top left repeat-x; padding: 5px 15px 0; }
+
+/*Aktualności: */
+
+div.post
+{
+  background-color: #eaeaea;
+  margin:10px;
+  padding: 5px;
+}
+
+hr.post
+{
+  border-width: 1px;
+  border-style: none;
+  border-color:#303030;
+  border-top-style: dashed;
+}
+
+i.post
+{
+  color:#777;
+  font-style: italic;
+  font-size: x-small;
+}
+
+div.navbar
+{
+  text-align:center;
+}
+
+div.plan{
+   text-align:center;
+}
+
+/*
+  Tabelki: 
+*/
+
+table{
+	border: 1px solid #D4E0EE;
+	border-collapse: collapse;
+	font-family: "Trebuchet MS", Arial, sans-serif;
+	color: #555;
+	margin:20px;
+}
+
+
+td {
+  border: 1px solid #D4E0EE;
+	border-collapse: collapse;
+  text-align: center;
+	padding: 4px;
+}
+
+th {
+  border: 1px solid #D4E0EE;
+	border-collapse: collapse;
+	text-align: center;
+	background: #E6EDF5;
+	color: #4F76A3;
+	font-size: 100% !important;
+	padding: 4px;
+}
+
+tr { background: #FCFDFE; }
+
+tr.odd { background: #F7F9FC; }
+
+table a:link {
+	color: #718ABE;
+	text-decoration: none;
+}
+
+table a:visited {
+	color: #718ABE;
+	text-decoration: none;
+}
+
+table a:hover {
+	color: #718ABE;
+	text-decoration: underline !important;
+}
+

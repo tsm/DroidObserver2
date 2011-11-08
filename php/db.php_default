@@ -1,0 +1,7 @@
+<?php
+  function connect2db() //potrzebne do zalogowania do bazy danych
+  {
+    mysql_connect("mysql.agh.edu.pl:3306","login","haslo") or die ("Nie można się połączyć z MySQL!");
+    mysql_select_db("nazwabazydanych") or die("Nie można się połączyć z bazą danych!");
+  }
+?>
