@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" 
+  android:key="patient_option_preference"
+  android:title="@string/prefTitle"
+  android:summary="@string/prefSummary"
+>
+	<EditTextPreference
+	  android:key="@string/serverIpOption"
+	  android:title="@string/serverIpTitle"
+	  android:summary="@string/serverIpSummary"
+	  android:dialogTitle="@string/serverIpDialog"
+	/>
+	<EditTextPreference
+	  android:key="@string/serverPortOption"
+	  android:title="@string/serverPortTitle"
+	  android:summary="@string/serverPortSummary"
+	  android:dialogTitle="@string/serverPortDialog"
+	/>
+</PreferenceScreen>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="hello">Hello World, GPSlocatorActivity!</string>
+    <string name="app_name">DroidObserver</string>
+    <string name="get_gps_button">Pobierz lokalizację</string>
+    
+    <!-- Preferencje -->
+    <string name="prefTitle">Preferencje</string>
+    <string name="prefSummary">Pozwala ustawić preferencje dotyczące działania aplikacji, np login.</string>
+      
+    <string name="serverIpTitle">Adres IP serwera</string>
+    <string name="serverIpSummary">Niezbędny do nawiązania połączenia</string>
+    <string name="serverIpOption">server_ip_option</string>
+    <string name="serverIpDialog">Wprowadź adres IP serwera</string>
+    
+    <string name="serverPortTitle">Port serwera</string>
+    <string name="serverPortSummary">Port na którym nasłuchuje serwer</string>
+    <string name="serverPortOption">server_port_option</string>
+    <string name="serverPortDialog">Wprowadź port na serwerze</string>
+    
+    <!-- Menu -->
+    <string name="menu_prefs_title">Ustawienia</string>
+    <string name="menu_quit_title">Wyjście</string>
+</resources>
