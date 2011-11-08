@@ -2,7 +2,7 @@
     function checkLogin($login, $pass)
 		{
 		  connect2db();
-		  $query="SELECT nr FROM `patients` WHERE login='$login' AND password='$pass'";
+		  $query="SELECT id FROM `patients` WHERE login='$login' AND password='$pass'";
 		  $wynik=mysql_query($query);
 		  if($dta=mysql_fetch_array($wynik)) 
 		  {
@@ -44,10 +44,10 @@
       {
         print 'Jesteś zalogowana/y jako '.$_SESSION['UserID'].'(<a href="index.php?page=epatient&action=logout">wyloguj</a>)';
         connect2db();
-        $wynik=mysql_query("SELECT latitude,longitude,date FROM `location` WHERE patient_id='1' ORDER BY id DESC;");
-								while($rekord=mysql_fetch_array($wynik))
+        $wynik=mysql_query("SELECT latitude, longitude, date FROM `locations` WHERE patient_id='1' ORDER BY id DESC;");
+								while($record=mysql_fetch_array($wynik))
 								{								  
-								  print "<p>$record[2], szerokość: $rekord[0]  długość: $record[1]</p>\n";								  
+								  print "<p>$record[2], szerokość: $record[0]  długość: $record[1]</p>\n";								  
 								}
       }
       else
