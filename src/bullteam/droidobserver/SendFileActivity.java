@@ -23,7 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SendFileActivity extends Activity {
-	String path = Environment.getExternalStorageDirectory()+"";
+	String path = Environment.getExternalStorageDirectory() + "";
 	String urlServer = "http://192.168.1.1/handle_upload.php";
 	String result = "result:";
 
@@ -33,32 +33,13 @@ public class SendFileActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		TextView tv = new TextView(this);
 		try {
-			//boolean isDone = captureImage1();
-			boolean isDone2 = captureImage();
-			tv.setText(result + " " + //isDone + 
-					" " + isDone2);
+			boolean isDone = captureImage();
+			tv.setText(result + " " + isDone);
 		} catch (Exception e) {
 			tv.setText("Wyst¹pi³ b³¹d" + e.getMessage());
 		}
 		setContentView(tv);
 		// finish();
-	}
-
-	public boolean captureImage1() {
-		File file = new File(path, "DroidObserver");
-		// Create the storage directory if it does not exist
-		if (!file.exists()) {
-			if (!file.mkdirs()) {
-				Log.d("DroidObserver", "failed to create directory");
-			}
-		}
-		Uri myImage = Uri.fromFile(file);
-
-		Intent intencja = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		intencja.putExtra(MediaStore.EXTRA_OUTPUT, myImage);
-
-		startActivityForResult(intencja, 0);
-		return false;
 	}
 
 	public boolean captureImage() {

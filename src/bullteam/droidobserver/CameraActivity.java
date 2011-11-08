@@ -7,14 +7,18 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import bullteam.droidobserver.R.id;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 public class CameraActivity extends Activity {
@@ -24,45 +28,34 @@ public class CameraActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// Sprawdza czy istnieja kamery
-		setContentView(R.layout.main);
+		super.onCreate(savedInstanceState);
+		Intent intent= getIntent();
+		setContentView(R.layout.camera_layout);
 
 		boolean isCamera = checkCameraHardware(getBaseContext());
-		Toast.makeText(this, "isCamera=" + isCamera, Toast.LENGTH_LONG).show();
+		Toast.makeText(getBaseContext(), "isCamera=" + isCamera, Toast.LENGTH_LONG).show();
 		if (isCamera != true)
 			return;
 		// Otwiera kamere
 		cam = getCameraInstance();
-		Toast.makeText(this, "Otwarto kamere:" + cam.toString(),
+		Toast.makeText(getBaseContext(), "Otwarto kamere:" + cam.toString(),
 				Toast.LENGTH_LONG).show();
 
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		CameraPreview preview = new CameraPreview(context, camera);
+		CameraPreview preview = new CameraPreview(this, cam);
+		FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
+		fl.addView(preview);
+		Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
+
 		// Robi zdjêcie
 		cam.takePicture(null, null, myPhoto);
 		Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
 
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		// Zwalnia kamerê
 		releaseCamera(cam);
 		Toast.makeText(this, "zwolniono kamere", Toast.LENGTH_LONG).show();
 
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		// Jeœli wszystko wykonalo sie poprawnie zwraca true
+		setResult(RESULT_OK, intent);
 		finish();
 	}
 
