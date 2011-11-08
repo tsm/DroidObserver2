@@ -6,6 +6,8 @@
 
     <uses-sdk android:minSdkVersion="8" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -33,11 +35,14 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:label="@string/app_name"
+            android:name=".SendFileActivity" >
+            <intent-filter >
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
-<<<<<<< HEAD
     <uses-sdk android:minSdkVersion="8" />
 </manifest>
-=======
-
-</manifest>
->>>>>>> fa5b27dd1a5db41425af4040b9f94a3ad2fe625e

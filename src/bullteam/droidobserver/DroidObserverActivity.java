@@ -5,10 +5,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-<<<<<<< HEAD
 import android.content.SharedPreferences;
-=======
->>>>>>> fa5b27dd1a5db41425af4040b9f94a3ad2fe625e
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -85,7 +82,6 @@ public class DroidObserverActivity extends Activity {
 	    	setOptionText();	    	
 	    }
 		
-<<<<<<< HEAD
 	    private void setOptionText(){
 	    	SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
 	    	//String option = prefs.getString(
@@ -96,19 +92,22 @@ public class DroidObserverActivity extends Activity {
 	    	//tv.setText("wartosc opacji wynosi "+option+" ("+optionText[Integer.parseInt(option)]+")");
 	    	
 	    }
-		public void getGPSLocation(View target){
-			TextView tv = new TextView(this);
-	        tv.setText("Lubie placki z serem i miodem");
-	        setContentView(tv);
-			
+//		public void getGPSLocation(View target){
+//			TextView tv = new TextView(this);
+//	        tv.setText("Lubie placki z serem i miodem");
+//	        setContentView(tv);
+//			
+//		}
+	    
+	    public void getGPSLocation(View target) {
+			//Uri uri = Uri.parse("gps://location");
+			//startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),REQ_CODE);
+			startActivity(new Intent(this,SendFileActivity.class));
 		}
+	    	
 }
-=======
-		public void getGPSLocation(View target) {
-		Uri uri = Uri.parse("gps://location");
-		//startActivityForResult(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),REQ_CODE);
-		startActivity(new Intent(this,GetLocationActivity.class));
-	}
+
+//  
 	
 //	@Override
 //	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -116,5 +115,3 @@ public class DroidObserverActivity extends Activity {
 //			Toast.makeText(getBaseContext(), "pobrano dane", Toast.LENGTH_LONG).show();
 //        }
 //	}
-}
->>>>>>> fa5b27dd1a5db41425af4040b9f94a3ad2fe625e
