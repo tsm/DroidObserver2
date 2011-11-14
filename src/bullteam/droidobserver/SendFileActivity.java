@@ -1,13 +1,28 @@
 package bullteam.droidobserver;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.output.ByteArrayOutputStream;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.InputStreamBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -42,7 +57,6 @@ public class SendFileActivity extends Activity {
 			tv.setText("Wyst¹pi³ b³¹d" + e.getMessage());
 		}
 		setContentView(tv);
-		finish();
 	}
 
 	public boolean captureImage() {
@@ -54,7 +68,6 @@ public class SendFileActivity extends Activity {
 		plik = getOutputMediaFile();
 		Uri fileUri = Uri.fromFile(plik); // create a file to save the image
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
-															// name
 		startActivityForResult(intent, 0);
 
 		return true;
@@ -67,9 +80,10 @@ public class SendFileActivity extends Activity {
 		if (!mediaStorageDir.exists()) {
 			Log.d("CAMERA", "Katalog nie istnieje");
 			if (!mediaStorageDir.mkdirs()) {
-				Log.d("CAMERA", "failed to create directory");
+				Log.d("CAMERA", "Nie uda³o siê stworzyæ katalogu dla zdjêæ");
 				return null;
 			}
+			Log.d("CAMERA", "Katalog zosta³ utworzony");
 		}
 
 		// Create a media file name
@@ -78,28 +92,27 @@ public class SendFileActivity extends Activity {
 		File mediaFile;
 		mediaFile = new File(mediaStorageDir.getPath() + File.separator
 				+ "IMG_" + timeStamp + ".jpg");
-
+		Log.d("CAMERA", "Stworzono plik:" + mediaFile.getName());
 		return mediaFile;
 
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		Log.d("CAMERA", "Activity result" + resultCode);
-		System.out.println("ACTIVITY RESULT!");
 		if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
 			Toast.makeText(this, "Image saved to:\n" + data.getData(),
 					Toast.LENGTH_LONG).show();
-			Log.d("CAMERA", "Photo has been taken!");
-			//result = sendFile();
+			Log.d("CAMERA", "Zdjêcie zosta³o zrobione!");
+			sendFile();
 		} else {
 			Toast.makeText(this, "Wystapil blad w aktywnosci",
 					Toast.LENGTH_LONG).show();
-			result = "Wyst¹pi³ b³¹d w aktywnoœci";
+			Log.d("CAMERA", "Wyst¹pi³ b³¹d w aktywnoœci!");
 		}
 	}
 
-	public String sendFile() {
+	public void sendFile() {
+		Log.d("CAMERA", "Rozpoczeto funkcjê wysy³ania pliku");
 		HttpURLConnection connection = null;
 		DataOutputStream outputStream = null;
 		DataInputStream inputStream = null;
@@ -113,62 +126,112 @@ public class SendFileActivity extends Activity {
 		int maxBufferSize = 1 * 1024 * 1024;
 
 		try {
-			FileInputStream fileInputStream = new FileInputStream(plik);
+			SharedPreferences prefs = getSharedPreferences(
+					"bullteam.droidobserver_preferences", 0);
+			String serverAddress = prefs.getString(this.getResources()
+					.getString(R.string.serverAddressOption), "");
+			serverAddress += "sendfile.php";
+			Log.d("CAMERA", "Adres serwera = " + serverAddress);
 
-			SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
-			String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
+			InputStream is = new FileInputStream(plik);
+			Log.d("CAMERA", "is = " + is.toString());
+			HttpClient httpClient = new DefaultHttpClient();
+			HttpPost postRequest = new HttpPost(serverAddress);
+			postRequest.setHeader("Content-Type", "multipart/form-data");
 			
-			URL url = new URL(serverAddress);
-			connection = (HttpURLConnection) url.openConnection();
+			byte[] data = IOUtils.toByteArray(is);
 
-			// Allow Inputs & Outputs
-			connection.setDoInput(true);
-			connection.setDoOutput(true);
-			connection.setUseCaches(false);
+			InputStreamBody isb = new InputStreamBody(new ByteArrayInputStream(
+					data), "uploadedfile");
 
-			// Enable POST method
-			connection.setRequestMethod("POST");
+			MultipartEntity multipartContent = new MultipartEntity(
+					HttpMultipartMode.BROWSER_COMPATIBLE);
+			multipartContent.addPart("uploadedfile", isb);
+			multipartContent.addPart("login", new StringBody("noob"));
+			multipartContent.addPart("pass", new StringBody("qwe321"));
 
-			connection.setRequestProperty("Connection", "Keep-Alive");
-			connection.setRequestProperty("Content-Type",
-					"multipart/form-data;boundary=" + boundary);
+			postRequest.setEntity(multipartContent);
+			HttpResponse res = httpClient.execute(postRequest);
 
-			outputStream = new DataOutputStream(connection.getOutputStream());
-			outputStream.writeBytes(twoHyphens + boundary + lineEnd);
-			outputStream
-					.writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\""
-							+ path + "\"" + lineEnd);
-			outputStream.writeBytes(lineEnd);
-
-			bytesAvailable = fileInputStream.available();
-			bufferSize = Math.min(bytesAvailable, maxBufferSize);
-			buffer = new byte[bufferSize];
-
-			// Read file
-			bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-
-			while (bytesRead > 0) {
-				outputStream.write(buffer, 0, bufferSize);
-				bytesAvailable = fileInputStream.available();
-				bufferSize = Math.min(bytesAvailable, maxBufferSize);
-				bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+			BufferedReader in = new BufferedReader(new InputStreamReader(res
+					.getEntity().getContent()));
+			StringBuffer sb = new StringBuffer("");
+			String line = "";
+			String NL = System.getProperty("line.separator");
+			while ((line = in.readLine()) != null) {
+				sb.append(line + NL);
 			}
+			in.close();
+			String textResult = sb.toString(); // TODO: czy zwraca OK?
 
-			outputStream.writeBytes(lineEnd);
-			outputStream.writeBytes(twoHyphens + boundary + twoHyphens
-					+ lineEnd);
+			// res.getEntity().getContent().close();
 
-			// Responses from the server (code and message)
-			int serverResponseCode = connection.getResponseCode();
-			String serverResponseMessage = connection.getResponseMessage();
-
-			fileInputStream.close();
-			outputStream.flush();
-			outputStream.close();
-		} catch (Exception ex) {
-			return ex.getMessage();
+			Log.d("CAMERA", textResult);
+		} catch (Exception e) {
+			Log.d("CAMERA", "B³¹d :" + e.getMessage());
 		}
-		return "Wysy³anie pliku udane";
-	}
+		// try {
+		// FileInputStream fileInputStream = new FileInputStream(plik);
+		//
+		// SharedPreferences prefs = getSharedPreferences(
+		// "bullteam.droidobserver_preferences", 0);
+		// String serverAddress = prefs.getString(this.getResources()
+		// .getString(R.string.serverAddressOption), "");
+		//
+		// Log.d("CAMERA", "Adres serwera = " + serverAddress);
+		//
+		// URL url = new URL(serverAddress + "sendfile.php");
+		// connection = (HttpURLConnection) url.openConnection();
+		// Log.d("CAMERA", "Ustanowiono poo³¹czenie!");
+		//
+		// // Allow Inputs & Outputs
+		// connection.setDoInput(true);
+		// connection.setDoOutput(true);
+		// connection.setUseCaches(false);
+		//
+		// // Enable POST method
+		// connection.setRequestMethod("POST");
+		//
+		// connection.setRequestProperty("Connection", "Keep-Alive");
+		// connection.setRequestProperty("Content-Type",
+		// "multipart/form-data;boundary=" + boundary);
+		//
+		// outputStream = new DataOutputStream(connection.getOutputStream());
+		// outputStream.writeBytes(twoHyphens + boundary + lineEnd);
+		// outputStream
+		// .writeBytes("Content-Disposition: form-data; name=\"uploadedfile\";filename=\""
+		// + path + "\"" + lineEnd);
+		// outputStream.writeBytes(lineEnd);
+		//
+		// bytesAvailable = fileInputStream.available();
+		// bufferSize = Math.min(bytesAvailable, maxBufferSize);
+		// buffer = new byte[bufferSize];
+		//
+		// // Read file
+		// bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+		//
+		// while (bytesRead > 0) {
+		// outputStream.write(buffer, 0, bufferSize);
+		// bytesAvailable = fileInputStream.available();
+		// bufferSize = Math.min(bytesAvailable, maxBufferSize);
+		// bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+		// }
+		//
+		// outputStream.writeBytes(lineEnd);
+		// outputStream.writeBytes(twoHyphens + boundary + twoHyphens
+		// + lineEnd);
+		//
+		// // Responses from the server (code and message)
+		// int serverResponseCode = connection.getResponseCode();
+		// String serverResponseMessage = connection.getResponseMessage();
+		//
+		// fileInputStream.close();
+		// outputStream.flush();
+		// outputStream.close();
+		// Log.d("CAMERA", "Wysy³anie pliku udane!");
+		// } catch (Exception ex) {
+		// Log.d("CAMERA", "B³¹d :" + ex.getMessage());
+		// }
 
+	}
 }
