@@ -56,9 +56,11 @@
     <link rel="Stylesheet" href="style.css" type="text/css">
 
     <title>DroidObserver</title>
-  </head>
-  <body>
-    <div class="strona"> 
+  <?php if($page=="maps") {echo '	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>'."\n</head>\n    <body onload=\"mapaStart()\">\n" ;}
+  else echo'</head>
+  <body>';
+  ?>
+  <div class="strona"> 
          
       <div class="logo">
         <h1>DroidObserver</h1>
@@ -86,7 +88,7 @@
       }
       else
       {
-        print "Każda próba nieudanego logowania będzie rejestrowana: <br>\n"; // pic na wodę, chodzi o to żeby odstraszyć wścibskich uczniów
+        print "Każda próba nieudanego logowania będzie rejestrowana: <br>\n"; // pic na wodę, chodzi o to żeby odstraszyć wścibskich pacjentów
         include "admin/login_form.php";
       }         
        ?>

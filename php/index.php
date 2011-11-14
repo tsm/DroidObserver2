@@ -10,7 +10,7 @@
   }
   else
   {
-   $page="aktualnosci";
+   $page="news"; // domyslna podstrona
   }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
@@ -26,8 +26,10 @@
     <link rel="Stylesheet" href="style.css" type="text/css">
 
     <title>DroidObserver</title>
-  </head>
-  <body>
+  <?php if($page=="maps") {echo '	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>'."\n</head>\n    <body onload=\"mapaStart()\">\n" ;}
+  else echo'</head>
+  <body>';
+  ?>
     <div class="strona"> 
          
       <div class="logo">   

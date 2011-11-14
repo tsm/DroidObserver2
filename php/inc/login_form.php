@@ -1,4 +1,4 @@
-<form action="index.php?page=epatient" method="POST">
+<form action="index.php?page=<?php echo $page ?>" method="POST">
   <input type='hidden' name='action' value='login'>
   <table>
     <tr><td>Login:</td><td><input class="tekst" type="text" name="login"></td></tr>

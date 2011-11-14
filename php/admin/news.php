@@ -26,8 +26,9 @@
 						  print "</div>\n";
 						}
 						$wynik=mysql_query("SELECT count(id) FROM `news`");
-						print '<div class="navbar">';
-						for ($i = 1 ; $i<($wynik+$ile_ogloszen)/$ile_ogloszen; $i++)
+						$wynik=mysql_fetch_array($wynik);
+						print '<div class="navbar">';						
+						if (ceil($wynik[0]/$ile_ogloszen)>1)for ($i = 1 ; $i<=(ceil($wynik[0]/$ile_ogloszen)); $i++)
 						{
 						  if ($i==$str){
 						    print "$i&nbsp;";
@@ -35,7 +36,7 @@
 						  else
 						  {
 						    print "<a href=\"admin.php?page=news&str=$i\">$i</a>&nbsp;";
-						  }
+						  }						  
 						}
 						print '</div>';
 				  ?>
