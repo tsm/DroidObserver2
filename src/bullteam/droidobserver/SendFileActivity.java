@@ -6,11 +6,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.net.Uri;
@@ -24,8 +27,8 @@ import android.widget.Toast;
 
 public class SendFileActivity extends Activity {
 	String path = Environment.getExternalStorageDirectory() + "";
-	String urlServer = "http://192.168.1.1/handle_upload.php";
 	String result = "result:";
+	File plik = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +46,52 @@ public class SendFileActivity extends Activity {
 	}
 
 	public boolean captureImage() {
-		Toast.makeText(getBaseContext(), "Zaczynam captureImage()", Toast.LENGTH_SHORT).show();
-		startActivityForResult(new Intent(this, CameraActivity.class), 0);
+		Toast.makeText(getBaseContext(), "Zaczynam captureImage()",
+				Toast.LENGTH_SHORT).show();
+		// startActivityForResult(new Intent(this, CameraActivity.class), 0);
+
+		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		plik = getOutputMediaFile();
+		Uri fileUri = Uri.fromFile(plik); // create a file to save the image
+		intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image file
+															// name
+		startActivityForResult(intent, 0);
+
 		return true;
+	}
+
+	private File getOutputMediaFile() {
+		File mediaStorageDir = new File(
+				Environment.getExternalStorageDirectory() + "", "DroidObserver");
+		// Create the storage directory if it does not exist
+		if (!mediaStorageDir.exists()) {
+			Log.d("CAMERA", "Katalog nie istnieje");
+			if (!mediaStorageDir.mkdirs()) {
+				Log.d("CAMERA", "failed to create directory");
+				return null;
+			}
+		}
+
+		// Create a media file name
+		String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
+				.format(new Date());
+		File mediaFile;
+		mediaFile = new File(mediaStorageDir.getPath() + File.separator
+				+ "IMG_" + timeStamp + ".jpg");
+
+		return mediaFile;
+
 	}
 
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		Log.d("CAMERA", "Activity result" + resultCode);
+		System.out.println("ACTIVITY RESULT!");
 		if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
 			Toast.makeText(this, "Image saved to:\n" + data.getData(),
 					Toast.LENGTH_LONG).show();
-		//	result = sendFile(urlServer, path);
+			Log.d("CAMERA", "Photo has been taken!");
+			//result = sendFile();
 		} else {
 			Toast.makeText(this, "Wystapil blad w aktywnosci",
 					Toast.LENGTH_LONG).show();
@@ -61,7 +99,7 @@ public class SendFileActivity extends Activity {
 		}
 	}
 
-	public String sendFile(String urlServer, String path) {
+	public String sendFile() {
 		HttpURLConnection connection = null;
 		DataOutputStream outputStream = null;
 		DataInputStream inputStream = null;
@@ -75,10 +113,12 @@ public class SendFileActivity extends Activity {
 		int maxBufferSize = 1 * 1024 * 1024;
 
 		try {
-			FileInputStream fileInputStream = new FileInputStream(
-					new File(path));
+			FileInputStream fileInputStream = new FileInputStream(plik);
 
-			URL url = new URL(urlServer);
+			SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
+			String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
+			
+			URL url = new URL(serverAddress);
 			connection = (HttpURLConnection) url.openConnection();
 
 			// Allow Inputs & Outputs

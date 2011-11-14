@@ -15,7 +15,7 @@ public class CameraPreview extends SurfaceView implements
 	private SurfaceHolder mHolder;
 	private Camera mCamera;
 	private Context context;
-	
+
 	public CameraPreview(Context context, Camera camera) {
 		super(context);
 		this.context = context;
@@ -52,9 +52,15 @@ public class CameraPreview extends SurfaceView implements
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		if (mCamera != null) {
+			try {
+				mCamera.stopPreview();
+			} catch (Exception e) {
+				// ignore: tried to stop a non-existent preview
+			}
 			mCamera.release(); // release the camera for other applications
 			mCamera = null;
-			Toast.makeText(context, "zwolniono kamere", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, "zwolniono kamere", Toast.LENGTH_LONG)
+					.show();
 		}
 	}
 
