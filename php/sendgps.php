@@ -26,6 +26,7 @@ if($_POST['longitude']&&$_POST['latitude']&&$_POST['login']&&$_POST['pass'])
 }
 else
 { 
+  print_r($_POST);
 ?>
   <form action="sendgps.php" method="POST">
   <table>

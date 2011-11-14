@@ -31,7 +31,6 @@
     <div class="strona"> 
          
       <div class="logo">
-       <!-- <img src="img/tablica.png" class="logo" /> !-->
         <h1>DroidObserver</h1>
       </div>
       
@@ -74,7 +73,7 @@
 				}
 		 }
 
-    if($_SESSION['UserID']=='administrator') // sprawdza czy jes
+    if($_SESSION['UserID']=='administrator') // sprawdza czy jestes adminem
       {
         print 'Jesteś zalogowana/y jako '.$_SESSION['UserID'].'(<a href="admin.php?page=news&action=logout">wyloguj</a>)';
         if(isset($page))

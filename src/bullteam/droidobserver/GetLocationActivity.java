@@ -23,13 +23,14 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class GetLocationActivity extends Activity {
 	
 	HttpClient client = new DefaultHttpClient();
-    HttpPost post;
+    HttpPost post;//= new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");;
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -37,6 +38,7 @@ public class GetLocationActivity extends Activity {
 		SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
 		String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
 		post = new HttpPost(serverAddress+"sendgps.php");
+		Log.d("serveradress",serverAddress+"sendgps.php");
 		LocationManager locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 		LocationListener locListener = new LocationListener()
 		{
@@ -51,20 +53,24 @@ public class GetLocationActivity extends Activity {
 					
 					String login = prefs.getString("login_option", ""); //TODO sprawdzic czy jest ustawione login i haslo
 					String pass = prefs.getString("pass_option", "");
+					Toast.makeText(getBaseContext(), "Login" + login
+							+" haslo: " + pass,Toast.LENGTH_SHORT).show();
+					Log.d("login", "Login" + login +" haslo: " + pass);
 					String textResult = "";
 					List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-					pairs.add(new BasicNameValuePair("login", login));
-					pairs.add(new BasicNameValuePair("pass", pass));
+					pairs.add(new BasicNameValuePair("login", "noob"));
+					pairs.add(new BasicNameValuePair("pass", "qwe321"));
 					pairs.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
 					pairs.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
 					try {
 						post.setEntity(new UrlEncodedFormEntity(pairs));
 					} catch (UnsupportedEncodingException e) {
 						// TODO Auto-generated catch block
+						Log.d("error","unsupprotedEncoding");
 						e.printStackTrace();
 					}
 					try {
-						HttpResponse response = client.execute(post); //TODO: czy zwraca OK?
+						HttpResponse response = client.execute(post); 
 						in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 						StringBuffer sb =new StringBuffer("");
 						String line = "";
@@ -73,7 +79,7 @@ public class GetLocationActivity extends Activity {
 							sb.append(line + NL);
 					    }
 					    in.close();
-					    textResult = sb.toString();
+					    textResult = sb.toString(); //TODO: czy zwraca OK?
 						
 					} catch (ClientProtocolException e) {
 						// TODO Auto-generated catch block
@@ -84,6 +90,7 @@ public class GetLocationActivity extends Activity {
 					}
 					Toast.makeText(getBaseContext(), "Nowa lokalizacja: szerokœæ [" + location.getLatitude()
 							+"] d³ugoœæ [" +location.getLongitude()+"] "+textResult,Toast.LENGTH_SHORT).show();
+					Log.d("response",textResult);
 				}
 			}
 			
