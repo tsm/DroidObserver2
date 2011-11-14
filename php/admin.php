@@ -12,6 +12,36 @@
   {
    $page="news";
   }
+  
+  $login_info="";
+  
+  if($_REQUEST['action'])
+    {
+      $akcja=$_REQUEST['action'];    
+      if($akcja=='logout')
+      {
+        if($_SESSION['UserID'])
+				{
+				  unset($_SESSION['UserID']);
+				  $login_info="Wylogowano! <br>";
+				}
+				else
+				{
+				  $login_info="<p class=\"error\">Błąd! Nie jesteś zalogowany!</p>\n";
+				}
+   			 session_destroy();
+      }
+      elseif($akcja=='login')
+      {
+        if($_POST['login']&&$_POST['haslo'])
+					{
+						if (($_POST['login']=='administrator') && ($_POST['haslo']=='xsw21qaz'))
+						{
+						   $_SESSION['UserID']=$_POST['login'];
+						}
+					}					
+				}
+		 }
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
 <html>
@@ -44,35 +74,8 @@
       
       <div class="tresc"> 
        <br>      
-       <?php
-         if($_REQUEST['action'])
-    {
-      $akcja=$_REQUEST['action'];    
-      if($akcja=='logout')
-      {
-        if($_SESSION['UserID'])
-				{
-				  unset($_SESSION['UserID']);
-				  print "Wylogowano! <br>";
-				}
-				else
-				{
-				  print "<p class=\"error\">Błąd! Nie jesteś zalogowany!</p>\n";
-				}
-   			 session_destroy();
-      }
-      elseif($akcja=='login')
-      {
-        if($_POST['login']&&$_POST['haslo'])
-					{
-						if (($_POST['login']=='administrator') && ($_POST['haslo']=='xsw21qaz'))
-						{
-						   $_SESSION['UserID']=$_POST['login'];
-						}
-					}					
-				}
-		 }
-
+<?php
+	print $login_info;
     if($_SESSION['UserID']=='administrator') // sprawdza czy jestes adminem
       {
         print 'Jesteś zalogowana/y jako '.$_SESSION['UserID'].'(<a href="admin.php?page=news&action=logout">wyloguj</a>)';

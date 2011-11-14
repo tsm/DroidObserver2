@@ -32,17 +32,19 @@
         print 'Jesteś zalogowana/y jako '.$_SESSION['UserID'].'(<a href="index.php?page=epatient&action=logout">wyloguj</a>)';
         connect2db();
 		$user_id=$_SESSION['UserID'];
-        print "\n<table>\n<caption align=\"center\">Informacje o pacjencie:</caption>\n<tr class=\"naglowek\"><th>Login/ID</th><th>Nazwisko</th><th>Imię</th><th>Telefon</th><th>e-mail</th><th>Choroba</th><th>Hasło</th><th>Ostatnie IP</th></tr>\n";
-            $wynik=mysql_query("SELECT login, surname, name, mobile, email, disease, password, last_ip FROM `patients` WHERE login='$user_id' ORDER BY surname;");
-						while($rekord=mysql_fetch_array($wynik))
-						{
-						  print "<tr><td>$rekord[0]</td><td>$rekord[1]</td><td>$rekord[2]</td><td>$rekord[3]</td><td>$rekord[4]</td><td>$rekord[5]</td><td>$rekord[6]</td><td>$rekord[7]</td></tr>";
-						}
-						print "</table>\n<br>\n";
+        $wynik=mysql_query("SELECT login, filename, date FROM `files` WHERE login='$user_id' ORDER BY id;");
+		print "<table>\n";
+		while($rekord=mysql_fetch_array($wynik))
+		{
+		  print "<tr><td>$rekord[0]</td><td>$rekord[2]</td><td><img src=\"upload/$rekord[1]\" width=\"640\" height=\"480\"></td></tr>";
+		}
+		print "</table>\n";
+	
       }
       else
       {
         print "Aby zobaczyć informacje o położeniu i wysłane zdjęcia należy się zalogować: <br>\n";
         include "login_form.php";
-      }
+      }          
+
 ?>

@@ -23,17 +23,17 @@
     <string name="serverAddressTitle">Adres serwera</string>
     <string name="serverAddressSummary">Niezbędny do nawiązania połączenia</string>
     <string name="serverAddressOption">server_address_option</string>
-    <string name="serverAddressDialog">Wprowadź adres URL serwera</string>
+    <string name="serverAddressDialog">Wprowadź URL</string>
     
     <string name="loginTitle">Login</string>
     <string name="loginSummary">Unikalny login pacjenta</string>
     <string name="loginOption">login_option</string>
-    <string name="loginDialog">Wprowadź login pacjenta</string>
+    <string name="loginDialog">Wprowadź login</string>
     
     <string name="passTitle">Hasło</string>
     <string name="passSummary">Używane do logowania na serwerze</string>
     <string name="passOption">pass_option</string>
-    <string name="passDialog">Wprowadź hasło dla podanego loginu</string>
+    <string name="passDialog">Wprowadź hasło</string>
     
     <!-- Menu -->
     <string name="menu_prefs_title">Ustawienia</string>

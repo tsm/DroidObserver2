@@ -29,16 +29,14 @@
 
     if($_SESSION['UserID']) // sprawdza czy pacjent jest zalogowany
       {
-        print 'Jesteś zalogowana/y jako '.$_SESSION['UserID'].'(<a href="index.php?page=epatient&action=logout">wyloguj</a>)';
+        print 'Jesteś zalogowana/y jako '.$_SESSION['UserID'].'(<a href="index.php?page=gps&action=logout">wyloguj</a>)';
         connect2db();
 		$user_id=$_SESSION['UserID'];
-        print "\n<table>\n<caption align=\"center\">Informacje o pacjencie:</caption>\n<tr class=\"naglowek\"><th>Login/ID</th><th>Nazwisko</th><th>Imię</th><th>Telefon</th><th>e-mail</th><th>Choroba</th><th>Hasło</th><th>Ostatnie IP</th></tr>\n";
-            $wynik=mysql_query("SELECT login, surname, name, mobile, email, disease, password, last_ip FROM `patients` WHERE login='$user_id' ORDER BY surname;");
-						while($rekord=mysql_fetch_array($wynik))
-						{
-						  print "<tr><td>$rekord[0]</td><td>$rekord[1]</td><td>$rekord[2]</td><td>$rekord[3]</td><td>$rekord[4]</td><td>$rekord[5]</td><td>$rekord[6]</td><td>$rekord[7]</td></tr>";
-						}
-						print "</table>\n<br>\n";
+        $wynik=mysql_query("SELECT latitude, longitude, date FROM `locations` WHERE login='$user_id' ORDER BY id DESC;");
+								while($record=mysql_fetch_array($wynik))
+								{								  
+								  print "<p>$record[2], szerokość: $record[0]  długość: $record[1]</p>\n";								  
+								}
       }
       else
       {
