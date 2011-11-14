@@ -39,10 +39,11 @@ public class SendFileActivity extends Activity {
 			tv.setText("Wyst¹pi³ b³¹d" + e.getMessage());
 		}
 		setContentView(tv);
-		// finish();
+		//finish();
 	}
 
 	public boolean captureImage() {
+		Toast.makeText(getBaseContext(), "Zaczynam captureImage()", Toast.LENGTH_SHORT).show();
 		startActivityForResult(new Intent(this, CameraActivity.class), 0);
 		return true;
 	}

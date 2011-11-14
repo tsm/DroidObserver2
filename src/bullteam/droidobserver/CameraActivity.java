@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class CameraActivity extends Activity {
@@ -29,32 +30,40 @@ public class CameraActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// Sprawdza czy istnieja kamery
 		super.onCreate(savedInstanceState);
-		Intent intent= getIntent();
-		setContentView(R.layout.camera_layout);
+		Intent intent = getIntent();
+		// setContentView(R.layout.camera_layout);
+		TextView tv = new TextView(this);
 
 		boolean isCamera = checkCameraHardware(getBaseContext());
-		Toast.makeText(getBaseContext(), "isCamera=" + isCamera, Toast.LENGTH_LONG).show();
+		Toast.makeText(getBaseContext(), "isCamera=" + isCamera,
+				Toast.LENGTH_SHORT).show();
+		tv.setText(tv.getText() + "\n" + "isCamera=" + isCamera);
 		if (isCamera != true)
 			return;
 		// Otwiera kamere
+		String camname = "null";
 		cam = getCameraInstance();
-		Toast.makeText(getBaseContext(), "Otwarto kamere:" + cam.toString(),
-				Toast.LENGTH_LONG).show();
+		if (cam != null)
+			camname = cam.toString();
+		Toast.makeText(getBaseContext(), "Otwarto kamere: " + camname,
+				Toast.LENGTH_SHORT).show();
 
-		CameraPreview preview = new CameraPreview(this, cam);
-		FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
-		fl.addView(preview);
-		Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
-
-		// Robi zdjêcie
-		cam.takePicture(null, null, myPhoto);
-		Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
-
-		// Zwalnia kamerê
-		releaseCamera(cam);
-		Toast.makeText(this, "zwolniono kamere", Toast.LENGTH_LONG).show();
-
+		tv.setText(tv.getText() + "\n" + "otwarto kamere");
+		// CameraPreview preview = new CameraPreview(this, cam);
+		// FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
+		// fl.addView(preview);
+		// Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
+		//
+		// // Robi zdjêcie
+		// cam.takePicture(null, null, myPhoto);
+		// Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
+		//
+		// // Zwalnia kamerê
+		// releaseCamera(cam);
+		// Toast.makeText(this, "zwolniono kamere", Toast.LENGTH_LONG).show();
+		//
 		// Jeœli wszystko wykonalo sie poprawnie zwraca true
+		setContentView(tv);
 		setResult(RESULT_OK, intent);
 		finish();
 	}
@@ -134,12 +143,13 @@ public class CameraActivity extends Activity {
 	 * 
 	 * @return
 	 */
-	public static Camera getCameraInstance() {
+	public Camera getCameraInstance() {
 		Camera c = null;
 		try {
 			c = Camera.open(); // attempt to get a Camera instance
 		} catch (Exception e) {
-			// Camera is not available (in use or does not exist)
+			Toast.makeText(getBaseContext(), "Kamera = null:",
+					Toast.LENGTH_SHORT).show();
 		}
 		return c; // returns null if camera is unavailable
 	}
