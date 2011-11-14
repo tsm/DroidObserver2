@@ -19,20 +19,19 @@ public class CameraPreview extends SurfaceView implements
 	public CameraPreview(Context context, Camera camera) {
 		super(context);
 		this.context = context;
+		
 		mCamera = camera;
 
-		// Install a SurfaceHolder.Callback so we get notified when the
-		// underlying surface is created and destroyed.
 		mHolder = getHolder();
 		mHolder.addCallback(this);
-		// deprecated setting, but required on Android versions prior to 3.0
 		mHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 	}
 
 	public void startCapture(Camera camera) {
+		Log.d("CAMERA", "start capture!");
 		try {
 			camera.setPreviewDisplay(mHolder);
-			mCamera.startPreview();
+			camera.startPreview();
 		} catch (IOException exception) {
 			Log.e("TAG", "IOException caused by setPreviewDisplay()", exception);
 		}
@@ -41,9 +40,11 @@ public class CameraPreview extends SurfaceView implements
 	public void surfaceCreated(SurfaceHolder holder) {
 		// The Surface has been created, now tell the camera where to draw the
 		// preview.
+		Log.d("CAMERA", "Surface created!");
 		try {
 			if (mCamera != null) {
 				mCamera.setPreviewDisplay(holder);
+				mCamera.startPreview();
 			}
 		} catch (IOException e) {
 			Log.d("TAG", "Error setting camera preview: " + e.getMessage());
@@ -51,30 +52,33 @@ public class CameraPreview extends SurfaceView implements
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
+		Log.d("CAMERA", "Surface destroyed!");
 		if (mCamera != null) {
 			try {
+				Log.d("CAMERA", "Zatrzymuje podgl¹d!");
 				mCamera.stopPreview();
 			} catch (Exception e) {
 				// ignore: tried to stop a non-existent preview
 			}
 			mCamera.release(); // release the camera for other applications
 			mCamera = null;
-			Toast.makeText(context, "zwolniono kamere", Toast.LENGTH_LONG)
-					.show();
+			Log.d("CAMERA", "Zwolniono kamerê");
 		}
 	}
 
 	public void surfaceChanged(SurfaceHolder holder, int format, int w, int h) {
 		// If your preview can change or rotate, take care of those events here.
 		// Make sure to stop the preview before resizing or reformatting it.
-
+		Log.d("CAMERA", "Surface changed!");
 		if (mHolder.getSurface() == null) {
 			// preview surface does not exist
+			Log.d("CAMERA", "surfaceChanged 1");
 			return;
 		}
 
 		// stop preview before making changes
 		try {
+			Log.d("CAMERA", "surfaceChanged 2");
 			mCamera.stopPreview();
 		} catch (Exception e) {
 			// ignore: tried to stop a non-existent preview
@@ -84,11 +88,12 @@ public class CameraPreview extends SurfaceView implements
 
 		// start preview with new settings
 		try {
+			Log.d("CAMERA", "surfaceChanged 3");
 			mCamera.setPreviewDisplay(mHolder);
 			mCamera.startPreview();
 
 		} catch (Exception e) {
-			Log.d("TAG", "Error starting camera preview: " + e.getMessage());
+			Log.d("CAMERA", "B³¹d podczas tworzenia podgl¹du kamery: " + e.getMessage());
 		}
 	}
 }

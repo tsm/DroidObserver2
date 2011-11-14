@@ -43,8 +43,7 @@ public class SendFileActivity extends Activity {
 	 * Robi zdjêcie (automatycznie lub manualnie)
 	 */
 	public void captureImage() {
-		Toast.makeText(getBaseContext(), "Zaczynam captureImage()",
-				Toast.LENGTH_SHORT).show();
+		Log.d("CAMERA", "Rozpoczynam aktywnoœæ");
 		startActivityForResult(new Intent(this, CameraActivity.class), 0);
 
 		// Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
