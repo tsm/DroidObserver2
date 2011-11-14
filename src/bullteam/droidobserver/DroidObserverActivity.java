@@ -1,37 +1,19 @@
 package bullteam.droidobserver;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class DroidObserverActivity extends Activity {
 	private TextView tv=null;
+	private static final String TAG = "DroidObserverActivity"; //DEL ?
 	
     /** Called when the activity is first created. */
 	 public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +23,8 @@ public class DroidObserverActivity extends Activity {
 	        setContentView(tv);*/
 	        
 	        setContentView(R.layout.main);  
+	        
+	        Log.d(TAG, "uruchamianie aplikacji"); //DEL ?
 	        
 	        //preferencje i menu:
 	        tv=(TextView)findViewById(R.id.text1);
@@ -92,9 +76,14 @@ public class DroidObserverActivity extends Activity {
 			startActivity(new Intent(this,SendFileActivity.class));
 		}
 	    
-	    public void getGPSLocation(View target) {
+	    public void bindGPSLocation(View target) {
 			//Uri uri = Uri.parse("gps://location");
-	    	startActivity(new Intent(this,GetLocationActivity.class));
+	    	startService(new Intent(DroidObserverActivity.this,GetLocationService.class));
+		}
+	    
+	    public void unbindGPSLocation(View target) {
+			//Uri uri = Uri.parse("gps://location");
+	    	stopService(new Intent(DroidObserverActivity.this,GetLocationService.class));
 		}
 	    	
 }
