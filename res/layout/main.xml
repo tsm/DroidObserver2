@@ -20,11 +20,17 @@
         android:onClick="getPhoto"
         android:text="@string/get_photo_button" />
     <Button
-        android:id="@+id/get_gps"
+        android:id="@+id/bindGPS"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="getGPSLocation"
-        android:text="@string/get_gps_button" />
+        android:onClick="bindGPSLocation"
+        android:text="@string/bind_gps_button" />
+    <Button
+        android:id="@+id/unbindGPS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="unbindGPSLocation"
+        android:text="@string/unbind_gps_button" />
     <TextView
         android:text="" android:id="@+id/text1"
         android:layout_width="fill_parent"
