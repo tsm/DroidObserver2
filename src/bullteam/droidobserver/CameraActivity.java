@@ -65,18 +65,14 @@ public class CameraActivity extends Activity {
 
 		// Robi preview
 		CameraPreview preview = new CameraPreview(this, cam);
-		preview.startCapture(cam);
 		// FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
+		preview.startCapture(cam);
 		// fl.addView(preview);
 		Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
 
 		// // Robi zdjêcie
 		cam.takePicture(null, null, myPhoto);
 		Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
-
-		// Zwalnia kamerê
-		releaseCamera(cam);
-		Toast.makeText(this, "zwolniono kamere", Toast.LENGTH_LONG).show();
 
 		// Jeœli wszystko wykonalo sie poprawnie zwraca true
 		setResult(RESULT_OK, intent);
