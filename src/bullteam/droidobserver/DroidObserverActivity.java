@@ -135,7 +135,6 @@ public class DroidObserverActivity extends Activity {
 	    
 	    public void getGPSLocation(View target) {
 			//Uri uri = Uri.parse("gps://location");
-	    	startActivityForResult(new Intent(this, CameraActivity.class), 0);
 			startActivity(new Intent(this,SendFileActivity.class));
 		}
 	    	

@@ -53,7 +53,7 @@ public class SendFileActivity extends Activity {
 		if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
 			Toast.makeText(this, "Image saved to:\n" + data.getData(),
 					Toast.LENGTH_LONG).show();
-			result = sendFile(urlServer, path);
+		//	result = sendFile(urlServer, path);
 		} else {
 			Toast.makeText(this, "Wystapil blad w aktywnosci",
 					Toast.LENGTH_LONG).show();

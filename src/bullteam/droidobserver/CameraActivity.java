@@ -31,17 +31,16 @@ public class CameraActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		//Tworzy button
-		Button captureButton = (Button) findViewById(id.button_capture);
-		captureButton.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				// get an image from the camera
-				cam.takePicture(null, null, myPhoto);
-			}
-		});
-		
-		
+
+		// //Tworzy button
+		// Button captureButton = (Button) findViewById(id.button_capture);
+		// captureButton.setOnClickListener(new View.OnClickListener() {
+		// public void onClick(View v) {
+		// // get an image from the camera
+		// cam.takePicture(null, null, myPhoto);
+		// }
+		// });
+
 		Intent intent = getIntent();
 		setContentView(R.layout.camera_layout);
 
@@ -66,13 +65,14 @@ public class CameraActivity extends Activity {
 
 		// Robi preview
 		CameraPreview preview = new CameraPreview(this, cam);
-		FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
-		fl.addView(preview);
+		preview.startCapture(cam);
+		// FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
+		// fl.addView(preview);
 		Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
 
 		// // Robi zdjêcie
-		// cam.takePicture(null, null, myPhoto);
-		// Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
+		cam.takePicture(null, null, myPhoto);
+		Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
 
 		// Zwalnia kamerê
 		releaseCamera(cam);
@@ -80,15 +80,16 @@ public class CameraActivity extends Activity {
 
 		// Jeœli wszystko wykonalo sie poprawnie zwraca true
 		setResult(RESULT_OK, intent);
-		finish();
+		// finish();
 	}
 
 	private PictureCallback myPhoto = new PictureCallback() {
 
 		public void onPictureTaken(byte[] data, Camera camera) {
+			Log.d("INFO", "Zrobiono zdjecie");
 			File pictureFile = getOutputMediaFile();
 			if (pictureFile == null) {
-				Log.d("TAG",
+				Log.d("PICTURE",
 						"Error creating media file, check storage permissions!");
 				return;
 			}
@@ -98,9 +99,9 @@ public class CameraActivity extends Activity {
 				fos.write(data);
 				fos.close();
 			} catch (FileNotFoundException e) {
-				Log.d("TAG", "File not found: " + e.getMessage());
+				Log.d("PICTURE", "File not found: " + e.getMessage());
 			} catch (IOException e) {
-				Log.d("TAG", "Error accessing file: " + e.getMessage());
+				Log.d("PICTURE", "Error accessing file: " + e.getMessage());
 			}
 
 		}
@@ -109,9 +110,9 @@ public class CameraActivity extends Activity {
 			File mediaStorageDir = new File(
 					Environment.getExternalStorageDirectory() + "",
 					"DroidObserver");
-
 			// Create the storage directory if it does not exist
 			if (!mediaStorageDir.exists()) {
+				Log.d("BLAD", "Katalog nie istnieje");
 				if (!mediaStorageDir.mkdirs()) {
 					Log.d("DroidObserver", "failed to create directory");
 					return null;
