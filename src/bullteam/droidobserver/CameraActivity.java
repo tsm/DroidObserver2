@@ -30,63 +30,54 @@ public class CameraActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.d("CAMERA", "CameraActivity start");
 		super.onCreate(savedInstanceState);
-
-		// //Tworzy button
-		// Button captureButton = (Button) findViewById(id.button_capture);
-		// captureButton.setOnClickListener(new View.OnClickListener() {
-		// public void onClick(View v) {
-		// // get an image from the camera
-		// cam.takePicture(null, null, myPhoto);
-		// }
-		// });
 
 		Intent intent = getIntent();
 		setContentView(R.layout.camera_layout);
 
 		// Sprawdza czy istnieja kamery
 		boolean isCamera = checkCameraHardware(getBaseContext());
-		Toast.makeText(getBaseContext(), "isCamera=" + isCamera,
-				Toast.LENGTH_SHORT).show();
-		if (isCamera != true)
-			return;
+		Log.d("CAMERA", "isCamera=" + isCamera);
+		if (!isCamera) {
+			setResult(RESULT_CANCELED, intent);
+			finish();
+		}
 
 		// Otwiera kamere
 		cam = getCameraInstance();
 		if (cam == null) {
-			Toast.makeText(getBaseContext(), "Kamera = null",
-					Toast.LENGTH_SHORT).show();
+			Log.d("CAMERA", "Kamera = null");
 			releaseCamera(cam);
 			setResult(RESULT_CANCELED, intent);
 			finish();
 		}
-		Toast.makeText(getBaseContext(), "Otwarto kamere: " + cam.toString(),
-				Toast.LENGTH_SHORT).show();
+		Log.d("CAMERA", "Kamera: " + cam.toString());
 
 		// Robi preview
 		CameraPreview preview = new CameraPreview(this, cam);
 		// FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
 		preview.startCapture(cam);
 		// fl.addView(preview);
-		Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
+		Log.d("CAMERA", "Dodano Layout");
 
 		// // Robi zdjêcie
 		cam.takePicture(null, null, myPhoto);
-		Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
+		Log.d("CAMERA", "Zrobiono zdjêcie");
 
 		// Jeœli wszystko wykonalo sie poprawnie zwraca true
 		setResult(RESULT_OK, intent);
-		// finish();
+		Log.d("CAMERA", "ALL OK - CameraActivity stop");
+		finish();
 	}
 
 	private PictureCallback myPhoto = new PictureCallback() {
 
 		public void onPictureTaken(byte[] data, Camera camera) {
-			Log.d("INFO", "Zrobiono zdjecie");
-			File pictureFile = getOutputMediaFile();
+			Log.d("CAMERA", "onPictureTaken start");
+			File pictureFile = SendFileActivity.getOutputMediaFile();
 			if (pictureFile == null) {
-				Log.d("PICTURE",
-						"Error creating media file, check storage permissions!");
+				Log.d("CAMERA", "Wyst¹pi³ b³¹d podczas tworzenia pliku!");
 				return;
 			}
 
@@ -95,41 +86,17 @@ public class CameraActivity extends Activity {
 				fos.write(data);
 				fos.close();
 			} catch (FileNotFoundException e) {
-				Log.d("PICTURE", "File not found: " + e.getMessage());
+				Log.d("CAMERA", "Nie znaleziono pliku: " + e.getMessage());
 			} catch (IOException e) {
-				Log.d("PICTURE", "Error accessing file: " + e.getMessage());
+				Log.d("CAMERA", "B³¹d IO: " + e.getMessage());
 			}
-
-		}
-
-		private File getOutputMediaFile() {
-			File mediaStorageDir = new File(
-					Environment.getExternalStorageDirectory() + "",
-					"DroidObserver");
-			// Create the storage directory if it does not exist
-			if (!mediaStorageDir.exists()) {
-				Log.d("BLAD", "Katalog nie istnieje");
-				if (!mediaStorageDir.mkdirs()) {
-					Log.d("DroidObserver", "failed to create directory");
-					return null;
-				}
-			}
-
-			// Create a media file name
-			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss")
-					.format(new Date());
-			File mediaFile;
-			mediaFile = new File(mediaStorageDir.getPath() + File.separator
-					+ "IMG_" + timeStamp + ".jpg");
-
-			return mediaFile;
-
 		}
 	};
 
 	@Override
 	protected void onPause() {
 		super.onPause();
+		Log.d("CAMERA", "onPause");
 		releaseCamera(cam);
 	}
 
@@ -142,10 +109,10 @@ public class CameraActivity extends Activity {
 	private boolean checkCameraHardware(Context context) {
 		if (context.getPackageManager().hasSystemFeature(
 				PackageManager.FEATURE_CAMERA)) {
-			// this device has a camera
+			// urz¹dzenie posiada kamerê
 			return true;
 		} else {
-			// no camera on this device
+			// brak kamery w urz¹dzeniu
 			return false;
 		}
 	}
@@ -160,8 +127,7 @@ public class CameraActivity extends Activity {
 		try {
 			c = Camera.open(); // attempt to get a Camera instance
 		} catch (Exception e) {
-			Toast.makeText(getBaseContext(), "Kamera = null:",
-					Toast.LENGTH_SHORT).show();
+			Log.d("CAMERA", "Wyst¹pi³ b³¹d podczas otwarcia kamery!");
 		}
 		return c; // returns null if camera is unavailable
 	}
@@ -174,8 +140,9 @@ public class CameraActivity extends Activity {
 	 */
 	private void releaseCamera(Camera mCamera) {
 		if (mCamera != null) {
-			mCamera.release(); // release the camera for other applications
+			mCamera.release();
 			mCamera = null;
+			Log.d("CAMERA", "Kamera zwolniona");
 		}
 	}
 
