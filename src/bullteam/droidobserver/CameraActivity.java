@@ -18,6 +18,8 @@ import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,42 +30,55 @@ public class CameraActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// Sprawdza czy istnieja kamery
 		super.onCreate(savedInstanceState);
+		
+		//Tworzy button
+		Button captureButton = (Button) findViewById(id.button_capture);
+		captureButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// get an image from the camera
+				cam.takePicture(null, null, myPhoto);
+			}
+		});
+		
+		
 		Intent intent = getIntent();
-		// setContentView(R.layout.camera_layout);
-		TextView tv = new TextView(this);
+		setContentView(R.layout.camera_layout);
 
+		// Sprawdza czy istnieja kamery
 		boolean isCamera = checkCameraHardware(getBaseContext());
 		Toast.makeText(getBaseContext(), "isCamera=" + isCamera,
 				Toast.LENGTH_SHORT).show();
-		tv.setText(tv.getText() + "\n" + "isCamera=" + isCamera);
 		if (isCamera != true)
 			return;
+
 		// Otwiera kamere
-		String camname = "null";
 		cam = getCameraInstance();
-		if (cam != null)
-			camname = cam.toString();
-		Toast.makeText(getBaseContext(), "Otwarto kamere: " + camname,
+		if (cam == null) {
+			Toast.makeText(getBaseContext(), "Kamera = null",
+					Toast.LENGTH_SHORT).show();
+			releaseCamera(cam);
+			setResult(RESULT_CANCELED, intent);
+			finish();
+		}
+		Toast.makeText(getBaseContext(), "Otwarto kamere: " + cam.toString(),
 				Toast.LENGTH_SHORT).show();
 
-		tv.setText(tv.getText() + "\n" + "otwarto kamere");
-		// CameraPreview preview = new CameraPreview(this, cam);
-		// FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
-		// fl.addView(preview);
-		// Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
-		//
+		// Robi preview
+		CameraPreview preview = new CameraPreview(this, cam);
+		FrameLayout fl = ((FrameLayout) findViewById(id.camera_preview));
+		fl.addView(preview);
+		Toast.makeText(this, "Dodano layout", Toast.LENGTH_LONG).show();
+
 		// // Robi zdjêcie
 		// cam.takePicture(null, null, myPhoto);
 		// Toast.makeText(this, "zrobiono zdjecie", Toast.LENGTH_LONG).show();
-		//
-		// // Zwalnia kamerê
-		// releaseCamera(cam);
-		// Toast.makeText(this, "zwolniono kamere", Toast.LENGTH_LONG).show();
-		//
+
+		// Zwalnia kamerê
+		releaseCamera(cam);
+		Toast.makeText(this, "zwolniono kamere", Toast.LENGTH_LONG).show();
+
 		// Jeœli wszystko wykonalo sie poprawnie zwraca true
-		setContentView(tv);
 		setResult(RESULT_OK, intent);
 		finish();
 	}
