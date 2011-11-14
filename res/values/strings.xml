@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="hello">Hello World, GPSlocatorActivity!</string>
+    <string name="hello">Hello World, DroidObserver!</string>
     <string name="app_name">DroidObserver</string>
+    <string name="get_photo_button">Cyknij fotę</string>
     <string name="get_gps_button">Pobierz lokalizację</string>
     
     <!-- Preferencje -->
     <string name="prefTitle">Preferencje</string>
     <string name="prefSummary">Pozwala ustawić preferencje dotyczące działania aplikacji, np login.</string>
       
-    <string name="serverIpTitle">Adres IP serwera</string>
+    <!-- <string name="serverIpTitle">Adres IP serwera</string>
     <string name="serverIpSummary">Niezbędny do nawiązania połączenia</string>
     <string name="serverIpOption">server_ip_option</string>
     <string name="serverIpDialog">Wprowadź adres IP serwera</string>
@@ -18,6 +19,21 @@
     <string name="serverPortSummary">Port na którym nasłuchuje serwer</string>
     <string name="serverPortOption">server_port_option</string>
     <string name="serverPortDialog">Wprowadź port na serwerze</string>
+    -->
+    <string name="serverAddressTitle">Adres serwera</string>
+    <string name="serverAddressSummary">Niezbędny do nawiązania połączenia</string>
+    <string name="serverAddressOption">server_address_option</string>
+    <string name="serverAddressDialog">Wprowadź adres URL serwera</string>
+    
+    <string name="loginTitle">Login</string>
+    <string name="loginSummary">Unikalny login pacjenta</string>
+    <string name="loginOption">login_option</string>
+    <string name="loginDialog">Wprowadź login pacjenta</string>
+    
+    <string name="passTitle">Hasło</string>
+    <string name="passSummary">Używane do logowania na serwerze</string>
+    <string name="passOption">pass_option</string>
+    <string name="passDialog">Wprowadź hasło dla podanego loginu</string>
     
     <!-- Menu -->
     <string name="menu_prefs_title">Ustawienia</string>

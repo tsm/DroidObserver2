@@ -4,6 +4,7 @@
   android:title="@string/prefTitle"
   android:summary="@string/prefSummary"
 >
+    <!--  
 	<EditTextPreference
 	  android:key="@string/serverIpOption"
 	  android:title="@string/serverIpTitle"
@@ -15,5 +16,25 @@
 	  android:title="@string/serverPortTitle"
 	  android:summary="@string/serverPortSummary"
 	  android:dialogTitle="@string/serverPortDialog"
+	/>
+	-->
+	<EditTextPreference
+	  android:key="@string/serverAddressOption"
+	  android:title="@string/serverAddressTitle"
+	  android:summary="@string/serverAddressSummary"
+	  android:dialogTitle="@string/serverAddressDialog"
+	/>
+	<EditTextPreference
+	  android:key="@string/loginOption"
+	  android:title="@string/loginTitle"
+	  android:summary="@string/loginSummary"
+	  android:dialogTitle="@string/loginDialog"
+	/>
+	<EditTextPreference
+	  android:key="@string/passOption"
+	  android:title="@string/passTitle"
+	  android:summary="@string/passSummary"
+	  android:dialogTitle="@string/passDialog"
+	  android:inputType="textPassword"
 	/>
 </PreferenceScreen>

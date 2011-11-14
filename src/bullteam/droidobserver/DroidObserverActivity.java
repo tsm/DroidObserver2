@@ -32,9 +32,7 @@ import android.widget.Toast;
 
 public class DroidObserverActivity extends Activity {
 	private TextView tv=null;
-	HttpClient client = new DefaultHttpClient();
-    HttpPost post = new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php"); //TODO: adres serwera z ustawieñ
-    
+	
     /** Called when the activity is first created. */
 	 public void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -42,49 +40,6 @@ public class DroidObserverActivity extends Activity {
 	        tv.setText("Lubie placki z serem");
 	        setContentView(tv);*/
 	        
-	        LocationManager locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-			LocationListener locListener = new LocationListener()
-			{
-				
-				public void onLocationChanged(Location location)
-				{
-					if(location!=null)
-					{
-						Toast.makeText(getBaseContext(), "Nowa lokalizacja: szerokœæ [" + location.getLatitude()
-								+"] d³ugoœæ [" +location.getLongitude()+"]",Toast.LENGTH_SHORT).show();
-						List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-						 pairs.add(new BasicNameValuePair("patient_id", "1"));
-						 pairs.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
-						 pairs.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
-						 try {
-							post.setEntity(new UrlEncodedFormEntity(pairs));
-						} catch (UnsupportedEncodingException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						 try {
-							HttpResponse response = client.execute(post);
-						} catch (ClientProtocolException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-				
-				public void onProviderDisabled(String provider){
-					
-				}
-				public void onProviderEnabled(String provider){
-					
-				}
-				public void onStatusChanged(String provider,int status, Bundle extras){
-					
-				}
-			};
-	        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,120000,0,locListener);
 	        setContentView(R.layout.main);  
 	        
 	        //preferencje i menu:
@@ -133,10 +88,14 @@ public class DroidObserverActivity extends Activity {
 //			
 //		}
 	    
-	    public void getGPSLocation(View target) {
-			//Uri uri = Uri.parse("gps://location");
+	    public void getPhoto(View target) {
 	    	startActivityForResult(new Intent(this, CameraActivity.class), 0);
 			startActivity(new Intent(this,SendFileActivity.class));
+		}
+	    
+	    public void getGPSLocation(View target) {
+			//Uri uri = Uri.parse("gps://location");
+	    	startActivity(new Intent(this,GetLocationActivity.class));
 		}
 	    	
 }
