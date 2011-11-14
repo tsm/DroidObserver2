@@ -84,7 +84,7 @@ public class DroidObserverActivity extends Activity {
 					
 				}
 			};
-	        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,0,0,locListener);
+	        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,120000,0,locListener);
 	        setContentView(R.layout.main);  
 	        
 	        //preferencje i menu:
