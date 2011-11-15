@@ -93,6 +93,11 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 			try {
 				camera.setPreviewDisplay(surfaceHolder);
 				camera.startPreview();
+				try {
+					Thread.sleep(3500);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 				camera.takePicture(null, null, myPictureCallback_JPG);
 				// previewing = true;
 			} catch (IOException e) {
