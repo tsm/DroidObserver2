@@ -4,12 +4,15 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
+import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -99,6 +102,16 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 
 	public void surfaceCreated(SurfaceHolder holder) {
 		camera = Camera.open();
+		if (camera != null) {
+			Camera.Parameters params = camera.getParameters();
+			// List<Size> sizes = params.getSupportedPictureSizes();
+			// See which sizes the camera supports and choose one of those
+			// Size mSize = sizes.get(0);
+			// params.setPictureSize(mSize.width, mSize.height);
+			params.setPictureSize(640, 480);
+			params.setJpegQuality(70);
+			camera.setParameters(params);
+		}
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
