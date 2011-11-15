@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,7 +16,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,15 +26,11 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.SlidingDrawer;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class GetLocationService extends Service {
@@ -45,7 +38,6 @@ public class GetLocationService extends Service {
 	private LocationManager locMgr;
 	private LocationListener locListener;
 	private Location currentBestLocation=null;
-	private Timer timer = new Timer();
 	private Thread thr;
 	private Handler handler;
 	
