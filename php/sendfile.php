@@ -14,7 +14,8 @@ if($_FILES['uploadedfile']&&$_REQUEST['login']&&$_REQUEST['pass'])
   else
   {
 
-	$target_path  = "./upload/"; //TODO dodaæ folder pacjenta!!!
+	$target_path  = "./upload/".$login;
+	mkdir($target_path, 0700);
 	$file_name= basename( $_FILES['uploadedfile']['name']);
 	$target_path = $target_path . $file_name;
 	mysql_query("INSERT INTO `files` (login, filename) VALUES ('$login','$file_name');"); //$login!!!!!!!!
