@@ -48,6 +48,10 @@
     <string name="updateTimeOption">update_time_option</string>
     <string name="updateTimeDialog">Co ile sekund wysyłać współrzędne?</string>
     
+    <string name="resolutionTitle">Rozdzielczość aparatu</string>
+    <string name="resolutionSummary">Rozdzielczość w jakiej przesyłane będą zdjęcia</string>
+    <string name="resolutionOption">resolution_option</string>
+    <string name="resolution_defaultValue">0</string>
     
     <!-- Menu -->
     <string name="menu_prefs_title">Ustawienia</string>

@@ -47,5 +47,13 @@
     android:key="connection_category"
     android:title="@string/photo_cat"
     android:summary="@string/photo_cat_summary">
+    <ListPreference
+    	android:key="@string/resolutionOption"
+      	android:title="@string/resolutionTitle"
+      	android:summary="@string/resolutionSummary"
+      	android:entries="@array/resolution_entries"
+      	android:entryValues="@array/resolution_entryValues"
+      	android:defaultValue="@string/resolution_defaultValue"
+    />
  </PreferenceCategory>  	
 </PreferenceScreen>

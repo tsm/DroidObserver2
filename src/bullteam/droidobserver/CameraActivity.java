@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
@@ -104,11 +105,32 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 		camera = Camera.open();
 		if (camera != null) {
 			Camera.Parameters params = camera.getParameters();
+
+			SharedPreferences prefs = getSharedPreferences(
+					"bullteam.droidobserver_preferences", 0);
+			String resolutionIndex = prefs.getString(this.getResources()
+					.getString(R.string.resolutionOption), this.getResources()
+					.getString(R.string.resolution_defaultValue));
+
+			String[] options = this.getResources().getStringArray(
+					R.array.resolution_entries);
+			String resolution = options[Integer.parseInt(resolutionIndex)];
+
+			Log.d(tag, "resolution=" + resolution);
+			String w = resolution.substring(0, resolution.indexOf("x"));
+			String h = resolution.substring(resolution.indexOf("x") + 1,
+					resolution.length());
+			params.setPictureSize(Integer.parseInt(w), Integer.parseInt(h));
+
 			// List<Size> sizes = params.getSupportedPictureSizes();
-			// See which sizes the camera supports and choose one of those
+			// // See which sizes the camera supports and choose one of those
+			// for (Size s : sizes) {
+			// Log.d(tag, s.height + "x" + s.width);
+			// }
 			// Size mSize = sizes.get(0);
 			// params.setPictureSize(mSize.width, mSize.height);
-			params.setPictureSize(640, 480);
+
+			// Ustawienie kompresji i rozdzielczoœci aparatu
 			params.setJpegQuality(70);
 			camera.setParameters(params);
 		}

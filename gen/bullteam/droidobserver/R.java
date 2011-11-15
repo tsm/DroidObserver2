@@ -9,8 +9,8 @@ package bullteam.droidobserver;
 
 public final class R {
     public static final class array {
-        public static final int patient_sort_options=0x7f050000;
-        public static final int patient_sort_options_values=0x7f050001;
+        public static final int resolution_entries=0x7f050000;
+        public static final int resolution_entryValues=0x7f050001;
     }
     public static final class attr {
     }
@@ -67,8 +67,8 @@ public final class R {
         public static final int loginTitle=0x7f060018;
         /**  Menu 
          */
-        public static final int menu_prefs_title=0x7f060024;
-        public static final int menu_quit_title=0x7f060025;
+        public static final int menu_prefs_title=0x7f060028;
+        public static final int menu_quit_title=0x7f060029;
         public static final int passDialog=0x7f06001f;
         public static final int passOption=0x7f06001e;
         public static final int passSummary=0x7f06001d;
@@ -80,6 +80,10 @@ public final class R {
          */
         public static final int prefTitle=0x7f06000c;
         public static final int preference_button=0x7f06000b;
+        public static final int resolutionOption=0x7f060026;
+        public static final int resolutionSummary=0x7f060025;
+        public static final int resolutionTitle=0x7f060024;
+        public static final int resolution_defaultValue=0x7f060027;
         public static final int serverAddressDialog=0x7f060017;
         public static final int serverAddressOption=0x7f060016;
         public static final int serverAddressSummary=0x7f060015;
