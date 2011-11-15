@@ -15,6 +15,7 @@ public class WizardActivity extends Activity{
 	    private String serverAddress;
 	    private String login;
 	    private String pass;
+	    private String update_time;
 	
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,8 @@ public class WizardActivity extends Activity{
 			serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
 			login = prefs.getString(this.getResources().getString(R.string.loginOption), "");
 			pass = prefs.getString(this.getResources().getString(R.string.passOption), "");
+			update_time= prefs.getString(this.getResources().getString(R.string.updateTimeOption),"");
+			if(update_time.length()==0) prefs.edit().putString(this.getResources().getString(R.string.updateTimeOption), "30").commit();
 			if(serverAddress.length()!=0){
 				if(!serverAddress.startsWith("http://")){
 					serverAddress = "http://"+serverAddress;

@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,7 +16,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
-import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -29,15 +26,11 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
-import android.widget.SlidingDrawer;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class GetLocationService extends Service {
@@ -45,16 +38,15 @@ public class GetLocationService extends Service {
 	private LocationManager locMgr;
 	private LocationListener locListener;
 	private Location currentBestLocation=null;
-	private Timer timer = new Timer();
 	private Thread thr;
 	private Handler handler;
 	
-	private static final long UPDATE_TIME = 1000 * 30 * 1;
+	private long update_time = 1000 * 30 * 1;
 	
 	HttpClient client = new DefaultHttpClient();
     HttpPost post;//= new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");
+    
     @Override
-	
     public void onCreate() {
 		super.onCreate();
 		notificationMgr =(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
@@ -62,6 +54,7 @@ public class GetLocationService extends Service {
 		
 		SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
 		String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
+		update_time = Long.getLong(prefs.getString(this.getResources().getString(R.string.updateTimeOption), "30"))*1000;
 		post = new HttpPost(serverAddress+"sendgps.php");
 		Log.d("serveradress",serverAddress+"sendgps.php");
 		locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
@@ -88,14 +81,54 @@ public class GetLocationService extends Service {
 				//if(status==LocationProvider.TEMPORARILY_UNAVAILABLE) sendGPS(currentBestLocation);
 			}
 		};
-        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,UPDATE_TIME,0,locListener);
+        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,update_time,0,locListener);
         currentBestLocation = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 	}   
     
-    public void onDestroy(){
+    public void onDestroy(){    	
     	displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
     	locMgr.removeUpdates(locListener);
     	if(thr!=null) thr.stop();
+    	super.onDestroy();
+    }
+    
+    @Override
+    public void onStart(Intent intent, int startId) {
+        // TODO Auto-generated method stub
+        super.onStart(intent, startId);
+
+        handler = new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+                // TODO Auto-generated method stub
+                super.handleMessage(msg);
+                if (currentBestLocation!=null) sendGPS(currentBestLocation);
+            }
+
+        };
+        thr = new Thread(new Runnable(){
+            public void run() {
+	            while(true)
+	            {
+	               try {
+		                Thread.sleep(update_time);
+		                handler.sendEmptyMessage(0);
+	
+		           } catch (InterruptedException e) {
+		                // TODO Auto-generated catch block
+		                e.printStackTrace();
+		           } 
+	
+	            }
+
+            }
+        });
+        thr.start();
+    }
+    
+    public IBinder onBind(Intent intent){
+    	return null;
     }
     
     public void sendGPS(Location location){
@@ -103,7 +136,7 @@ public class GetLocationService extends Service {
 			
 			BufferedReader in = null;
 			
-			String login = prefs.getString("login_option", ""); //TODO sprawdzic czy jest ustawione login i haslo
+			String login = prefs.getString("login_option", "");
 			String pass = prefs.getString("pass_option", "");
 			String textResult = "";
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -143,47 +176,7 @@ public class GetLocationService extends Service {
 				Toast.makeText(getBaseContext(),textResult,Toast.LENGTH_SHORT).show();
     }
     
-    @Override
-    public void onStart(Intent intent, int startId) {
-        // TODO Auto-generated method stub
-        super.onStart(intent, startId);
-
-        handler = new Handler(){
-
-            @Override
-            public void handleMessage(Message msg) {
-                // TODO Auto-generated method stub
-                super.handleMessage(msg);
-                if (currentBestLocation!=null) sendGPS(currentBestLocation);
-            }
-
-        };
-
-
-
-        thr = new Thread(new Runnable(){
-            public void run() {
-            // TODO Auto-generated method stub
-            while(true)
-            {
-               try {
-                Thread.sleep(UPDATE_TIME);
-                handler.sendEmptyMessage(0);
-
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } 
-
-            }
-
-                            }
-        });
-        thr.start();
-    }
-    public IBinder onBind(Intent intent){
-    	return null;
-    }
+    
     
     private void displayNotificationMessage(String message){
     	Notification notification = new Notification(R.drawable.ic_droidobserver,message,System.currentTimeMillis());
@@ -204,8 +197,8 @@ public class GetLocationService extends Service {
 
        // Check whether the new location fix is newer or older
        long timeDelta = location.getTime() - currentBestLocation.getTime();
-       boolean isSignificantlyNewer = timeDelta > UPDATE_TIME/2;
-       boolean isSignificantlyOlder = timeDelta < -UPDATE_TIME/2;
+       boolean isSignificantlyNewer = timeDelta > update_time/2;
+       boolean isSignificantlyOlder = timeDelta < -update_time/2;
        boolean isNewer = timeDelta > 0;
 
        // If it's been more than two minutes since the current location, use the new location
@@ -239,7 +232,7 @@ public class GetLocationService extends Service {
    }
 
    /** Checks whether two providers are the same */
-   private boolean isSameProvider(String provider1, String provider2) {
+   private boolean isSameProvider(String provider1, String provider2) { //TODO sprawdzanie po sieci GSM?
        if (provider1 == null) {
          return provider2 == null;
        }

@@ -7,7 +7,9 @@
     
     <string name="get_photo_button">Cyknij fotę</string>
     <string name="bind_gps_button">Pobieraj GPS</string>
-    <string name="unbind_gps_button">Zatrzymaj GPS</string>
+    <string name="unbind_gps_button">Idź spać GPS</string>
+    <string name="bind_email_button">Monitoruj email</string>
+    <string name="unbind_email_button">Zatrzymaj spam</string>
     
     <!--  wizard -->
     <string name="default_server_address">http://student.agh.edu.pl/~tsm/droidobserver/</string>

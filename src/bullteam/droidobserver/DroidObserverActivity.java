@@ -2,32 +2,27 @@ package bullteam.droidobserver;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 public class DroidObserverActivity extends Activity {
-	private TextView tv = null;
 	private static final String TAG = "DroidObserverActivity";
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		setContentView(R.layout.main);
-		startActivity(new Intent(this, WizardActivity.class));
-
 		Log.d(TAG, "uruchamianie aplikacji");
+		setContentView(R.layout.main);
 		startActivity(new Intent(this, WizardActivity.class));
 	}
 
 	@Override
 	protected void onDestroy() {
+		stopService(new Intent(DroidObserverActivity.this,GetLocationService.class));
 		super.onDestroy();
 		System.runFinalizersOnExit(true);
 		android.os.Process.killProcess(android.os.Process.myPid());
@@ -71,6 +66,16 @@ public class DroidObserverActivity extends Activity {
 	public void unbindGPSLocation(View target) {
 		stopService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
+	}
+	public void bindEmail(View target) {
+		startActivity(new Intent(this, WizardActivity.class));
+		startService(new Intent(DroidObserverActivity.this,
+				EmailService.class));
+	}
+
+	public void unbindEmail(View target) {
+		stopService(new Intent(DroidObserverActivity.this,
+				EmailService.class));
 	}
 
 }
