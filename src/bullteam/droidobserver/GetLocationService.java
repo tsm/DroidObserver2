@@ -63,13 +63,10 @@ public class GetLocationService extends Service {
 					
 					String login = prefs.getString("login_option", ""); //TODO sprawdzic czy jest ustawione login i haslo
 					String pass = prefs.getString("pass_option", "");
-					Toast.makeText(getBaseContext(), "Login" + login
-							+" haslo: " + pass,Toast.LENGTH_SHORT).show();
-					Log.d("login", "Login" + login +" haslo: " + pass);
 					String textResult = "";
 					List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-					pairs.add(new BasicNameValuePair("login", "noob"));
-					pairs.add(new BasicNameValuePair("pass", "qwe321"));
+					pairs.add(new BasicNameValuePair("login", login));
+					pairs.add(new BasicNameValuePair("pass", pass));
 					pairs.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
 					pairs.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
 					try {

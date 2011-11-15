@@ -3,9 +3,20 @@
 
     <string name="hello">Hello World, DroidObserver!</string>
     <string name="app_name">DroidObserver</string>
+    
+    
     <string name="get_photo_button">Cyknij fotę</string>
     <string name="bind_gps_button">Pobieraj GPS</string>
     <string name="unbind_gps_button">Zatrzymaj GPS</string>
+    
+    <!--  wizard -->
+    <string name="default_server_address">http://student.agh.edu.pl/~tsm/drodiobserver/</string>
+    <string name="wrong_preferences_title">Wykryto niepoprawne ustawienia:</string>
+    <string name="error_server_address_empty">pusty adres serwera</string>
+    <string name="error_login_empty">pusty login</string>
+    <string name="error_pass_empty">puste hasło</string>
+    <string name="default_button">Ustaw serwer domyślny</string>
+    <string name="preference_button">Przejdź do ustawień</string>
     
     <!-- Preferencje -->
     <string name="prefTitle">Preferencje</string>
@@ -21,6 +32,7 @@
     <string name="serverPortOption">server_port_option</string>
     <string name="serverPortDialog">Wprowadź port na serwerze</string>
     -->
+    
     <string name="serverAddressTitle">Adres serwera</string>
     <string name="serverAddressSummary">Niezbędny do nawiązania połączenia</string>
     <string name="serverAddressOption">server_address_option</string>

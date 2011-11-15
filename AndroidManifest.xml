@@ -35,9 +35,16 @@
                 <category android:name="android.intent.category.PREFERENCE" />
             </intent-filter>
         </activity>
+        <activity android:name=".PatientPreferenceActivity"
+            android:label="@string/prefTitle">
+          <intent-filter>
+              <action android:name="bullteam.droidobserver.intent.action.PatientPreferences" />
+              <category android:name="android.intent.category.PREFERENCE" />
+          </intent-filter>
+        </activity>
         <activity
             android:label="@string/app_name"
-            android:name=".GetLocationService" >
+            android:name=".WizardActivity" >
             <intent-filter >
                 <action android:name="android.intent.action.VIEW" />
 
