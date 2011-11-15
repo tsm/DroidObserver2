@@ -49,7 +49,7 @@ public class GetLocationService extends Service {
 	private Thread thr;
 	private Handler handler;
 	
-	private static final long UPDATE_TIME = 1000 * 30 * 1;
+	private long update_time = 1000 * 30 * 1;
 	
 	HttpClient client = new DefaultHttpClient();
     HttpPost post;//= new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");
@@ -62,6 +62,7 @@ public class GetLocationService extends Service {
 		
 		SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
 		String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
+		update_time = Long.getLong(prefs.getString(this.getResources().getString(R.string.updateTimeOption), "30"))*1000;
 		post = new HttpPost(serverAddress+"sendgps.php");
 		Log.d("serveradress",serverAddress+"sendgps.php");
 		locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
@@ -88,7 +89,7 @@ public class GetLocationService extends Service {
 				//if(status==LocationProvider.TEMPORARILY_UNAVAILABLE) sendGPS(currentBestLocation);
 			}
 		};
-        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,UPDATE_TIME,0,locListener);
+        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,update_time,0,locListener);
         currentBestLocation = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 	}   
     
@@ -167,7 +168,7 @@ public class GetLocationService extends Service {
             while(true)
             {
                try {
-                Thread.sleep(UPDATE_TIME);
+                Thread.sleep(update_time);
                 handler.sendEmptyMessage(0);
 
             } catch (InterruptedException e) {
@@ -204,8 +205,8 @@ public class GetLocationService extends Service {
 
        // Check whether the new location fix is newer or older
        long timeDelta = location.getTime() - currentBestLocation.getTime();
-       boolean isSignificantlyNewer = timeDelta > UPDATE_TIME/2;
-       boolean isSignificantlyOlder = timeDelta < -UPDATE_TIME/2;
+       boolean isSignificantlyNewer = timeDelta > update_time/2;
+       boolean isSignificantlyOlder = timeDelta < -update_time/2;
        boolean isNewer = timeDelta > 0;
 
        // If it's been more than two minutes since the current location, use the new location
