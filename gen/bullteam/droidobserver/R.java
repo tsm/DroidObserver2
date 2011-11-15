@@ -21,23 +21,26 @@ public final class R {
         /**   notification  
          */
         public static final int app_notification_id=0x7f070000;
-        public static final int bindGPS=0x7f070003;
-        public static final int button_default=0x7f070008;
-        public static final int button_preference=0x7f070009;
-        public static final int camerapreview=0x7f070001;
-        public static final int get_photo=0x7f070002;
-        public static final int menu_prefs=0x7f07000a;
-        public static final int menu_quit=0x7f07000b;
-        public static final int text1=0x7f070005;
-        public static final int tv_wrong_preferences=0x7f070007;
-        public static final int tv_wrong_preferences_title=0x7f070006;
-        public static final int unbindGPS=0x7f070004;
+        public static final int bindGPS=0x7f070005;
+        public static final int button_capture=0x7f070002;
+        public static final int button_default=0x7f07000a;
+        public static final int button_preference=0x7f07000b;
+        public static final int camera_preview=0x7f070001;
+        public static final int camerapreview=0x7f070003;
+        public static final int get_photo=0x7f070004;
+        public static final int menu_prefs=0x7f07000c;
+        public static final int menu_quit=0x7f07000d;
+        public static final int text1=0x7f070007;
+        public static final int tv_wrong_preferences=0x7f070009;
+        public static final int tv_wrong_preferences_title=0x7f070008;
+        public static final int unbindGPS=0x7f070006;
     }
     public static final class layout {
-        public static final int cameracontrol=0x7f030000;
-        public static final int camerapreview=0x7f030001;
-        public static final int main=0x7f030002;
-        public static final int wizard=0x7f030003;
+        public static final int camera_layout=0x7f030000;
+        public static final int cameracontrol=0x7f030001;
+        public static final int camerapreview=0x7f030002;
+        public static final int main=0x7f030003;
+        public static final int wizard=0x7f030004;
     }
     public static final class menu {
         public static final int mainmenu=0x7f080000;

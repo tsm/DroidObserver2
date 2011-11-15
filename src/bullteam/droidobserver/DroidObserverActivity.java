@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class DroidObserverActivity extends Activity {
 	private TextView tv=null;
-	private static final String TAG = "DroidObserverActivity"; //DEL ?
+	private static final String TAG = "DroidObserverActivity";
 	
     /** Called when the activity is first created. */
 	 public void onCreate(Bundle savedInstanceState) {
@@ -22,7 +22,7 @@ public class DroidObserverActivity extends Activity {
 	        setContentView(R.layout.main);  
 	        startActivity(new Intent(this,WizardActivity.class));
 	        
-	        Log.d(TAG, "uruchamianie aplikacji"); //DEL ?
+	        Log.d(TAG, "uruchamianie aplikacji");
 	        startActivity(new Intent(this,WizardActivity.class));
 	    }
 	 
@@ -55,23 +55,12 @@ public class DroidObserverActivity extends Activity {
 		}
 	    
 	    public void bindGPSLocation(View target) {
-			//Uri uri = Uri.parse("gps://location");
 	    	startActivity(new Intent(this,WizardActivity.class));
 	    	startService(new Intent(DroidObserverActivity.this,GetLocationService.class));
 		}
 	    
 	    public void unbindGPSLocation(View target) {
-			//Uri uri = Uri.parse("gps://location");
 	    	stopService(new Intent(DroidObserverActivity.this,GetLocationService.class));
 		}
 	    	
 }
-
-//  
-	
-//	@Override
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		if (requestCode == REQ_CODE && resultCode == RESULT_OK) {
-//			Toast.makeText(getBaseContext(), "pobrano dane", Toast.LENGTH_LONG).show();
-//        }
-//	}

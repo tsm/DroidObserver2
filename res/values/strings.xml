@@ -10,7 +10,7 @@
     <string name="unbind_gps_button">Zatrzymaj GPS</string>
     
     <!--  wizard -->
-    <string name="default_server_address">http://student.agh.edu.pl/~tsm/drodiobserver/</string>
+    <string name="default_server_address">http://student.agh.edu.pl/~tsm/droidobserver/</string>
     <string name="wrong_preferences_title">Wykryto niepoprawne ustawienia:</string>
     <string name="error_server_address_empty">pusty adres serwera</string>
     <string name="error_login_empty">pusty login</string>

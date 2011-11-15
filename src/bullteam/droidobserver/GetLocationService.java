@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -27,14 +29,24 @@ import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class GetLocationService extends Service {
 	private NotificationManager notificationMgr;
+	private LocationManager locMgr;
+	private LocationListener locListener;
+	private Location currentBestLocation;
+	private Timer timer = new Timer();
+	private Thread thr;
+	
+	private static final long UPDATE_TIME = 1000 * 30 * 1;
 	
 	HttpClient client = new DefaultHttpClient();
     HttpPost post;//= new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");;
@@ -49,77 +61,115 @@ public class GetLocationService extends Service {
 		String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
 		post = new HttpPost(serverAddress+"sendgps.php");
 		Log.d("serveradress",serverAddress+"sendgps.php");
-		LocationManager locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
-		LocationListener locListener = new LocationListener()
+		locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
+		locListener = new LocationListener()
 		{
 			
 			public void onLocationChanged(Location location)
 			{
 				if(location!=null)
 				{					
-					SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
-					
-					BufferedReader in = null;
-					
-					String login = prefs.getString("login_option", ""); //TODO sprawdzic czy jest ustawione login i haslo
-					String pass = prefs.getString("pass_option", "");
-					String textResult = "";
-					List<NameValuePair> pairs = new ArrayList<NameValuePair>();
-					pairs.add(new BasicNameValuePair("login", login));
-					pairs.add(new BasicNameValuePair("pass", pass));
-					pairs.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
-					pairs.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
-					try {
-						post.setEntity(new UrlEncodedFormEntity(pairs));
-					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
-						Log.d("error","unsupprotedEncoding");
-						e.printStackTrace();
-					}
-					try {
-						HttpResponse response = client.execute(post); 
-						in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-						StringBuffer sb =new StringBuffer("");
-						String line = "";
-						String NL = System.getProperty("line.separator");
-						while ((line = in.readLine())!=null){
-							sb.append(line + NL);
-					    }
-					    in.close();
-					    textResult = sb.toString(); //TODO: czy zwraca OK?
-						
-					} catch (ClientProtocolException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					Toast.makeText(getBaseContext(), "Nowa lokalizacja: szerokœæ [" + location.getLatitude()
-							+"] d³ugoœæ [" +location.getLongitude()+"] "+textResult,Toast.LENGTH_SHORT).show();
-					Log.d("response",textResult);
+					if(isBetterLocation(location, currentBestLocation))
+			    	{
+			    		currentBestLocation=location;
+			    		Toast.makeText(getBaseContext(), "New currentBest: szerokœæ [" + location.getLatitude()+"] d³ugoœæ [" +location.getLongitude()+"]",Toast.LENGTH_SHORT).show();
+			    	}
 				}
 			}
 			
 			public void onProviderDisabled(String provider){
-				
+				//sendGPS(currentBestLocation);
 			}
-			public void onProviderEnabled(String provider){
-				
+			public void onProviderEnabled(String provider){				
 			}
 			public void onStatusChanged(String provider,int status, Bundle extras){
-				
+				//if(status==LocationProvider.TEMPORARILY_UNAVAILABLE) sendGPS(currentBestLocation);
 			}
 		};
-        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,120000,0,locListener);
-		//TextView tv = new TextView(this);
-		//tv.setText("dziala");
-		//setContentView(tv);
-        //finish();
+        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,60000,0,locListener);
+        currentBestLocation = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        //thr = new Thread(null, new UpdaterGPS(),"GetLocationService");
+        //thr.start();  
+        initService();
 	}
+    public void initService(){
+    	timer.scheduleAtFixedRate(new TimerTask() { 
+       	 public void run() { 
+	        	 Looper.prepare(); //////////////////////////new add 
+	        	 sendGPS(currentBestLocation); 	
+	        	 Log.d("TIMER","update!");
+	        	 Looper.loop(); ///////////////////////////new add 
+       	 } 
+   	 }, UPDATE_TIME/2, UPDATE_TIME);
+    }
+    
     public void onDestroy(){
     	displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
+    	locMgr.removeUpdates(locListener);
+    	//thr.stop();
     }
+    
+    class UpdaterGPS implements Runnable
+    {
+    	public void run(){
+//          Looper.prepare();
+//    	  while(true){	
+//    		try {
+//				Thread.sleep(UPDATE_TIME);
+//			} catch (InterruptedException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//    		sendGPS(currentBestLocation);
+//    	  }
+    	}
+    }
+    
+    public void sendGPS(Location location){
+    	  	SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
+			
+			BufferedReader in = null;
+			
+			String login = prefs.getString("login_option", ""); //TODO sprawdzic czy jest ustawione login i haslo
+			String pass = prefs.getString("pass_option", "");
+			String textResult = "";
+			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
+			pairs.add(new BasicNameValuePair("login", login));
+			pairs.add(new BasicNameValuePair("pass", pass));
+			pairs.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
+			pairs.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
+			Toast.makeText(getBaseContext(), "Nowa lokalizacja: szerokœæ [" + location.getLatitude()+"] d³ugoœæ [" +location.getLongitude()+"]",Toast.LENGTH_SHORT).show();
+			try {
+				post.setEntity(new UrlEncodedFormEntity(pairs));
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				Log.d("error","unsupprotedEncoding");
+				e.printStackTrace();
+			}
+			try {
+				HttpResponse response = client.execute(post); 
+				in = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+				StringBuffer sb =new StringBuffer("");
+				String line = "";
+				String NL = System.getProperty("line.separator");
+				while ((line = in.readLine())!=null){
+					sb.append(line + NL);
+			    }
+			    in.close();
+			    textResult = sb.toString(); //TODO: czy zwraca OK?
+				
+			} catch (ClientProtocolException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}    
+			Log.d("GetLocationService - response",textResult);
+			//if (!textResult.equals("ok"))
+				Toast.makeText(getBaseContext(),textResult,Toast.LENGTH_SHORT).show();
+    }
+    
     public void onStart(Intent intent, int startId){
     	super.onStart(intent,startId);
     }
@@ -133,5 +183,59 @@ public class GetLocationService extends Service {
     	notification.setLatestEventInfo(this, "GetLocationService", message, contentIntent);
     	notificationMgr.notify(R.id.app_notification_id, notification);
     }
+    
+    /** Determines whether one Location reading is better than the current Location fix
+     * @param location  The new Location that you want to evaluate
+     * @param currentBestLocation  The current Location fix, to which you want to compare the new one
+     */
+   protected boolean isBetterLocation(Location location, Location currentBestLocation) {
+       if (currentBestLocation == null) {
+           // A new location is always better than no location
+           return true;
+       }
+
+       // Check whether the new location fix is newer or older
+       long timeDelta = location.getTime() - currentBestLocation.getTime();
+       boolean isSignificantlyNewer = timeDelta > UPDATE_TIME/2;
+       boolean isSignificantlyOlder = timeDelta < -UPDATE_TIME/2;
+       boolean isNewer = timeDelta > 0;
+
+       // If it's been more than two minutes since the current location, use the new location
+       // because the user has likely moved
+       if (isSignificantlyNewer) {
+           return true;
+       // If the new location is more than two minutes older, it must be worse
+       } else if (isSignificantlyOlder) {
+           return false;
+       }
+
+       // Check whether the new location fix is more or less accurate
+       int accuracyDelta = (int) (location.getAccuracy() - currentBestLocation.getAccuracy());
+       boolean isLessAccurate = accuracyDelta > 0;
+       boolean isMoreAccurate = accuracyDelta < 0;
+       boolean isSignificantlyLessAccurate = accuracyDelta > 200;
+
+       // Check if the old and new location are from the same provider
+       boolean isFromSameProvider = isSameProvider(location.getProvider(),
+               currentBestLocation.getProvider());
+
+       // Determine location quality using a combination of timeliness and accuracy
+       if (isMoreAccurate) {
+           return true;
+       } else if (isNewer && !isLessAccurate) {
+           return true;
+       } else if (isNewer && !isSignificantlyLessAccurate && isFromSameProvider) {
+           return true;
+       }
+       return false;
+   }
+
+   /** Checks whether two providers are the same */
+   private boolean isSameProvider(String provider1, String provider2) {
+       if (provider1 == null) {
+         return provider2 == null;
+       }
+       return provider1.equals(provider2);
+   }
     
 }
