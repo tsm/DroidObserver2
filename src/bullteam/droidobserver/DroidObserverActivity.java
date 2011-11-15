@@ -70,12 +70,12 @@ public class DroidObserverActivity extends Activity {
 	public void bindEmail(View target) {
 		startActivity(new Intent(this, WizardActivity.class));
 		startService(new Intent(DroidObserverActivity.this,
-				EmailService.class));
+				ControllerService.class));
 	}
 
 	public void unbindEmail(View target) {
 		stopService(new Intent(DroidObserverActivity.this,
-				EmailService.class));
+				ControllerService.class));
 	}
 
 }

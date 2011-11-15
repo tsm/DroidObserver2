@@ -17,7 +17,7 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-public class EmailService extends Service {
+public class ControllerService extends Service {
 	private Thread thr;
 	private Handler handler;	
 	private long update_time = 1000 * 30 * 1;
@@ -25,12 +25,11 @@ public class EmailService extends Service {
 	@Override
     public void onCreate() {
 		super.onCreate();		
-		Log.d("EmailService","Start");
+		Log.d("ControllerService","Start");
 		
 	}   
     
     public void onDestroy(){    	
-    	if(thr!=null) thr.stop();
     	super.onDestroy();
     }
     
@@ -42,7 +41,7 @@ public class EmailService extends Service {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Log.d("EmailService","Sprawdzam e-maile");
+                Log.d("ContrallerService","Sprawdzam e-maile");
             }
 
         };
