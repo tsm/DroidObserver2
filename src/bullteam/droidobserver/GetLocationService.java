@@ -31,8 +31,10 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
@@ -42,14 +44,15 @@ public class GetLocationService extends Service {
 	private NotificationManager notificationMgr;
 	private LocationManager locMgr;
 	private LocationListener locListener;
-	private Location currentBestLocation;
+	private Location currentBestLocation=null;
 	private Timer timer = new Timer();
 	private Thread thr;
+	private Handler handler;
 	
 	private static final long UPDATE_TIME = 1000 * 30 * 1;
 	
 	HttpClient client = new DefaultHttpClient();
-    HttpPost post;//= new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");;
+    HttpPost post;//= new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");
     @Override
 	
     public void onCreate() {
@@ -78,7 +81,6 @@ public class GetLocationService extends Service {
 			}
 			
 			public void onProviderDisabled(String provider){
-				//sendGPS(currentBestLocation);
 			}
 			public void onProviderEnabled(String provider){				
 			}
@@ -86,43 +88,14 @@ public class GetLocationService extends Service {
 				//if(status==LocationProvider.TEMPORARILY_UNAVAILABLE) sendGPS(currentBestLocation);
 			}
 		};
-        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,60000,0,locListener);
+        locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,UPDATE_TIME,0,locListener);
         currentBestLocation = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        //thr = new Thread(null, new UpdaterGPS(),"GetLocationService");
-        //thr.start();  
-        initService();
-	}
-    public void initService(){
-    	timer.scheduleAtFixedRate(new TimerTask() { 
-       	 public void run() { 
-	        	 Looper.prepare(); //////////////////////////new add 
-	        	 sendGPS(currentBestLocation); 	
-	        	 Log.d("TIMER","update!");
-	        	 Looper.loop(); ///////////////////////////new add 
-       	 } 
-   	 }, UPDATE_TIME/2, UPDATE_TIME);
-    }
+	}   
     
     public void onDestroy(){
     	displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
     	locMgr.removeUpdates(locListener);
-    	//thr.stop();
-    }
-    
-    class UpdaterGPS implements Runnable
-    {
-    	public void run(){
-//          Looper.prepare();
-//    	  while(true){	
-//    		try {
-//				Thread.sleep(UPDATE_TIME);
-//			} catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//    		sendGPS(currentBestLocation);
-//    	  }
-    	}
+    	if(thr!=null) thr.stop();
     }
     
     public void sendGPS(Location location){
@@ -170,8 +143,43 @@ public class GetLocationService extends Service {
 				Toast.makeText(getBaseContext(),textResult,Toast.LENGTH_SHORT).show();
     }
     
-    public void onStart(Intent intent, int startId){
-    	super.onStart(intent,startId);
+    @Override
+    public void onStart(Intent intent, int startId) {
+        // TODO Auto-generated method stub
+        super.onStart(intent, startId);
+
+        handler = new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+                // TODO Auto-generated method stub
+                super.handleMessage(msg);
+                if (currentBestLocation!=null) sendGPS(currentBestLocation);
+            }
+
+        };
+
+
+
+        thr = new Thread(new Runnable(){
+            public void run() {
+            // TODO Auto-generated method stub
+            while(true)
+            {
+               try {
+                Thread.sleep(UPDATE_TIME);
+                handler.sendEmptyMessage(0);
+
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } 
+
+            }
+
+                            }
+        });
+        thr.start();
     }
     public IBinder onBind(Intent intent){
     	return null;

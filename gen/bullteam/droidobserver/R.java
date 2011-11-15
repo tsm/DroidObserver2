@@ -48,6 +48,8 @@ public final class R {
     public static final class string {
         public static final int app_name=0x7f060001;
         public static final int bind_gps_button=0x7f060003;
+        public static final int con_cat=0x7f06000e;
+        public static final int con_cat_summary=0x7f06000f;
         public static final int default_button=0x7f06000a;
         /**   wizard 
          */
@@ -56,40 +58,37 @@ public final class R {
         public static final int error_pass_empty=0x7f060009;
         public static final int error_server_address_empty=0x7f060007;
         public static final int get_photo_button=0x7f060002;
+        public static final int gps_cat=0x7f060010;
+        public static final int gps_cat_summary=0x7f060011;
         public static final int hello=0x7f060000;
-        public static final int loginDialog=0x7f060015;
-        public static final int loginOption=0x7f060014;
-        public static final int loginSummary=0x7f060013;
-        public static final int loginTitle=0x7f060012;
+        public static final int loginDialog=0x7f06001b;
+        public static final int loginOption=0x7f06001a;
+        public static final int loginSummary=0x7f060019;
+        public static final int loginTitle=0x7f060018;
         /**  Menu 
          */
-        public static final int menu_prefs_title=0x7f06001a;
-        public static final int menu_quit_title=0x7f06001b;
-        public static final int passDialog=0x7f060019;
-        public static final int passOption=0x7f060018;
-        public static final int passSummary=0x7f060017;
-        public static final int passTitle=0x7f060016;
+        public static final int menu_prefs_title=0x7f060024;
+        public static final int menu_quit_title=0x7f060025;
+        public static final int passDialog=0x7f06001f;
+        public static final int passOption=0x7f06001e;
+        public static final int passSummary=0x7f06001d;
+        public static final int passTitle=0x7f06001c;
+        public static final int photo_cat=0x7f060012;
+        public static final int photo_cat_summary=0x7f060013;
         public static final int prefSummary=0x7f06000d;
         /**  Preferencje 
          */
         public static final int prefTitle=0x7f06000c;
         public static final int preference_button=0x7f06000b;
-        public static final int serverAddressDialog=0x7f060011;
-        public static final int serverAddressOption=0x7f060010;
-        public static final int serverAddressSummary=0x7f06000f;
-        /**  <string name="serverIpTitle">Adres IP serwera</string>
-    <string name="serverIpSummary">Niezbędny do nawiązania połączenia</string>
-    <string name="serverIpOption">server_ip_option</string>
-    <string name="serverIpDialog">Wprowadź adres IP serwera</string>
-    
-    <string name="serverPortTitle">Port serwera</string>
-    <string name="serverPortSummary">Port na którym nasłuchuje serwer</string>
-    <string name="serverPortOption">server_port_option</string>
-    <string name="serverPortDialog">Wprowadź port na serwerze</string>
-    
-         */
-        public static final int serverAddressTitle=0x7f06000e;
+        public static final int serverAddressDialog=0x7f060017;
+        public static final int serverAddressOption=0x7f060016;
+        public static final int serverAddressSummary=0x7f060015;
+        public static final int serverAddressTitle=0x7f060014;
         public static final int unbind_gps_button=0x7f060004;
+        public static final int updateTimeDialog=0x7f060023;
+        public static final int updateTimeOption=0x7f060022;
+        public static final int updateTimeSummary=0x7f060021;
+        public static final int updateTimeTitle=0x7f060020;
         public static final int wrong_preferences_title=0x7f060006;
     }
     public static final class xml {

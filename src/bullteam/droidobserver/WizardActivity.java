@@ -55,6 +55,7 @@ public class WizardActivity extends Activity{
 			if(login.length()==0) wrong = wrong+this.getResources().getString(R.string.error_login_empty)+"\n";
 			if(pass.length()==0) wrong = wrong+this.getResources().getString(R.string.error_pass_empty)+"\n";
 			TextView tv= (TextView) this.findViewById(R.id.tv_wrong_preferences);
+			if(wrong.equalsIgnoreCase("")) finish();
 			tv.setText(wrong);			
 		}
 		

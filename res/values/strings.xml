@@ -21,18 +21,13 @@
     <!-- Preferencje -->
     <string name="prefTitle">Preferencje</string>
     <string name="prefSummary">Pozwala ustawić preferencje dotyczące działania aplikacji, np login.</string>
+    <string name="con_cat">Połączenie</string>
+    <string name="con_cat_summary">Ustawienia połączeń</string>
+    <string name="gps_cat">GPS</string>
+    <string name="gps_cat_summary">Ustawienia GPS</string> 
+    <string name="photo_cat">Zdjęcia</string>
+    <string name="photo_cat_summary">Ustawienia zdjęć</string>  
       
-    <!-- <string name="serverIpTitle">Adres IP serwera</string>
-    <string name="serverIpSummary">Niezbędny do nawiązania połączenia</string>
-    <string name="serverIpOption">server_ip_option</string>
-    <string name="serverIpDialog">Wprowadź adres IP serwera</string>
-    
-    <string name="serverPortTitle">Port serwera</string>
-    <string name="serverPortSummary">Port na którym nasłuchuje serwer</string>
-    <string name="serverPortOption">server_port_option</string>
-    <string name="serverPortDialog">Wprowadź port na serwerze</string>
-    -->
-    
     <string name="serverAddressTitle">Adres serwera</string>
     <string name="serverAddressSummary">Niezbędny do nawiązania połączenia</string>
     <string name="serverAddressOption">server_address_option</string>
@@ -47,6 +42,12 @@
     <string name="passSummary">Używane do logowania na serwerze</string>
     <string name="passOption">pass_option</string>
     <string name="passDialog">Wprowadź hasło</string>
+    
+    <string name="updateTimeTitle">Częstotliwość odświeżania</string>
+    <string name="updateTimeSummary">w sekundach</string>
+    <string name="updateTimeOption">update_time_option</string>
+    <string name="updateTimeDialog">Co ile sekund wysyłać współrzędne?</string>
+    
     
     <!-- Menu -->
     <string name="menu_prefs_title">Ustawienia</string>

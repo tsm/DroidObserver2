@@ -4,20 +4,11 @@
   android:title="@string/prefTitle"
   android:summary="@string/prefSummary"
 >
-    <!--  
-	<EditTextPreference
-	  android:key="@string/serverIpOption"
-	  android:title="@string/serverIpTitle"
-	  android:summary="@string/serverIpSummary"
-	  android:dialogTitle="@string/serverIpDialog"
-	/>
-	<EditTextPreference
-	  android:key="@string/serverPortOption"
-	  android:title="@string/serverPortTitle"
-	  android:summary="@string/serverPortSummary"
-	  android:dialogTitle="@string/serverPortDialog"
-	/>
-	-->
+  <PreferenceCategory
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="connection_category"
+    android:title="@string/con_cat"
+    android:summary="@string/con_cat_summary">
 	<EditTextPreference
 	  android:key="@string/serverAddressOption"
 	  android:title="@string/serverAddressTitle"
@@ -37,4 +28,24 @@
 	  android:dialogTitle="@string/passDialog"
 	  android:inputType="textPassword"
 	/>
+ </PreferenceCategory>
+ <PreferenceCategory
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="connection_category"
+    android:title="@string/gps_cat"
+    android:summary="@string/gps_cat_summary">
+    <EditTextPreference
+	  android:key="@string/updateTimeOption"
+	  android:title="@string/updateTimeTitle"
+	  android:summary="@string/updateTimeSummary"
+	  android:dialogTitle="@string/updateTimeDialog"
+	  android:inputType="number"
+	/>
+ </PreferenceCategory>
+ <PreferenceCategory
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="connection_category"
+    android:title="@string/photo_cat"
+    android:summary="@string/photo_cat_summary">
+ </PreferenceCategory>  	
 </PreferenceScreen>
