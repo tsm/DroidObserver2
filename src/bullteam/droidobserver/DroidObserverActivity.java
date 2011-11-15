@@ -17,19 +17,15 @@ public class DroidObserverActivity extends Activity {
 	
     /** Called when the activity is first created. */
 	 public void onCreate(Bundle savedInstanceState) {
-	        super.onCreate(savedInstanceState);
-	       /* TextView tv = new TextView(this);
-	        tv.setText("Lubie placki z serem");
-	        setContentView(tv);*/
+	        super.onCreate(savedInstanceState);   
 	        
 	        setContentView(R.layout.main);  
+	        startActivity(new Intent(this,WizardActivity.class));
 	        
 	        Log.d(TAG, "uruchamianie aplikacji"); //DEL ?
-	        
-	        //preferencje i menu:
-	        tv=(TextView)findViewById(R.id.text1);
-	        setOptionText();
+	        startActivity(new Intent(this,WizardActivity.class));
 	    }
+	 
 	    @Override
 	    public boolean onCreateOptionsMenu(Menu menu){
 	    	MenuInflater inflater=getMenuInflater();
@@ -51,26 +47,8 @@ public class DroidObserverActivity extends Activity {
 	    
 	    @Override
 	    public void onActivityResult(int reqCode,int resCode,Intent data){
-	    	super.onActivityResult(reqCode, resCode, data);
-	    	setOptionText();	    	
+	    	super.onActivityResult(reqCode, resCode, data);  	
 	    }
-		
-	    private void setOptionText(){
-	    	SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
-	    	//String option = prefs.getString(
-	    	//		this.getResources().getString(R.string.selected_patient_sort_option),
-	    	//		this.getResources().getString(R.string.patient_sort_option_default_value));
-	    	//String[] optionText=
-	    	//		this.getResources().getStringArray(R.array.patient_sort_options);
-	    	//tv.setText("wartosc opacji wynosi "+option+" ("+optionText[Integer.parseInt(option)]+")");
-	    	
-	    }
-//		public void getGPSLocation(View target){
-//			TextView tv = new TextView(this);
-//	        tv.setText("Lubie placki z serem i miodem");
-//	        setContentView(tv);
-//			
-//		}
 	    
 	    public void getPhoto(View target) {
 			startActivity(new Intent(this,SendFileActivity.class));
@@ -78,6 +56,7 @@ public class DroidObserverActivity extends Activity {
 	    
 	    public void bindGPSLocation(View target) {
 			//Uri uri = Uri.parse("gps://location");
+	    	startActivity(new Intent(this,WizardActivity.class));
 	    	startService(new Intent(DroidObserverActivity.this,GetLocationService.class));
 		}
 	    
