@@ -14,17 +14,15 @@ import java.util.Date;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class SendFileActivity extends Activity {
-	String result = "result:";
-	File plik = null;
+	private static File plik = null;
+	private static String tag = "Kamera";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +41,7 @@ public class SendFileActivity extends Activity {
 	 * Robi zdjêcie (automatycznie lub manualnie)
 	 */
 	public void captureImage() {
-		Log.d("CAMERA", "Rozpoczynam aktywnoœæ");
+		Log.d(tag, "Rozpoczynam aktywnoœæ");
 		startActivityForResult(new Intent(this, CameraActivity.class), 0);
 
 		// Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -65,12 +63,12 @@ public class SendFileActivity extends Activity {
 				Environment.getExternalStorageDirectory() + "", "DroidObserver");
 		// Create the storage directory if it does not exist
 		if (!mediaStorageDir.exists()) {
-			Log.d("CAMERA", "Katalog nie istnieje");
+			Log.d(tag, "Katalog nie istnieje");
 			if (!mediaStorageDir.mkdirs()) {
-				Log.d("CAMERA", "Nie uda³o siê stworzyæ katalogu dla zdjêæ");
+				Log.d(tag, "Nie uda³o siê stworzyæ katalogu dla zdjêæ");
 				return null;
 			}
-			Log.d("CAMERA", "Katalog zosta³ utworzony");
+			Log.d(tag, "Katalog zosta³ utworzony");
 		}
 
 		// Create a media file name
@@ -79,7 +77,8 @@ public class SendFileActivity extends Activity {
 		File mediaFile;
 		mediaFile = new File(mediaStorageDir.getPath() + File.separator
 				+ "IMG_" + timeStamp + ".jpg");
-		Log.d("CAMERA", "Stworzono plik:" + mediaFile.getName());
+		Log.d(tag, "Stworzono plik:" + mediaFile.getName());
+		plik = mediaFile;
 		return mediaFile;
 	}
 
@@ -93,16 +92,16 @@ public class SendFileActivity extends Activity {
 				Toast.makeText(this, "Image saved to:\n" + plik.getPath(),
 						Toast.LENGTH_LONG).show();
 
-				Log.d("CAMERA", "Zdjêcie zosta³o zrobione!");
+				Log.d(tag, "Zdjêcie zosta³o zrobione!");
 				sendFile();
 			} else {
-				Log.d("CAMERA", "Nieznany B³¹d: plik pusty?");
+				Log.d(tag, "Nieznany B³¹d: plik pusty?");
 			}
 
 		} else {
 			Toast.makeText(this, "Wystapil blad w aktywnosci",
 					Toast.LENGTH_LONG).show();
-			Log.d("CAMERA", "Wyst¹pi³ b³¹d w aktywnoœci!");
+			Log.d(tag, "Wyst¹pi³ b³¹d w aktywnoœci!");
 		}
 	}
 
@@ -111,7 +110,7 @@ public class SendFileActivity extends Activity {
 	 */
 	@SuppressWarnings("unused")
 	public void sendFile() {
-		Log.d("CAMERA", "Rozpoczeto funkcjê wysy³ania pliku");
+		Log.d(tag, "Rozpoczeto funkcjê wysy³ania pliku");
 		HttpURLConnection connection = null;
 		DataOutputStream outputStream = null;
 		DataInputStream inputStream = null;
@@ -138,7 +137,7 @@ public class SendFileActivity extends Activity {
 			URL url = new URL(serverAddress + "?login=" + login + "&pass="
 					+ pass);
 			connection = (HttpURLConnection) url.openConnection();
-			Log.d("CAMERA", "Ustanowiono po³¹czenie z " + serverAddress);
+			Log.d(tag, "Ustanowiono po³¹czenie z " + serverAddress);
 
 			// Allow Inputs & Outputs
 			connection.setDoInput(true);
@@ -195,9 +194,11 @@ public class SendFileActivity extends Activity {
 			fileInputStream.close();
 			outputStream.flush();
 			outputStream.close();
-			Log.d("CAMERA", textResult);
+			Log.d(tag, textResult);
+			Toast.makeText(getBaseContext(), "Obraz zosta³ pomyœlnie wys³any",
+					Toast.LENGTH_SHORT);
 		} catch (Exception ex) {
-			Log.d("CAMERA", "B³¹d :" + ex.getMessage());
+			Log.d(tag, "B³¹d :" + ex.getMessage());
 		}
 		finish();
 	}
