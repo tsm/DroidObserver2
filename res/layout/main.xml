@@ -31,6 +31,18 @@
         android:layout_height="wrap_content"
         android:onClick="unbindGPSLocation"
         android:text="@string/unbind_gps_button" />
+    <Button
+        android:id="@+id/bindEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="bindEmail"
+        android:text="@string/bind_email_button" />
+    <Button
+        android:id="@+id/unbindEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="unbindEmail"
+        android:text="@string/unbind_email_button" />
     <TextView
         android:text="" android:id="@+id/text1"
         android:layout_width="fill_parent"

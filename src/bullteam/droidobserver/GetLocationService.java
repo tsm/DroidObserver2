@@ -45,8 +45,8 @@ public class GetLocationService extends Service {
 	
 	HttpClient client = new DefaultHttpClient();
     HttpPost post;//= new HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");
+    
     @Override
-	
     public void onCreate() {
 		super.onCreate();
 		notificationMgr =(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
@@ -85,10 +85,50 @@ public class GetLocationService extends Service {
         currentBestLocation = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 	}   
     
-    public void onDestroy(){
+    public void onDestroy(){    	
     	displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
     	locMgr.removeUpdates(locListener);
     	if(thr!=null) thr.stop();
+    	super.onDestroy();
+    }
+    
+    @Override
+    public void onStart(Intent intent, int startId) {
+        // TODO Auto-generated method stub
+        super.onStart(intent, startId);
+
+        handler = new Handler(){
+
+            @Override
+            public void handleMessage(Message msg) {
+                // TODO Auto-generated method stub
+                super.handleMessage(msg);
+                if (currentBestLocation!=null) sendGPS(currentBestLocation);
+            }
+
+        };
+        thr = new Thread(new Runnable(){
+            public void run() {
+	            while(true)
+	            {
+	               try {
+		                Thread.sleep(update_time);
+		                handler.sendEmptyMessage(0);
+	
+		           } catch (InterruptedException e) {
+		                // TODO Auto-generated catch block
+		                e.printStackTrace();
+		           } 
+	
+	            }
+
+            }
+        });
+        thr.start();
+    }
+    
+    public IBinder onBind(Intent intent){
+    	return null;
     }
     
     public void sendGPS(Location location){
@@ -96,7 +136,7 @@ public class GetLocationService extends Service {
 			
 			BufferedReader in = null;
 			
-			String login = prefs.getString("login_option", ""); //TODO sprawdzic czy jest ustawione login i haslo
+			String login = prefs.getString("login_option", "");
 			String pass = prefs.getString("pass_option", "");
 			String textResult = "";
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -136,47 +176,7 @@ public class GetLocationService extends Service {
 				Toast.makeText(getBaseContext(),textResult,Toast.LENGTH_SHORT).show();
     }
     
-    @Override
-    public void onStart(Intent intent, int startId) {
-        // TODO Auto-generated method stub
-        super.onStart(intent, startId);
-
-        handler = new Handler(){
-
-            @Override
-            public void handleMessage(Message msg) {
-                // TODO Auto-generated method stub
-                super.handleMessage(msg);
-                if (currentBestLocation!=null) sendGPS(currentBestLocation);
-            }
-
-        };
-
-
-
-        thr = new Thread(new Runnable(){
-            public void run() {
-            // TODO Auto-generated method stub
-            while(true)
-            {
-               try {
-                Thread.sleep(update_time);
-                handler.sendEmptyMessage(0);
-
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } 
-
-            }
-
-                            }
-        });
-        thr.start();
-    }
-    public IBinder onBind(Intent intent){
-    	return null;
-    }
+    
     
     private void displayNotificationMessage(String message){
     	Notification notification = new Notification(R.drawable.ic_droidobserver,message,System.currentTimeMillis());
@@ -232,7 +232,7 @@ public class GetLocationService extends Service {
    }
 
    /** Checks whether two providers are the same */
-   private boolean isSameProvider(String provider1, String provider2) {
+   private boolean isSameProvider(String provider1, String provider2) { //TODO sprawdzanie po sieci GSM?
        if (provider1 == null) {
          return provider2 == null;
        }
