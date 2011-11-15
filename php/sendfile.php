@@ -15,9 +15,9 @@ if($_FILES['uploadedfile']&&$_REQUEST['login']&&$_REQUEST['pass'])
   {
 
 	$target_path  = "./upload/".$login;
-	mkdir($target_path, 0700);
+	mkdir($target_path, 0755);
 	$file_name= basename( $_FILES['uploadedfile']['name']);
-	$target_path = $target_path . $file_name;
+	$target_path = $target_path ."/". $file_name;
 	mysql_query("INSERT INTO `files` (login, filename) VALUES ('$login','$file_name');"); //$login!!!!!!!!
 
 	if(move_uploaded_file($_FILES['uploadedfile']['tmp_name'], $target_path)) {
