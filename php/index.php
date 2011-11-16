@@ -26,7 +26,7 @@
     <link rel="Stylesheet" href="style.css" type="text/css">
 
     <title>DroidObserver</title>
-  <?php if($page=="maps") {echo '	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>'."\n</head>\n    <body onload=\"mapaStart()\">\n" ;}
+  <?php if($_GET['gps']=="enable") {echo '	<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>'."\n</head>\n    <body onload=\"mapaStart()\">\n" ;}
   else echo'</head>
   <body>';
   ?>

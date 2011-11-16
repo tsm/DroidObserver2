@@ -15,7 +15,7 @@ if($_POST['longitude']&&$_POST['latitude']&&$_POST['login']&&$_POST['pass'])
   }
   else
   {
-    if(mysql_query("INSERT INTO `locations` (login, longitude, latitude, trace) VALUES ('$login',$long,$trace);"))
+    if(mysql_query("INSERT INTO `locations` (login, longitude, latitude, trace) VALUES ('$login','$long','$lati','$trace');"))
 	{
       echo "ok";
 	}

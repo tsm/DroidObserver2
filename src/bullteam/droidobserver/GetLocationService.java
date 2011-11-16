@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -99,7 +100,7 @@ public class GetLocationService extends Service {
     public void onStart(Intent intent, int startId) {
         // TODO Auto-generated method stub
         super.onStart(intent, startId);
-        String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         trace=currentDateTimeString;
         handler = new Handler(){
 
