@@ -46,14 +46,13 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-		Log.d(getLocalClassName(), "zrobilem holdery");
-
 		controlInflater = LayoutInflater.from(getBaseContext());
 		View viewControl = controlInflater
 				.inflate(R.layout.cameracontrol, null);
 		LayoutParams layoutParamsControl = new LayoutParams(
 				LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT);
 		this.addContentView(viewControl, layoutParamsControl);
+		Log.d(getLocalClassName(), "onCreate end");
 	}
 
 	private PictureCallback myPictureCallback_JPG = new PictureCallback() {
@@ -88,7 +87,14 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 	private AutoFocusCallback myAutoFocusCallback = new AutoFocusCallback() {
 
 		public void onAutoFocus(boolean success, Camera camera) {
-			camera.takePicture(null, null, myPictureCallback_JPG);
+			try {
+				camera.takePicture(null, null, myPictureCallback_JPG);
+			} catch (Exception e) {
+				Log.d(getLocalClassName(),
+						"B³¹d w onAutoFocus: " + e.getMessage());
+				surfaceDestroyed(surfaceHolder);
+				finish();
+			}
 		}
 	};
 
@@ -104,28 +110,36 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 					e.printStackTrace();
 				}
 				camera.autoFocus(myAutoFocusCallback);
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				Log.d(getLocalClassName(),
+						"B³¹d w surfacechanged: " + e.getMessage());
+				surfaceDestroyed(holder);
+				finish();
 			}
 		}
 	}
 
 	public void surfaceCreated(SurfaceHolder holder) {
-		camera = Camera.open();
-		if (camera != null) {
-			Camera.Parameters params = camera.getParameters();
-			params.setJpegQuality(70);
-			camera.setParameters(params);
+		try {
+			camera = Camera.open();
+			if (camera != null) {
+				Camera.Parameters params = camera.getParameters();
+				params.setJpegQuality(70);
+				camera.setParameters(params);
+			}
+		} catch (Exception e) {
+			Log.d(getLocalClassName(),
+					"B³¹d w surfaceCreated: " + e.getMessage());
+			surfaceDestroyed(holder);
+			finish();
 		}
 	}
 
 	public void surfaceDestroyed(SurfaceHolder holder) {
-
 		if (camera != null) {
 			camera.stopPreview();
 			camera.release();
 			camera = null;
-			// previewing = false;
 		} else {
 			Log.d(getLocalClassName(), "Powierzchnia juz usuniêta!");
 		}
