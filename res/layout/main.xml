@@ -5,13 +5,6 @@
     android:background="@drawable/android_doctor"
     android:gravity="bottom|center"
     android:orientation="vertical" >
-
-    <Button
-        android:id="@+id/get_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="getPhoto"
-        android:text="@string/get_photo_button" />
 
     <LinearLayout
         android:id="@+id/linearLayout1"
