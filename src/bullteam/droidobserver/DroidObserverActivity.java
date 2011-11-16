@@ -67,22 +67,26 @@ public class DroidObserverActivity extends Activity {
 
 	public void bindGPSLocation(View target) {
 		startActivity(new Intent(this, WizardActivity.class));
+		Log.d(getLocalClassName(), "bindGPS!");
 		startService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
 	}
 
 	public void unbindGPSLocation(View target) {
+		Log.d(getLocalClassName(), "unbindGPS!");
 		stopService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
 	}
 
-	public void bindEmail(View target) {
+	public void bindSMS(View target) {
 		startActivity(new Intent(this, WizardActivity.class));
+		Log.d(getLocalClassName(), "bindSMS!");
 		startService(new Intent(DroidObserverActivity.this,
 				ControllerService.class));
 	}
 
-	public void unbindEmail(View target) {
+	public void unbindSMS(View target) {
+		Log.d(getLocalClassName(), "unbindSMS!");
 		stopService(new Intent(DroidObserverActivity.this,
 				ControllerService.class));
 	}

@@ -5,7 +5,7 @@
     android:background="@drawable/android_doctor"
     android:gravity="bottom|center"
     android:orientation="vertical" >
-
+
     <Button
         android:id="@+id/emergencyButton"
         android:layout_width="130dp"
@@ -45,20 +45,20 @@
         android:gravity="center" >
 
         <Button
-            android:id="@+id/bindEmail"
+            android:id="@+id/bindSMS"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="bindEmail"
-            android:text="@string/bind_email_button" />
+            android:onClick="bindSMS"
+            android:text="@string/bind_controller_button" />
 
         <Button
-            android:id="@+id/unbindEmail"
+            android:id="@+id/unbindSMS"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="unbindEmail"
-            android:text="@string/unbind_email_button" />
+            android:onClick="unbindSMS"
+            android:text="@string/unbind_controller_button" />
     </LinearLayout>
 
     <TextView
