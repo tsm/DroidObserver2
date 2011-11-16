@@ -8,8 +8,6 @@
     <string name="bind_gps_button">Pobieraj GPS</string>
     <string name="unbind_gps_button">Idź spać GPS</string>
     <string name="emergency_button">Telefon alarmowy</string>
-    <string name="bind_controller_button">Monitoruj żądania</string>
-    <string name="unbind_controller_button">Olej spam</string>
     
     <!--  wizard -->
     <string name="default_server_address">http://student.agh.edu.pl/~tsm/droidobserver/</string>
@@ -64,7 +62,7 @@
     <!-- Menu -->
     <string name="menu_prefs_title">Ustawienia</string>
     <string name="menu_quit_title">Wyjście</string>
-    <string name="menu_takephoto_title">Zrob i wyślij zdjęcie</string>
+    <string name="menu_takephoto_title">Zrób i wyślij zdjęcie</string>
     
     <!--  notification  -->
     <item type="id" name="app_notification_id" />

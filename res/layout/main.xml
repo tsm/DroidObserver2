@@ -38,29 +38,6 @@
             android:text="@string/unbind_gps_button" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/bindSMS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="bindSMS"
-            android:text="@string/bind_controller_button" />
-
-        <Button
-            android:id="@+id/unbindSMS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="unbindSMS"
-            android:text="@string/unbind_controller_button" />
-    </LinearLayout>
-
     <TextView
         android:id="@+id/text1"
         android:layout_width="fill_parent"

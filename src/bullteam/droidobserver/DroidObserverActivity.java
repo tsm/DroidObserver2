@@ -19,12 +19,15 @@ public class DroidObserverActivity extends Activity {
 		Log.d(getLocalClassName(), "uruchamianie aplikacji");
 		setContentView(R.layout.main);
 		startActivity(new Intent(this, WizardActivity.class));
+		startService(new Intent(DroidObserverActivity.this, ControllerService.class));
 	}
 
 	@Override
 	protected void onDestroy() {
 		stopService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
+		stopService(new Intent(DroidObserverActivity.this,
+				ControllerService.class));
 		super.onDestroy();
 		System.runFinalizersOnExit(true);
 		android.os.Process.killProcess(android.os.Process.myPid());
@@ -74,19 +77,6 @@ public class DroidObserverActivity extends Activity {
 		Log.d(getLocalClassName(), "unbindGPS!");
 		stopService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
-	}
-
-	public void bindSMS(View target) {
-		startActivity(new Intent(this, WizardActivity.class));
-		Log.d(getLocalClassName(), "bindSMS!");
-		startService(new Intent(DroidObserverActivity.this,
-				ControllerService.class));
-	}
-
-	public void unbindSMS(View target) {
-		Log.d(getLocalClassName(), "unbindSMS!");
-		stopService(new Intent(DroidObserverActivity.this,
-				ControllerService.class));
 	}
 
 	public void emergencyCall(View target) {
