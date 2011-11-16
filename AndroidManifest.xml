@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
 
-        <service android:name="EmailService" />
+        <service android:name=".ControllerService" />
         <service android:name="GetLocationService" />
 
         <activity

@@ -36,7 +36,7 @@
 		print "<table>\n";
 		while($rekord=mysql_fetch_array($wynik))
 		{
-		  print "<tr><td>$rekord[0]</td><td>$rekord[2]</td><td><img src=\"upload/$rekord[1]\" width=\"640\"></td></tr>";
+		  print "<tr><td>$rekord[0]</td><td>$rekord[2]</td><td><img src=\"upload/$rekord[0]/$rekord[1]\" width=\"640\"></td></tr>";
 		}
 		print "</table>\n";
 	

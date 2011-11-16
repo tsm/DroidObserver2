@@ -49,14 +49,15 @@ public class GetLocationService extends Service {
     @Override
     public void onCreate() {
 		super.onCreate();
+		Log.d("GetLocationService","start");
 		notificationMgr =(NotificationManager)getSystemService(NOTIFICATION_SERVICE);
 		displayNotificationMessage("uruchamianie us³ugi wysy³aj¹cej sygna³ GPS");
 		
-		SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
+		SharedPreferences prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);		
 		String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
-		update_time = Long.getLong(prefs.getString(this.getResources().getString(R.string.updateTimeOption), "30"))*1000;
+		update_time = Long.parseLong(prefs.getString("update_time_option", "30"))*1000;
 		post = new HttpPost(serverAddress+"sendgps.php");
-		Log.d("serveradress",serverAddress+"sendgps.php");
+		Log.d("GetLocationService",serverAddress+"sendgps.php");
 		locMgr= (LocationManager)this.getSystemService(Context.LOCATION_SERVICE);
 		locListener = new LocationListener()
 		{
@@ -88,7 +89,6 @@ public class GetLocationService extends Service {
     public void onDestroy(){    	
     	displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
     	locMgr.removeUpdates(locListener);
-    	if(thr!=null) thr.stop();
     	super.onDestroy();
     }
     
