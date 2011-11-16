@@ -22,35 +22,37 @@ public final class R {
         public static final int redbutton_shape=0x7f020004;
     }
     public static final class id {
-        /**   notification  
+        /**  notification 
          */
         public static final int app_notification_id=0x7f070000;
-        public static final int bindGPS=0x7f070006;
-        public static final int bindSMS=0x7f070009;
+        public static final int bindGPS=0x7f070007;
+        public static final int bindSMS=0x7f07000a;
         public static final int button_capture=0x7f070002;
-        public static final int button_default=0x7f07000e;
-        public static final int button_preference=0x7f07000f;
+        public static final int button_default=0x7f07000f;
+        public static final int button_preference=0x7f070010;
         public static final int camera_preview=0x7f070001;
         public static final int camerapreview=0x7f070003;
-        public static final int emergencyButton=0x7f070004;
-        public static final int linearLayout1=0x7f070005;
-        public static final int linearLayout2=0x7f070008;
-        public static final int menu_group1=0x7f070010;
-        public static final int menu_prefs=0x7f070011;
-        public static final int menu_quit=0x7f070012;
-        public static final int menu_takephoto=0x7f070013;
-        public static final int text1=0x7f07000b;
-        public static final int tv_wrong_preferences=0x7f07000d;
-        public static final int tv_wrong_preferences_title=0x7f07000c;
-        public static final int unbindGPS=0x7f070007;
-        public static final int unbindSMS=0x7f07000a;
+        public static final int dialog=0x7f070004;
+        public static final int emergencyButton=0x7f070005;
+        public static final int linearLayout1=0x7f070006;
+        public static final int linearLayout2=0x7f070009;
+        public static final int menu_group1=0x7f070011;
+        public static final int menu_prefs=0x7f070012;
+        public static final int menu_quit=0x7f070013;
+        public static final int menu_takephoto=0x7f070014;
+        public static final int text1=0x7f07000c;
+        public static final int tv_wrong_preferences=0x7f07000e;
+        public static final int tv_wrong_preferences_title=0x7f07000d;
+        public static final int unbindGPS=0x7f070008;
+        public static final int unbindSMS=0x7f07000b;
     }
     public static final class layout {
         public static final int camera_layout=0x7f030000;
         public static final int cameracontrol=0x7f030001;
         public static final int camerapreview=0x7f030002;
-        public static final int main=0x7f030003;
-        public static final int wizard=0x7f030004;
+        public static final int dialog=0x7f030003;
+        public static final int main=0x7f030004;
+        public static final int wizard=0x7f030005;
     }
     public static final class menu {
         public static final int mainmenu=0x7f080000;
@@ -62,9 +64,12 @@ public final class R {
         public static final int con_cat=0x7f060011;
         public static final int con_cat_summary=0x7f060012;
         public static final int default_button=0x7f06000d;
-        /**   wizard 
+        /**  wizard 
          */
         public static final int default_server_address=0x7f060007;
+        /**  dialogi 
+         */
+        public static final int dialog_activity_text=0x7f060032;
         public static final int emergency_button=0x7f060004;
         public static final int error_login_empty=0x7f06000a;
         public static final int error_pass_empty=0x7f06000b;

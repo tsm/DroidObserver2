@@ -2,8 +2,10 @@ package bullteam.droidobserver;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -50,9 +52,9 @@ public class DroidObserverActivity extends Activity {
 			if (isconnected()) {
 				startActivity(new Intent(this, SendFileActivity.class));
 			} else {
-				// TODO nie dzia³a toast w menu???
-				// Toast.makeText(getBaseContext(),
-				// "Brak po³¹czenia z internetem", Toast.LENGTH_LONG);
+				startActivity(new Intent(this, DialogActivity.class)
+						.putExtra("text",
+								"Nie mo¿na wys³aæ zdjêcia, ze wzglêdu na brak po³¹czenia z internetem!"));
 			}
 		}
 		return true;
@@ -90,7 +92,16 @@ public class DroidObserverActivity extends Activity {
 	}
 
 	public void emergencyCall(View target) {
-		Log.d(getLocalClassName(), "Emergency Call!");
+		SharedPreferences prefs = getSharedPreferences(
+				"bullteam.droidobserver_preferences", 0);
+		String telephoneNumber = prefs.getString(
+				this.getResources().getString(R.string.telelphoneNumberOption),
+				"");
+
+		Intent intent = new Intent(Intent.ACTION_CALL);
+		intent.setData(Uri.parse("tel:" + telephoneNumber));
+		Log.d(getLocalClassName(), "Telefon alarmowy do: " + telephoneNumber);
+		startActivity(intent);
 	}
 
 	public boolean isconnected() {

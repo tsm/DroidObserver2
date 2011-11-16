@@ -1,71 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">DroidObserver</string>
-    
-    
-    <string name="get_photo_button">Cyknij fotę</string>
-    <string name="bind_gps_button">Pobieraj GPS</string>
-    <string name="unbind_gps_button">Idź spać GPS</string>
-    <string name="emergency_button">Telefon alarmowy</string>
-    <string name="bind_controller_button">Monitoruj żądania</string>
-    <string name="unbind_controller_button">Olej spam</string>
-    
-    <!--  wizard -->
-    <string name="default_server_address">http://student.agh.edu.pl/~tsm/droidobserver/</string>
-    <string name="wrong_preferences_title">Wykryto niepoprawne ustawienia:</string>
-    <string name="error_server_address_empty">pusty adres serwera</string>
-    <string name="error_login_empty">pusty login</string>
-    <string name="error_pass_empty">puste hasło</string>
-    <string name="error_telephoneNumber_empty">pusty telefon alarmowy</string>
-    <string name="default_button">Ustaw serwer domyślny</string>
-    <string name="preference_button">Przejdź do ustawień</string>
-    
-    <!-- Preferencje -->
-    <string name="prefTitle">Preferencje</string>
-    <string name="prefSummary">Pozwala ustawić preferencje dotyczące działania aplikacji, np login.</string>
-    <string name="con_cat">Połączenie</string>
-    <string name="con_cat_summary">Ustawienia połączeń</string>
-    <string name="gps_cat">GPS</string>
-    <string name="gps_cat_summary">Ustawienia GPS</string> 
-    <string name="photo_cat">Zdjęcia</string>
-    <string name="photo_cat_summary">Ustawienia zdjęć</string>  
-      
-    <string name="serverAddressTitle">Adres serwera</string>
-    <string name="serverAddressSummary">Niezbędny do nawiązania połączenia</string>
-    <string name="serverAddressOption">server_address_option</string>
-    <string name="serverAddressDialog">Wprowadź URL</string>
-    
-    <string name="loginTitle">Login</string>
-    <string name="loginSummary">Unikalny login pacjenta</string>
-    <string name="loginOption">login_option</string>
-    <string name="loginDialog">Wprowadź login</string>
-    
-    <string name="passTitle">Hasło</string>
-    <string name="passSummary">Używane do logowania na serwerze</string>
-    <string name="passOption">pass_option</string>
-    <string name="passDialog">Wprowadź hasło</string>
-    
-    <string name="telelphoneNumberTitle">Telefon alarmowy</string>
-    <string name="telelphoneNumberSummary">Używany do połączeń alarmowych</string>
-    <string name="telelphoneNumberOption">telephoneNumber_option</string>
-    <string name="telelphoneNumberDialog">Wprowadź numer telefonu</string>
-    
-    <string name="updateTimeTitle">Częstotliwość odświeżania</string>
-    <string name="updateTimeSummary">w sekundach</string>
-    <string name="updateTimeOption">update_time_option</string>
-    <string name="updateTimeDialog">Co ile sekund wysyłać współrzędne?</string>
-    
-    <string name="resolutionTitle">Rozdzielczość aparatu</string>
-    <string name="resolutionSummary">Rozdzielczość w jakiej przesyłane będą zdjęcia</string>
-    <string name="resolutionOption">resolution_option</string>
-    <string name="resolution_defaultValue">0</string>
-    
-    <!-- Menu -->
-    <string name="menu_prefs_title">Ustawienia</string>
-    <string name="menu_quit_title">Wyjście</string>
-    <string name="menu_takephoto_title">Zrob i wyślij zdjęcie</string>
-    
-    <!--  notification  -->
-    <item type="id" name="app_notification_id" />
+	<string name="app_name">DroidObserver</string>
+
+
+	<string name="get_photo_button">Cyknij fotę</string>
+	<string name="bind_gps_button">Pobieraj GPS</string>
+	<string name="unbind_gps_button">Idź spać GPS</string>
+	<string name="emergency_button">Telefon alarmowy</string>
+	<string name="bind_controller_button">Monitoruj żądania</string>
+	<string name="unbind_controller_button">Olej spam</string>
+
+	<!-- wizard -->
+	<string name="default_server_address">http://student.agh.edu.pl/~tsm/droidobserver/
+	</string>
+	<string name="wrong_preferences_title">Wykryto niepoprawne ustawienia:</string>
+	<string name="error_server_address_empty">pusty adres serwera</string>
+	<string name="error_login_empty">pusty login</string>
+	<string name="error_pass_empty">puste hasło</string>
+	<string name="error_telephoneNumber_empty">pusty telefon alarmowy</string>
+	<string name="default_button">Ustaw serwer domyślny</string>
+	<string name="preference_button">Przejdź do ustawień</string>
+
+	<!-- Preferencje -->
+	<string name="prefTitle">Preferencje</string>
+	<string name="prefSummary">Pozwala ustawić preferencje dotyczące działania
+		aplikacji, np login.</string>
+	<string name="con_cat">Połączenie</string>
+	<string name="con_cat_summary">Ustawienia połączeń</string>
+	<string name="gps_cat">GPS</string>
+	<string name="gps_cat_summary">Ustawienia GPS</string>
+	<string name="photo_cat">Zdjęcia</string>
+	<string name="photo_cat_summary">Ustawienia zdjęć</string>
+
+	<string name="serverAddressTitle">Adres serwera</string>
+	<string name="serverAddressSummary">Niezbędny do nawiązania połączenia</string>
+	<string name="serverAddressOption">server_address_option</string>
+	<string name="serverAddressDialog">Wprowadź URL</string>
+
+	<string name="loginTitle">Login</string>
+	<string name="loginSummary">Unikalny login pacjenta</string>
+	<string name="loginOption">login_option</string>
+	<string name="loginDialog">Wprowadź login</string>
+
+	<string name="passTitle">Hasło</string>
+	<string name="passSummary">Używane do logowania na serwerze</string>
+	<string name="passOption">pass_option</string>
+	<string name="passDialog">Wprowadź hasło</string>
+
+	<string name="telelphoneNumberTitle">Telefon alarmowy</string>
+	<string name="telelphoneNumberSummary">Używany do połączeń alarmowych</string>
+	<string name="telelphoneNumberOption">telephoneNumber_option</string>
+	<string name="telelphoneNumberDialog">Wprowadź numer telefonu</string>
+
+	<string name="updateTimeTitle">Częstotliwość odświeżania</string>
+	<string name="updateTimeSummary">w sekundach</string>
+	<string name="updateTimeOption">update_time_option</string>
+	<string name="updateTimeDialog">Co ile sekund wysyłać współrzędne?</string>
+
+	<string name="resolutionTitle">Rozdzielczość aparatu</string>
+	<string name="resolutionSummary">Rozdzielczość w jakiej przesyłane będą zdjęcia
+	</string>
+	<string name="resolutionOption">resolution_option</string>
+	<string name="resolution_defaultValue">0</string>
+
+	<!-- Menu -->
+	<string name="menu_prefs_title">Ustawienia</string>
+	<string name="menu_quit_title">Wyjście</string>
+	<string name="menu_takephoto_title">Zrob i wyślij zdjęcie</string>
+
+	<!-- notification -->
+	<item type="id" name="app_notification_id" />
+
+	<!-- dialogi -->
+	<string name="dialog_activity_text">Dialog</string>
+
 </resources>
