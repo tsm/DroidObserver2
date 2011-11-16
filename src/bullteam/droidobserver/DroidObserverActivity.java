@@ -10,10 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class DroidObserverActivity extends Activity {
-	private static final String TAG = "DroidObserverActivity";
 
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
@@ -91,9 +89,10 @@ public class DroidObserverActivity extends Activity {
 				ControllerService.class));
 	}
 
-	public void emergencyCall(View target){
+	public void emergencyCall(View target) {
 		Log.d(getLocalClassName(), "Emergency Call!");
 	}
+
 	public boolean isconnected() {
 		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		if (cm != null) {

@@ -4,16 +4,13 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
-import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
-import android.hardware.Camera.Size;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -66,7 +63,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 			File pictureFile = SendFileActivity.getOutputMediaFile();
 			try {
 				if (pictureFile == null) {
-					Log.d(getLocalClassName(), "Wyst¹pi³ b³¹d podczas tworzenia pliku!");
+					Log.d(getLocalClassName(),
+							"Wyst¹pi³ b³¹d podczas tworzenia pliku!");
 					return;
 				}
 
@@ -75,7 +73,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 				fos.close();
 				setResult(RESULT_OK, getIntent());
 			} catch (FileNotFoundException e) {
-				Log.d(getLocalClassName(), "Nie znaleziono pliku: " + e.getMessage());
+				Log.d(getLocalClassName(),
+						"Nie znaleziono pliku: " + e.getMessage());
 				return;
 			} catch (IOException e) {
 				Log.d(tag, "B³¹d IO: " + e.getMessage());
