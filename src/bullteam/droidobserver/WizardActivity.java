@@ -15,6 +15,7 @@ public class WizardActivity extends Activity{
 	    private String serverAddress;
 	    private String login;
 	    private String pass;
+	    private String telephoneNumber;
 	    private String update_time;
 	
 		@Override
@@ -25,6 +26,7 @@ public class WizardActivity extends Activity{
 			serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
 			login = prefs.getString(this.getResources().getString(R.string.loginOption), "");
 			pass = prefs.getString(this.getResources().getString(R.string.passOption), "");
+			telephoneNumber = prefs.getString(this.getResources().getString(R.string.telelphoneNumberOption), "");
 			update_time= prefs.getString(this.getResources().getString(R.string.updateTimeOption),"");
 			if(update_time.length()==0) prefs.edit().putString(this.getResources().getString(R.string.updateTimeOption), "30").commit();
 			if(serverAddress.length()!=0){
@@ -38,7 +40,7 @@ public class WizardActivity extends Activity{
 				}
 			}
 			
-			if((serverAddress.length()==0)||(login.length()==0)||(pass.length()==0)){
+			if((serverAddress.length()==0)||(login.length()==0)||(pass.length()==0)||(telephoneNumber.length()==0)){
 				setContentView(R.layout.wizard); 
 				refreshView();
 			}
@@ -49,6 +51,7 @@ public class WizardActivity extends Activity{
 			serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
 			login = prefs.getString(this.getResources().getString(R.string.loginOption), "");
 			pass = prefs.getString(this.getResources().getString(R.string.passOption), "");
+			telephoneNumber = prefs.getString(this.getResources().getString(R.string.telelphoneNumberOption), "");
 			if(serverAddress.equalsIgnoreCase(this.getResources().getString(R.string.default_server_address))){
 		          Button but =(Button)this.findViewById(R.id.button_default);
 		          but.setVisibility(View.GONE);
@@ -57,6 +60,7 @@ public class WizardActivity extends Activity{
 			if(serverAddress.length()==0) wrong = wrong+this.getResources().getString(R.string.error_server_address_empty)+"\n";
 			if(login.length()==0) wrong = wrong+this.getResources().getString(R.string.error_login_empty)+"\n";
 			if(pass.length()==0) wrong = wrong+this.getResources().getString(R.string.error_pass_empty)+"\n";
+			if(telephoneNumber.length()==0) wrong = wrong+this.getResources().getString(R.string.error_telephoneNumber_empty)+"\n";
 			TextView tv= (TextView) this.findViewById(R.id.tv_wrong_preferences);
 			if(wrong.equalsIgnoreCase("")) finish();
 			tv.setText(wrong);			

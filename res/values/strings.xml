@@ -16,6 +16,7 @@
     <string name="error_server_address_empty">pusty adres serwera</string>
     <string name="error_login_empty">pusty login</string>
     <string name="error_pass_empty">puste hasło</string>
+    <string name="error_telephoneNumber_empty">pusty telefon alarmowy</string>
     <string name="default_button">Ustaw serwer domyślny</string>
     <string name="preference_button">Przejdź do ustawień</string>
     
@@ -44,6 +45,11 @@
     <string name="passOption">pass_option</string>
     <string name="passDialog">Wprowadź hasło</string>
     
+    <string name="telelphoneNumberTitle">Telefon alarmowy</string>
+    <string name="telelphoneNumberSummary">Używany do połączeń alarmowych</string>
+    <string name="telelphoneNumberOption">telephoneNumber_option</string>
+    <string name="telelphoneNumberDialog">Wprowadź numer telefonu</string>
+    
     <string name="updateTimeTitle">Częstotliwość odświeżania</string>
     <string name="updateTimeSummary">w sekundach</string>
     <string name="updateTimeOption">update_time_option</string>
@@ -57,6 +63,7 @@
     <!-- Menu -->
     <string name="menu_prefs_title">Ustawienia</string>
     <string name="menu_quit_title">Wyjście</string>
+    <string name="menu_takephoto_title">Zrob i wyślij zdjęcie</string>
     
     <!--  notification  -->
     <item type="id" name="app_notification_id" />

@@ -28,6 +28,13 @@
 	  android:dialogTitle="@string/passDialog"
 	  android:inputType="textPassword"
 	/>
+	<EditTextPreference
+	  android:key="@string/telelphoneNumberOption"
+	  android:title="@string/telelphoneNumberTitle"
+	  android:summary="@string/telelphoneNumberSummary"
+	  android:dialogTitle="@string/telelphoneNumberDialog"
+	  android:inputType="number"
+	/>
  </PreferenceCategory>
  <PreferenceCategory
     xmlns:android="http://schemas.android.com/apk/res/android"

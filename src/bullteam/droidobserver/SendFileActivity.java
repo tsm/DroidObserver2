@@ -98,6 +98,10 @@ public class SendFileActivity extends Activity {
 				Log.d(tag, "Nieznany B³¹d: plik pusty?");
 			}
 
+		} else if (requestCode == 0 && resultCode == 3) {
+			Toast.makeText(this, "Brak po³¹czennia z sieci¹!",
+					Toast.LENGTH_LONG).show();
+			Log.d(tag, "Brak po³¹czenia z sieci¹!");
 		} else {
 			Toast.makeText(this, "Wystapil blad w aktywnosci",
 					Toast.LENGTH_LONG).show();

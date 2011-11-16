@@ -22,7 +22,8 @@ public class DroidObserverActivity extends Activity {
 
 	@Override
 	protected void onDestroy() {
-		stopService(new Intent(DroidObserverActivity.this,GetLocationService.class));
+		stopService(new Intent(DroidObserverActivity.this,
+				GetLocationService.class));
 		super.onDestroy();
 		System.runFinalizersOnExit(true);
 		android.os.Process.killProcess(android.os.Process.myPid());
@@ -44,6 +45,8 @@ public class DroidObserverActivity extends Activity {
 		} else if (item.getItemId() == R.id.menu_quit) {
 			Log.d("DroidObserver", "Killuje - DroidObserver");
 			onDestroy();
+		} else if (item.getItemId() == R.id.menu_takephoto) {
+			startActivity(new Intent(this, SendFileActivity.class));
 		}
 		return true;
 	}
@@ -54,7 +57,7 @@ public class DroidObserverActivity extends Activity {
 	}
 
 	public void getPhoto(View target) {
-		startActivity(new Intent(this, SendFileActivity.class));
+
 	}
 
 	public void bindGPSLocation(View target) {
@@ -67,6 +70,7 @@ public class DroidObserverActivity extends Activity {
 		stopService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
 	}
+
 	public void bindEmail(View target) {
 		startActivity(new Intent(this, WizardActivity.class));
 		startService(new Intent(DroidObserverActivity.this,
