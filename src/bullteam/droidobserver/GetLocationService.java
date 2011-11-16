@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
@@ -40,6 +42,7 @@ public class GetLocationService extends Service {
 	private Location currentBestLocation=null;
 	private Thread thr;
 	private Handler handler;
+	private String trace;
 	
 	private long update_time = 1000 * 30 * 1;
 	
@@ -96,7 +99,8 @@ public class GetLocationService extends Service {
     public void onStart(Intent intent, int startId) {
         // TODO Auto-generated method stub
         super.onStart(intent, startId);
-
+        String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
+        trace=currentDateTimeString;
         handler = new Handler(){
 
             @Override
@@ -144,6 +148,7 @@ public class GetLocationService extends Service {
 			pairs.add(new BasicNameValuePair("pass", pass));
 			pairs.add(new BasicNameValuePair("latitude", Double.toString(location.getLatitude())));
 			pairs.add(new BasicNameValuePair("longitude", Double.toString(location.getLongitude())));
+			pairs.add(new BasicNameValuePair("trace", trace));
 			Toast.makeText(getBaseContext(), "Nowa lokalizacja: szerokœæ [" + location.getLatitude()+"] d³ugoœæ [" +location.getLongitude()+"]",Toast.LENGTH_SHORT).show();
 			try {
 				post.setEntity(new UrlEncodedFormEntity(pairs));

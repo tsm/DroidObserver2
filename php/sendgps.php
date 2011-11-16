@@ -8,13 +8,14 @@ if($_POST['longitude']&&$_POST['latitude']&&$_POST['login']&&$_POST['pass'])
   $lati=$_POST['latitude'];
   $login=$_POST['login'];
   $pass=$_POST['pass'];
+  $trace=$_POST['trace'];
   if (!checkLogin($_POST['login'],$_POST['pass']))
   {
 	print "B³¹d! Login albo has³o niepoprawne! \n";
   }
   else
   {
-    if(mysql_query("INSERT INTO `locations` (login, longitude, latitude) VALUES ('$login',$long,$lati);"))
+    if(mysql_query("INSERT INTO `locations` (login, longitude, latitude, trace) VALUES ('$login',$long,$trace);"))
 	{
       echo "ok";
 	}

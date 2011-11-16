@@ -3,13 +3,9 @@
 
 	<string name="app_name">DroidObserver</string>
 
-
-	<string name="get_photo_button">Cyknij fotę</string>
 	<string name="bind_gps_button">Pobieraj GPS</string>
-	<string name="unbind_gps_button">Idź spać GPS</string>
+	<string name="unbind_gps_button">Wyłącz GPS</string>
 	<string name="emergency_button">Telefon alarmowy</string>
-	<string name="bind_controller_button">Monitoruj żądania</string>
-	<string name="unbind_controller_button">Olej spam</string>
 
 	<!-- wizard -->
 	<string name="default_server_address">http://student.agh.edu.pl/~tsm/droidobserver/
@@ -25,7 +21,8 @@
 	<!-- Preferencje -->
 	<string name="prefTitle">Preferencje</string>
 	<string name="prefSummary">Pozwala ustawić preferencje dotyczące działania
-		aplikacji, np login.</string>
+		aplikacji, np login.
+	</string>
 	<string name="con_cat">Połączenie</string>
 	<string name="con_cat_summary">Ustawienia połączeń</string>
 	<string name="gps_cat">GPS</string>

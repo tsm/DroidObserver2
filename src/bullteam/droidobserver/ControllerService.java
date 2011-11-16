@@ -87,7 +87,7 @@ public class ControllerService extends Service {
 
             }
         });
-        thr.start();
+        //thr.start(); na razie nie potrzebujemy cyklicznego nas³uchiwacza
     }
     
 	@Override

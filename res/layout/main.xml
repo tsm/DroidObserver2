@@ -5,11 +5,12 @@
     android:background="@drawable/android_doctor"
     android:gravity="bottom|center"
     android:orientation="vertical" >
-
+
     <Button
         android:id="@+id/emergencyButton"
         android:layout_width="130dp"
         android:layout_height="130dp"
+        android:layout_marginBottom="35dp"
         android:background="@drawable/redbutton_shape"
         android:onClick="emergencyCall"
         android:text="@string/emergency_button"
@@ -37,29 +38,6 @@
             android:layout_weight="1"
             android:onClick="unbindGPSLocation"
             android:text="@string/unbind_gps_button" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/bindSMS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="bindSMS"
-            android:text="@string/bind_controller_button" />
-
-        <Button
-            android:id="@+id/unbindSMS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="unbindSMS"
-            android:text="@string/unbind_controller_button" />
     </LinearLayout>
 
     <TextView
