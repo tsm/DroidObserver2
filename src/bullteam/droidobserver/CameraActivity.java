@@ -6,10 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
 import android.util.Log;
@@ -29,7 +29,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 	private LayoutInflater controlInflater = null;
 	private static String tag = "Kamera";
 
-	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -57,7 +56,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 		this.addContentView(viewControl, layoutParamsControl);
 	}
 
-	PictureCallback myPictureCallback_JPG = new PictureCallback() {
+	private PictureCallback myPictureCallback_JPG = new PictureCallback() {
 
 		public void onPictureTaken(byte[] data, Camera camera) {
 			File pictureFile = SendFileActivity.getOutputMediaFile();
@@ -86,6 +85,13 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 		}
 	};
 
+	private AutoFocusCallback myAutoFocusCallback = new AutoFocusCallback() {
+
+		public void onAutoFocus(boolean success, Camera camera) {
+			camera.takePicture(null, null, myPictureCallback_JPG);
+		}
+	};
+
 	public void surfaceChanged(SurfaceHolder holder, int format, int width,
 			int height) {
 		if (camera != null) {
@@ -97,8 +103,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				camera.takePicture(null, null, myPictureCallback_JPG);
-				// previewing = true;
+				camera.autoFocus(myAutoFocusCallback);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -109,32 +114,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 		camera = Camera.open();
 		if (camera != null) {
 			Camera.Parameters params = camera.getParameters();
-
-			SharedPreferences prefs = getSharedPreferences(
-					"bullteam.droidobserver_preferences", 0);
-			String resolutionIndex = prefs.getString(this.getResources()
-					.getString(R.string.resolutionOption), this.getResources()
-					.getString(R.string.resolution_defaultValue));
-
-			String[] options = this.getResources().getStringArray(
-					R.array.resolution_entries);
-			String resolution = options[Integer.parseInt(resolutionIndex)];
-
-			Log.d(getLocalClassName(), "resolution=" + resolution);
-			String w = resolution.substring(0, resolution.indexOf("x"));
-			String h = resolution.substring(resolution.indexOf("x") + 1,
-					resolution.length());
-			params.setPictureSize(Integer.parseInt(w), Integer.parseInt(h));
-
-			// List<Size> sizes = params.getSupportedPictureSizes();
-			// // See which sizes the camera supports and choose one of those
-			// for (Size s : sizes) {
-			// Log.d(tag, s.height + "x" + s.width);
-			// }
-			// Size mSize = sizes.get(0);
-			// params.setPictureSize(mSize.width, mSize.height);
-
-			// Ustawienie kompresji i rozdzielczoœci aparatu
 			params.setJpegQuality(70);
 			camera.setParameters(params);
 		}

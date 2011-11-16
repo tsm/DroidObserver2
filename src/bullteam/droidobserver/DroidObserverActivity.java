@@ -21,7 +21,8 @@ public class DroidObserverActivity extends Activity {
 		Log.d(getLocalClassName(), "uruchamianie aplikacji");
 		setContentView(R.layout.main);
 		startActivity(new Intent(this, WizardActivity.class));
-		startService(new Intent(DroidObserverActivity.this, ControllerService.class));
+		startService(new Intent(DroidObserverActivity.this,
+				ControllerService.class));
 	}
 
 	@Override

@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 public class SendFileActivity extends Activity {
 	private static File plik = null;
-	private static String tag = "Kamera";
+	private static String tag = "SendFileActivity";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +43,6 @@ public class SendFileActivity extends Activity {
 	public void captureImage() {
 		Log.d(tag, "Rozpoczynam aktywnoœæ");
 		startActivityForResult(new Intent(this, CameraActivity.class), 0);
-
-		// Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		// plik = getOutputMediaFile();
-		// Uri fileUri = Uri.fromFile(plik); // create a file to save the image
-		// intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri); // set the image
-		// file
-		// startActivityForResult(intent, 0);
 	}
 
 	/**
@@ -89,7 +82,7 @@ public class SendFileActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
 			if (plik != null) {
-				Toast.makeText(this, "Image saved to:\n" + plik.getPath(),
+				Toast.makeText(this, "Zdjêcie wykonano pomyœlnie!",
 						Toast.LENGTH_LONG).show();
 
 				Log.d(tag, "Zdjêcie zosta³o zrobione!");
@@ -97,11 +90,6 @@ public class SendFileActivity extends Activity {
 			} else {
 				Log.d(tag, "Nieznany B³¹d: plik pusty?");
 			}
-
-		} else if (requestCode == 0 && resultCode == 3) {
-			Toast.makeText(this, "Brak po³¹czennia z sieci¹!",
-					Toast.LENGTH_LONG).show();
-			Log.d(tag, "Brak po³¹czenia z sieci¹!");
 		} else {
 			Toast.makeText(this, "Wystapil blad w aktywnosci",
 					Toast.LENGTH_LONG).show();
