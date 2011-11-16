@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="bindEmail"
-            android:text="@string/bind_email_button" />
+            android:text="@string/bind_controller_button" />
 
         <Button
             android:id="@+id/unbindEmail"
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:onClick="unbindEmail"
-            android:text="@string/unbind_email_button" />
+            android:text="@string/unbind_controller_button" />
     </LinearLayout>
 
     <TextView

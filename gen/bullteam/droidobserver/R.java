@@ -52,7 +52,7 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f060000;
-        public static final int bind_email_button=0x7f060004;
+        public static final int bind_controller_button=0x7f060004;
         public static final int bind_gps_button=0x7f060002;
         public static final int con_cat=0x7f06000f;
         public static final int con_cat_summary=0x7f060010;
@@ -93,7 +93,7 @@ public final class R {
         public static final int serverAddressOption=0x7f060017;
         public static final int serverAddressSummary=0x7f060016;
         public static final int serverAddressTitle=0x7f060015;
-        public static final int unbind_email_button=0x7f060005;
+        public static final int unbind_controller_button=0x7f060005;
         public static final int unbind_gps_button=0x7f060003;
         public static final int updateTimeDialog=0x7f060024;
         public static final int updateTimeOption=0x7f060023;
