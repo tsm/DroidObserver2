@@ -9,6 +9,7 @@
     <string name="unbind_gps_button">Idź spać GPS</string>
     <string name="bind_email_button">Monitoruj email</string>
     <string name="unbind_email_button">Zatrzymaj spam</string>
+    <string name="emergency_button">Telefon alarmowy</string>
     
     <!--  wizard -->
     <string name="default_server_address">http://student.agh.edu.pl/~tsm/droidobserver/</string>

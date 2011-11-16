@@ -41,7 +41,7 @@ public class ControllerService extends Service {
             @Override
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
-                Log.d("ContrallerService","Sprawdzam e-maile");
+                Log.d("ContrellerService","Sprawdzam e-maile");
             }
 
         };

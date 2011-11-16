@@ -20,7 +20,7 @@ public class WizardActivity extends Activity{
 	
 		@Override
 		protected void onCreate(Bundle savedInstanceState) {
-			Log.d("WizardActivity","start");
+			Log.d(this.getLocalClassName(),"start");
 			super.onCreate(savedInstanceState);
 			prefs=getSharedPreferences("bullteam.droidobserver_preferences",0);
 			serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");

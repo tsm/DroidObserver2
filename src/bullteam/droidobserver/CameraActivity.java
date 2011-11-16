@@ -50,7 +50,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 		surfaceHolder.addCallback(this);
 		surfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-		Log.d(tag, "zrobilem holdery");
+		Log.d(getLocalClassName(), "zrobilem holdery");
 
 		controlInflater = LayoutInflater.from(getBaseContext());
 		View viewControl = controlInflater
@@ -66,7 +66,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 			File pictureFile = SendFileActivity.getOutputMediaFile();
 			try {
 				if (pictureFile == null) {
-					Log.d(tag, "Wyst¹pi³ b³¹d podczas tworzenia pliku!");
+					Log.d(getLocalClassName(), "Wyst¹pi³ b³¹d podczas tworzenia pliku!");
 					return;
 				}
 
@@ -75,7 +75,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 				fos.close();
 				setResult(RESULT_OK, getIntent());
 			} catch (FileNotFoundException e) {
-				Log.d(tag, "Nie znaleziono pliku: " + e.getMessage());
+				Log.d(getLocalClassName(), "Nie znaleziono pliku: " + e.getMessage());
 				return;
 			} catch (IOException e) {
 				Log.d(tag, "B³¹d IO: " + e.getMessage());
@@ -121,7 +121,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 					R.array.resolution_entries);
 			String resolution = options[Integer.parseInt(resolutionIndex)];
 
-			Log.d(tag, "resolution=" + resolution);
+			Log.d(getLocalClassName(), "resolution=" + resolution);
 			String w = resolution.substring(0, resolution.indexOf("x"));
 			String h = resolution.substring(resolution.indexOf("x") + 1,
 					resolution.length());
@@ -149,7 +149,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback {
 			camera = null;
 			// previewing = false;
 		} else {
-			Log.d(tag, "Powierzchnia juz usuniêta!");
+			Log.d(getLocalClassName(), "Powierzchnia juz usuniêta!");
 		}
 	}
 }
