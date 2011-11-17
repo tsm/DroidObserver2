@@ -98,6 +98,7 @@ public class GetLocationService extends Service {
 				// sendGPS(currentBestLocation);
 			}
 		};
+
 		locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				update_time, 0, locListener);
 		currentBestLocation = locMgr
@@ -125,6 +126,7 @@ public class GetLocationService extends Service {
 				super.handleMessage(msg);
 				if (currentBestLocation != null)
 					sendGPS(currentBestLocation);
+
 			}
 
 		};
