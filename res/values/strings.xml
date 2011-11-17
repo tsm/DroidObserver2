@@ -68,6 +68,7 @@
 
 	<!-- notification -->
 	<item type="id" name="app_notification_id" />
+	<item type="id" name="sendDataId" />
 
 	<!-- dialogi -->
 	<string name="dialog_activity_text">Dialog</string>

@@ -6,7 +6,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="lib" path="C:/Program Files/Java/commons-io-2.1/commons-io-2.1.jar" sourcepath="C:/Program Files/Java/commons-io-2.1/commons-io-2.1-sources.jar">
 		<attributes>
-			<attribute name="javadoc_location" value="jar:file:/C:/Program Files/Java/commons-io-2.1/commons-io-2.1-javadoc.jar!/"/>
+			<attribute name="javadoc_location" value="file:/C:/Program Files/Java/commons-io-2.1/docs/"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="C:/Program Files/Java/httpmime-4.0.1.jar"/>

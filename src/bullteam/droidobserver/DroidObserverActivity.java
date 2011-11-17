@@ -15,14 +15,20 @@ import android.view.View;
 
 public class DroidObserverActivity extends Activity {
 
+	private final static String tag = "DroidObserverActivity";
+	private static ConnectivityManager cm;
+
 	/** Called when the activity is first created. */
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d(getLocalClassName(), "uruchamianie aplikacji");
+		Log.d(tag, "Uruchamianie aplikacji");
+		cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		setContentView(R.layout.main);
 		startActivity(new Intent(this, WizardActivity.class));
 		startService(new Intent(DroidObserverActivity.this,
 				ControllerService.class));
+		startService(new Intent(DroidObserverActivity.this,
+				SendDataService.class));
 	}
 
 	@Override
@@ -31,6 +37,8 @@ public class DroidObserverActivity extends Activity {
 				GetLocationService.class));
 		stopService(new Intent(DroidObserverActivity.this,
 				ControllerService.class));
+		stopService(new Intent(DroidObserverActivity.this,
+				SendDataService.class));
 		super.onDestroy();
 		System.runFinalizersOnExit(true);
 		android.os.Process.killProcess(android.os.Process.myPid());
@@ -50,16 +58,10 @@ public class DroidObserverActivity extends Activity {
 					bullteam.droidobserver.PatientPreferenceActivity.class);
 			this.startActivityForResult(intent, 0);
 		} else if (item.getItemId() == R.id.menu_quit) {
-			Log.d(getLocalClassName(), "Killuje - DroidObserver");
+			Log.d(tag, "Killuje - DroidObserver");
 			onDestroy();
 		} else if (item.getItemId() == R.id.menu_takephoto) {
-			if (isconnected()) {
-				startActivity(new Intent(this, SendFileActivity.class));
-			} else {
-				startActivity(new Intent(this, DialogActivity.class)
-						.putExtra("text",
-								"Nie mo¿na wys³aæ zdjêcia, ze wzglêdu na brak po³¹czenia z internetem!"));
-			}
+			startActivity(new Intent(this, SendFileActivity.class));
 		}
 		return true;
 	}
@@ -71,13 +73,13 @@ public class DroidObserverActivity extends Activity {
 
 	public void bindGPSLocation(View target) {
 		startActivity(new Intent(this, WizardActivity.class));
-		Log.d(getLocalClassName(), "bindGPS!");
+		Log.d(tag, "bindGPS!");
 		startService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
 	}
 
 	public void unbindGPSLocation(View target) {
-		Log.d(getLocalClassName(), "unbindGPS!");
+		Log.d(tag, "unbindGPS!");
 		stopService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
 	}
@@ -91,27 +93,25 @@ public class DroidObserverActivity extends Activity {
 
 		Intent intent = new Intent(Intent.ACTION_CALL);
 		intent.setData(Uri.parse("tel:" + telephoneNumber));
-		Log.d(getLocalClassName(), "Telefon alarmowy do: " + telephoneNumber);
+		Log.d(tag, "Telefon alarmowy do: " + telephoneNumber);
 		startActivity(intent);
 	}
 
-	public boolean isconnected() {
-		ConnectivityManager cm = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+	public static boolean isconnected(String tag) {
 		if (cm != null) {
-			Log.d(getLocalClassName(), "Sprawdzanie dostêpu do sieci...");
 			NetworkInfo netInfo = cm.getActiveNetworkInfo();
 			if (netInfo != null && netInfo.isAvailable()
 					&& netInfo.isConnected()) {
-				Log.d(getLocalClassName(),
+				Log.d(tag,
 						"Aktywne po³¹czenie internetowe poprzez: "
 								+ netInfo.getTypeName());
 				return true;
 			} else {
-				Log.d(getLocalClassName(), "Brak po³¹czenia z internetem");
+				Log.d(tag, "Brak po³¹czenia z internetem");
 				return false;
 			}
 		} else {
-			Log.d(getLocalClassName(),
+			Log.d(tag,
 					"Nie mo¿na uzyskaæ dostêpu do serwisu po³¹czeñ internetowych");
 		}
 		return false;
