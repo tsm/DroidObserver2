@@ -10,35 +10,14 @@
         android:id="@+id/emergencyButton"
         android:layout_width="130dp"
         android:layout_height="130dp"
-        android:layout_marginBottom="35dp"
+        android:layout_marginBottom="85dp"
+        android:layout_gravity="center_vertical|center_horizontal"
         android:background="@drawable/redbutton_shape"
         android:onClick="emergencyCall"
         android:text="@string/emergency_button"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center" >
-
-        <Button
-            android:id="@+id/bindGPS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="bindGPSLocation"
-            android:text="@string/bind_gps_button" />
-
-        <Button
-            android:id="@+id/unbindGPS"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:onClick="unbindGPSLocation"
-            android:text="@string/unbind_gps_button" />
-    </LinearLayout>
 
     <TextView
         android:id="@+id/text1"

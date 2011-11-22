@@ -49,7 +49,7 @@ public class GetLocationService extends Service {
 	HttpClient client = new DefaultHttpClient();
 	HttpPost post;// = new
 					// HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");
-
+	
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -103,18 +103,6 @@ public class GetLocationService extends Service {
 				update_time, 0, locListener);
 		currentBestLocation = locMgr
 				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-	}
-
-	public void onDestroy() {
-		displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
-		locMgr.removeUpdates(locListener);
-		super.onDestroy();
-	}
-
-	@Override
-	public void onStart(Intent intent, int startId) {
-		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
 		String currentDateTimeString = DateFormat.getDateInstance().format(
 				new Date());
 		trace = currentDateTimeString;
@@ -131,25 +119,50 @@ public class GetLocationService extends Service {
 
 		};
 		thr = new Thread(new Runnable() {
+			
 			public void run() {
-				while (true) {
+				boolean isActive=true;
+				while (isActive) {
 					try {
 						Thread.sleep(update_time);
 						handler.sendEmptyMessage(0);
 
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
-						e.printStackTrace();
+						isActive=false;
+						
 					}
 
 				}
-
+				Log.d("GetLocationService_thread", "wyszedlem!");
 			}
 		});
 		thr.start();
 	}
 
+	public void onDestroy() {
+		displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
+		locMgr.removeUpdates(locListener);
+		super.onDestroy();
+		thr.interrupt();
+		notificationMgr.cancelAll();
+	}
+
+	
+	
+	@Override
+	public void onStart(Intent intent, int startId) {
+		// TODO Auto-generated method stub
+		super.onStart(intent, startId);
+		String currentDateTimeString = DateFormat.getDateInstance().format(
+				new Date());
+		trace = currentDateTimeString;
+	}
+
 	public IBinder onBind(Intent intent) {
+		String currentDateTimeString = DateFormat.getDateInstance().format(
+				new Date());
+		trace = currentDateTimeString;
 		return null;
 	}
 

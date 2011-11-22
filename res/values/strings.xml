@@ -3,7 +3,7 @@
 
 	<string name="app_name">DroidObserver</string>
 
-	<string name="bind_gps_button">Pobieraj GPS</string>
+	<string name="bind_gps_button">Wysyłaj GPS</string>
 	<string name="unbind_gps_button">Wyłącz GPS</string>
 	<string name="emergency_button">Telefon alarmowy</string>
 

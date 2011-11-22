@@ -62,6 +62,11 @@ public class DroidObserverActivity extends Activity {
 			onDestroy();
 		} else if (item.getItemId() == R.id.menu_takephoto) {
 			startActivity(new Intent(this, SendFileActivity.class));
+		} else if (item.getItemId()== R.id.menu_getGPS){
+			startActivity(new Intent(this, WizardActivity.class));
+			startService(new Intent(DroidObserverActivity.this, GetLocationService.class));
+		} else if (item.getItemId()== R.id.menu_stopGPS){
+			stopService(new Intent(DroidObserverActivity.this, GetLocationService.class));
 		}
 		return true;
 	}
