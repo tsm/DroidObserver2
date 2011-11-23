@@ -4,10 +4,11 @@
 		<item android:id="@+id/menu_prefs" android:title="@string/menu_prefs_title" />
 		<item android:id="@+id/menu_quit" android:title="@string/menu_quit_title" />
 	</group>
+	
+	<item android:id="@+id/menu_takephoto" android:title="@string/menu_takephoto_title"></item>
+	
 	<group android:id="@+id/menu_group2" android:menuCategory="container">
 		<item android:id="@+id/menu_getGPS" android:title="@string/bind_gps_button" />
 		<item android:id="@+id/menu_stopGPS" android:title="@string/unbind_gps_button" />
 	</group>
-	<item android:id="@+id/menu_takephoto" android:title="@string/menu_takephoto_title"></item>
-	
 </menu>

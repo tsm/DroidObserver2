@@ -93,14 +93,21 @@ public class ControllerService extends Service {
 	private void parseSms(String sender, String msg) {
 		Log.d("ControllerSevice", sender + ": " + msg);
 		if (msg.equals("GetGPS")) {
+			//wysylanie smsa z lokalizacja
+			//SharedPreferences prefs = getSharedPreferences(
+			//"bullteam.droidobserver_preferences", 0);
+			//String telephoneNumber = prefs.getString(
+			//this.getResources().getString(R.string.telelphoneNumberOption),"");
+			//SmsManager smsMgr = SmsManager.getDefault();
+			//smsMgr.sendTextMessage(telephoneNumber,null,message,null,null);
+			
+		} else if (msg.equals("StartGPS")) {
 			startService(new Intent(ControllerService.this,
 					GetLocationService.class));
-		}
-		if (msg.equals("StopGPS")) {
+		} else if (msg.equals("StopGPS")) {
 			stopService(new Intent(ControllerService.this,
 					GetLocationService.class));
-		}
-		if (msg.equals("TakePhoto")) {
+		} else if (msg.equals("TakePhoto")) {
 			startActivity(new Intent(ControllerService.this,
 					SendFileActivity.class)
 					.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));

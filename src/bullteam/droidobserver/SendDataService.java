@@ -18,11 +18,21 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.util.Log;
 
+/**
+ * Serwis który dzia³a w tle: - szuka czy s¹ zdjêcia w folderze programu - jeœli
+ * znajdzie takowe to wysy³a je na serwer - usuwa wys³ane zdjêcia
+ * 
+ * @author Krzychu
+ * 
+ */
 public class SendDataService extends Service {
 	private final static String tag = "SendDataService";
 	private NotificationManager notificationMgr;
 	private SendData sd = null;
 
+	/**
+	 * Metoda wywo³ywana automatycznie gdy serwis rozpoczyna dzia³anie
+	 */
 	@Override
 	public void onCreate() {
 		Log.d(tag, "start");
@@ -38,6 +48,9 @@ public class SendDataService extends Service {
 		}
 	}
 
+	/**
+	 * Metoda wywo³ywana automatycznie gdy serwis koñczy dzia³anie
+	 */
 	@Override
 	public void onDestroy() {
 		Log.d(tag, "stop");
@@ -47,14 +60,24 @@ public class SendDataService extends Service {
 		super.onDestroy();
 	}
 
+	/**
+	 * Funkcja do bindowania serwisu do innych aplikacji (tutaj uniemozliwia
+	 * innym aplikacjom utuchomienie tego serwisu)
+	 */
 	@Override
 	public IBinder onBind(Intent arg0) {
 		return null;
 	}
 
+	/**
+	 * Klasa odpowiedzialna za w¹tek który sprawdza i wysy³a zdjêcia
+	 * 
+	 * @author Krzychu
+	 * 
+	 */
 	class SendData implements Runnable {
 		boolean isActive = true;
-		int delay = 10; // czestotliwosc wysy³ania zdjec w sek
+		int delay = 60; // czestotliwosc wysy³ania zdjec w sek
 
 		public void deactivate() {
 			isActive = false;
@@ -83,6 +106,11 @@ public class SendDataService extends Service {
 		}
 	}
 
+	/**
+	 * Funkcja sprawdza czy w folderze programu s¹ nowe zdjêcia
+	 * 
+	 * @return lista zdjêæ
+	 */
 	public File[] getPhotos() {
 		File[] filelist = null;
 		File mediaStorageDir = new File(
@@ -103,6 +131,9 @@ public class SendDataService extends Service {
 
 	/**
 	 * Wysy³a zrobione zdjêcie na serwer
+	 * 
+	 * @param fileToSend
+	 *            plik do wys³ania
 	 */
 	@SuppressWarnings("unused")
 	public void sendFile(File fileToSend) {

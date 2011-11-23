@@ -16,11 +16,10 @@ public final class R {
     }
     public static final class drawable {
         public static final int android_doctor=0x7f020000;
-        public static final int buttonshape=0x7f020001;
-        public static final int ic_droidobserver=0x7f020002;
-        public static final int redbutton_default=0x7f020003;
-        public static final int redbutton_pressed=0x7f020004;
-        public static final int redbutton_shape=0x7f020005;
+        public static final int ic_droidobserver=0x7f020001;
+        public static final int redbutton_default=0x7f020002;
+        public static final int redbutton_pressed=0x7f020003;
+        public static final int redbutton_shape=0x7f020004;
     }
     public static final class id {
         /**  notification 
@@ -33,13 +32,13 @@ public final class R {
         public static final int camerapreview=0x7f070004;
         public static final int dialog=0x7f070005;
         public static final int emergencyButton=0x7f070006;
-        public static final int menu_getGPS=0x7f070010;
+        public static final int menu_getGPS=0x7f070011;
         public static final int menu_group1=0x7f07000c;
-        public static final int menu_group2=0x7f07000f;
+        public static final int menu_group2=0x7f070010;
         public static final int menu_prefs=0x7f07000d;
         public static final int menu_quit=0x7f07000e;
-        public static final int menu_stopGPS=0x7f070011;
-        public static final int menu_takephoto=0x7f070012;
+        public static final int menu_stopGPS=0x7f070012;
+        public static final int menu_takephoto=0x7f07000f;
         public static final int sendDataId=0x7f070001;
         public static final int text1=0x7f070007;
         public static final int tv_wrong_preferences=0x7f070009;
