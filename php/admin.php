@@ -2,6 +2,7 @@
   session_start(); //sesja pamięta logowanie
   header('Content-type: text/html; charset=utf-8');  
   include "db.php"; //znajduje się tam funkcja do zalogowania się do bazy danych
+  include "config.php";
   
   
   if(isset($_GET['page']))
@@ -20,9 +21,9 @@
       $akcja=$_REQUEST['action'];    
       if($akcja=='logout')
       {
-        if($_SESSION['UserID'])
+        if($_SESSION['AdminID'])
 				{
-				  unset($_SESSION['UserID']);
+				  unset($_SESSION['AdminID']);
 				  $login_info="Wylogowano! <br>";
 				}
 				else
@@ -35,9 +36,9 @@
       {
         if($_POST['login']&&$_POST['haslo'])
 					{
-						if (($_POST['login']=='administrator') && ($_POST['haslo']=='xsw21qaz'))
+						if (($_POST['login']==$admin_login) && ($_POST['haslo']==$admin_haslo))
 						{
-						   $_SESSION['UserID']=$_POST['login'];
+						   $_SESSION['AdminID']=$_POST['login'];
 						}
 					}					
 				}
@@ -78,9 +79,9 @@
        <br>      
 <?php
 	print $login_info;
-    if($_SESSION['UserID']=='administrator') // sprawdza czy jestes adminem
+    if($_SESSION['AdminID']=='administrator') // sprawdza czy jestes adminem
       {
-        print 'Jesteś zalogowana/y jako '.$_SESSION['UserID'].'(<a href="admin.php?page=news&action=logout">wyloguj</a>)';
+        print 'Jesteś zalogowana/y jako '.$_SESSION['AdminID'].'(<a href="admin.php?page=news&action=logout">wyloguj</a>)';
         if(isset($page))
           {
             include "admin/".$page.".php";

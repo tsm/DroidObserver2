@@ -107,8 +107,98 @@ Krzysztof \textsc{Śmiłek}\\
 \subsection {Zmiany na etapie projektowania klas}
 \subsection {Zmiany w funkcjonowaniu systemu}
 
+\newpage
 \section {Instrukcja obsługi Systemu}
+\subsection{Instrukcja instalacji}
 
+\subsubsection{Instalacja aplikacji na telefonie}
+Plik DroidObserver.apk wgrać na telefon z systemem Android 2.2 (lub wyższym) i uruchomić go.
+Instalacja powinna rozpocząć się automatycznie.
+
+\subsubsection{Instalacja bazy danych}
+\begin{enumerate}
+\item Założyc nową bazę danych
+\item W nowo stworzonej bazie danych uruchomić skrypt droidobserver.sql (plik ten znajduje się w folderze php) i zaobserwować czy powstały nowe tabele
+\end{enumerate}
+
+\subsubsection{Instalacja serwera}
+\begin{enumerate}
+\item Otworzyć plik config.php w edytorze tekstu
+\item Zmienić natępujące parametry według wzoru:
+\subitem \$baza = 'adres\_bazy\_danych';  (np. mysql.agh.edu.pl:3306);
+\subitem \$login = 'login\_do\_bazy\_danych'; 
+\subitem \$haslo = 'hasło\_do\_bazy\_danych';
+\subitem \$database\_name = 'nazwa\_bazy\_danych'
+\subitem \$admin\_login = 'login\_administratora'
+\subitem \$admin\_haslo = 'haslo\_administratora'
+\item Do katalogu public\_html (na serwerze) przegrać całą zawartośc folderu php
+\end{enumerate}
+
+\subsection{Instrukcja obsługi systemu}
+\subsubsection{Instrukcja obsługi serwisu WWW}
+
+Serwis WWW jest dostepny pod adresem:
+\begin{itemize}
+\item www.adresSerwera.domena - dla zwykłego użytkownika 
+\item www.adresSerwera.domena/admin.php - dla administratora systemu
+\end{itemize}
+
+{\bf Panel użytkownika}\\
+Aby skorzystać z panelu użytkownika należy zalogować się do systemu, poprzez podanie odpowiedniego loginu i hasła.
+Aby uzyskać dane dostępowe należy skontaktować się z admnistratorem systemu.
+Po zalogowaniu się użytkownik ma dostęp do nastepujących elementów:
+\begin{itemize}
+\item Przeglądanie aktualności (nie wymaga logowania się)
+\item Sprawdzanie swoich danych osobowych (Imię, Nazwisko, telefon, email, nazwa choroby)
+\item Odczytywanie ostatnich tras GPS 
+\subitem Po kliknięciu w daną datę otwiera się okno z wszystkimi trasami z danego dnia
+\item Przeglądanie zdjęć wysłanych na serwer
+\end{itemize}
+
+{\bf Panel administratora}\\
+Panel administratora poza standartowymi funkcjonalnościami umożliwia także:
+\begin{itemize}
+\item Dodawanie aktualności
+\item Dodawanie nowych pacjentów / Przeglądanie bazy wszystkich pacjentów
+\item Odczytywanie trad GPS każdego z pacjentów
+\item Przeglądanie zdjęć wyslanych przez konkretnego pacjenta
+\end{itemize}
+
+\subsubsection{Instrukcja obsługi aplikacji}
+
+Po otwarciu nowo zainstalowanej aplikacji wyświetlony zostaje monit o podanie odpowiednich ustawień.
+Ich zmiany można dokonać także później poprzez wybranie z menu głównego opcji 'Ustawienia'.\\
+\\
+{\bf Widok opcji}
+\begin{enumerate}
+\item {\it Adres serwera*} - niezbędny do uzyskania połączenia (http://adresSerwera.domena/)
+\item {\it Login*} - unikalny login pacjenta
+\item {\it Hasło*} - używane do logowania na serwerze
+\item {\it Telefon alarmowy*} - Używany do połączen alarmowych
+\item Częstotliwośc odświeżania - Interwał pomiędzy kolejnymi wysyłanymi współrzędnymi
+\item Rozdzielczość aparatu - Rozdzielczość w jakiej robione będą zdjęcia
+\end{enumerate}
+
+* - pola unikalne (pozostałe opcje posiadają wartości domyślne)
+\\\\
+Po ustawieniu odpowiednich opcji nastepuje powrót do ekranu głównego. \\Można z niego wykonać jedną z poniższych opcji:
+\begin{itemize}
+\item Skontaktować się natychmiastowo z numerem alarmowym poprzez kliknięcie w duży czerwony przycisk na środku ekranu.
+\item Zrobic i wysłać zdjęcie na serwer  poprzez wybór odpowiedniej opcji z menu.
+\item Aktywować usługę wysyłania położenia GPS poprzez wybór odpowiedniej opcji z menu.
+\item Wyłączyć usługę wysyłanie położenia GPS  poprzez wybór odpowiedniej opcji z menu.
+\item Wyjść z programu poprzez wybór odpowiedniej opcji z menu.
+\end{itemize}
+
+\vspace{10pt}
+Aplikacja jest skonstruowana tak, by automatyzować pewne procesy. W szczególności umożliwia ona zdalne włączanie/wyłączanie odpowiednich opcji programu, poprzez analizę przychodzących SMSów. Jeśli aplikacja napotka na SMS z konkretną treścią uruchamia ona jedną z opcji programu. Oto lista obsługiwanych komend:
+\begin{enumerate}
+\item GetGPS - wysyła pod numer alarmowy SMSa z aktualną lokalizacją 
+\item StartGPS - uruchamia usługę wysyłania położenia GPS
+\item StopGPS - zatrzymuje usługę wysyłania położenia GPS
+\item TakePhoto - robi zdjęcie i wysyła na serwer
+\end{enumerate}
+\newpage
 \section{Bibliografia}
 
 \bibliographystyle{plain}

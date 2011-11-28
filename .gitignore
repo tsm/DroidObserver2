@@ -1,6 +1,5 @@
 /bin/*
 *.class
-/php/db.php
 /gen/*
 
 ## generic and temp files
