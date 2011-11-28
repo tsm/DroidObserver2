@@ -51,7 +51,7 @@ Krzysztof \textsc{Śmiłek}\\
 }
 \makeatother
 
-\title{DroidObserver}
+\title{Projekt i implementacja mobilnego systemu monitorowania pacjenta\\DroidObserver}
 \date{\today}
 
 \makeindex
@@ -66,31 +66,62 @@ Krzysztof \textsc{Śmiłek}\\
 
 \newpage
 
-\section{Wstęp}
-
-\cite{2009UltraDeponti}
-\cite{2010ComputingEttinger}
-\cite{2011IEEEIntGoldman}
-\cite{2011IEEERadioMitchell}
-\cite{2009IEEEEngineeringSposaro}
-\cite{2011DroidColunas}
-\cite{2010IEEEEMBCDoukas}
-\cite{2010IEEEEMBCSposaro}
-\cite{2009IEEEBIBEWang}
-\cite{2010NISSYang}
-\cite{2010AndroidHashimi}
-
 \section {Sformułowanie zadania projektowego}
 \subsection {Obszar i przedmiot projektowania}
 \subsubsection {Dziedzina problemu}
-\subsubsection {Obszar modelowania}
-\subsubsection {Zakres odpowiedzialności systemu}
-\subsection {Zwięzła nazwa problemu}
-\subsection {Cele do osiągnięcia}
-\subsubsection {Cele rezultatu}
-\subsubsection {Cele projektu}
+ Niewielkie upośledzenie pamięci, wyrażające się zapominaniem pewnych stosunkowo niedawnych faktów, takich jak wydarzenia sprzed godziny lub z dnia poprzedniego, jest stosunkowo częstą dolegliwością wieku starczego.
+Nie budzi to niepokoju otoczenia, nawet gdy nasilenie tych zaburzeń jest nieco większe, niż u innych osób w tym samym wieku. W powszechnym przekonaniu upośledzenie pamięci jest bowiem typową cechą starości, wynikającą z rozwijającej się nieuchronnie miażdżycy. Problem ten jeszcze do niedawna był bagatelizowany. Dopiero rozwój wiedzy na temat choroby Alzheimera uświadomił wielu osobom, także lekarzom, że występujące w starości kłopoty z pamięcią są również wynikiem zmian chorobowych, a nie tylko prostego procesu starzenia się.\\
+\\
+ Wywołane chorobą zaburzenia funkcji intelektualnej, takich jak pamięć, orientacja i myślenie, mogą być niewielkie i utrzymywać się na stale jednakowym poziomie, mogą też być wyraźnie nasilone i szybko postępujące. W tym pierwszym przypadku zaburzenia te ograniczają się tylko do pamięci, w drugim zaburzeniom pamięci towarzyszą z reguły również inne, postępujące zaburzenia funkcji intelektualnych. Powoduje to wyraźne problemy w życiu społecznym chorych. Nie mogą oni kontynuować dotychczasowej pracy zawodowej, a nawet poprawnie funkcjonować w domu. Stan ten nazywany jest otępieniem (demencją). Określenie to często bywa nadużywane. Według powszechnie przyjętych kryteriów, otępieniem nazywamy obniżenie funkcji intelektualnych człowieka w odniesieniu do ich poprzedniego, przedchorobowego poziomu, które powoduje problemy w życiu codziennym chorego. To obniżenie funkcji intelektualnych w otępieniu nie ogranicza się tylko do pamięci. Musi dotyczyć przynajmniej jeszcze jednej funkcji: orientacji, myślenia lub osądu.\\
+\\
+ Najczęstszymi przyczynami zaburzeń pamięci i intelektu są choroby zwyrodnieniowe i naczyniowe układu nerwowego. Mało nasilony proces zwyrodnieniowy, niewiele odbiegający od normalnego starzenia się, może spowodować tzw. zaburzenia pamięci związane z wiekiem, zwane też łagodną niepamięcią starczą lub łagodnym zaburzeniem funkcji poznawczych.\\
+\\
+ Najczęstszym rodzajem otępienia pochodzenia zwyrodnieniowego jest choroba Alzheimera. Znacznie rzadziej są to inne choroby, takie jak choroba Picka lub otępienie czołowe. Najczęstszym „naczyniowym” powodem otępienia są liczne, drobne zawały mózgu (otępienie wielozawałowe). Ponieważ niektóre części mózgu, np. wewnętrzna część płata skroniowego, są szczególnie ważne dla funkcji pamięci, ich uszkodzenie w wyniku pojedynczego zawału mózgu także może być powodem otępienia.\\
+\\
+ Ludzie dotknięci wyżej wymienionymi problemami mogą mieć problem w swobodnym poruszaniu się poza domem czy jednostką kliniczną. Może się zdarzyć, iż taka osoba bez bezpośredniego nadzoru opiekuna zgubi się i zapomni w jaki sposób wrócić do bezpiecznej lokalizacji. W tym wypadku z pomocą przychodzi nasza aplikacja. Pacjent może uzyskać pomoc naciskając tylko jeden czerwony przycisk znajdujący się na środku ekranu. Po nawiązaniu połączenia z opiekunem, może zostać poproszony o wycelowanie telefonu w kierunku charakterystycznych obiektów takich jak budynek, przystanek autobusowy czy rzeźba terenu. Opiekun lub lekarz natomiast mogą w prosty sposób monitorować miejsce pobytu pacjenta. 
 
+\subsubsection {Obszar modelowania}
+
+Projekt można podzielić na trzy współpracujące ze sobą części:
+\begin{itemize}
+\item Baza danych - przechowuje dane o pacjentach, kolekcjonuje lokalizacje GPS oraz ścieżki dostępu do plików.
+\item Aplikacja webowa - pozwala na modyfikację, dodawanie oraz przeglądanie danych.
+\item Aplikacja kliencką - zainstalowana na telefonie pacjenta reaguje na sygnały zewnętrzne (akcje klienta bądź żądania ze strony opiekuna bądź lekarza) i zajmuje się pozyskiwaniem i wysyłaniem danych na serwer.
+\end{itemize}
+
+Ze względu na strukturę organizacyjną wyróżniamy następujące funkcje:
+\begin{itemize}
+\item Administrator systemu - zarządza bazą danych pacjentów, w ogólnym wypadku jest to lekarz posiadający kartotekę pacjentów.
+\item Opiekun - osoba, która ma dostęp do hasła pacjenta w serwisie, jego numer może być przypisany jako numer alarmowy w aplikacji klienckiej. Opiekun jest opcjonalny jeśli lekarz-administrator przejmie jego funkcje.
+\item Pacjent - osoba dotknięta dysfunkcją, która wyraziła zgodę na dobrowolny udział w projekcie. Powinna zawsze nosić przy sobie urządzenie z systemem Android z zainstalowaną aplikacją kliencką.
+\end{itemize}
+\subsubsection {Zakres odpowiedzialności systemu}
+W zakres odpowiedzialności realizowanego systemu wchodzą następujące obszary aktywności:
+\begin{itemize}
+\item Administracja danymi pacjenta.
+\item Reakcja na sygnały zewnętrzne aplikacji klienckiej.
+\item Wysyłanie współrzędnych geograficznych w oparciu o odczyt GPS.
+\item Zdalne wykonanie zdjęcia i przesłanie na serwer.
+\item Udostępnienie interfejsu dla opiekuna/pacjenta w celu dostępu do zebranych informacji.
+\end{itemize}
+
+Dodatkowo realizowane są następujące obszary aktywności:
+W zakres odpowiedzialności realizowanego systemu wchodzą następujące obszary aktywności:
+\begin{itemize}
+\item System newsów w celu informowania opiekunów/pacjentów o aktualnościach i zmianach w działaniu systemu.
+\item Czerwony przycisk pomocy umożliwiający nawiązanie błyskawicznego kontaktu z numerem alarmowym.
+\item System sprawdzania poprawności konfiguracji i pomoc w niej.
+\end{itemize}
+
+
+\subsection {Zwięzła nazwa problemu}
+Projekt zakłada stworzenie aplikacji na system Android wspomagającą opiekę nad starszymi ludźmi i chorymi na alzheimera oraz inne dysfunkcje doprowadzające do demencji, potrafiącą zdalnie określić położenie pacjenta (dzięki nadajnikowi GPS w telefonie) oraz wykonać zdjęcie aparatem. System zarządzany jest z poziomu przeglądarki internetowej lekarza (administratora), który mógłby mieć pod opieką więcej niż jednego pacjenta.
+\subsection {Cele do osiągnięcia}
+Celem projektu jest stworzenie systemu wspomagającego opiekę nad ludźmi dotkniętymi demencją poprzez monitorowanie na żądanie obecnego położenia geograficznego pacjenta oraz możliwość wykonania zdjęcia. System powinien być jak najbardziej niezawodny w zróżnicowanych warunkach. Ze względu na to iż pacjentami w większości będą osoby starsze bez zbytniego obycia w technologiach mobilnych system powinien mieć niezwykle prosty oraz ograniczony do minimum interfejs użytkownika, a większość czynności powinna być wykonywana automatycznie. Jako, że w systemie przechowywane są prywatne dane pacjentów powinien zapewniać bezpieczeństwo tych danych i zminimalizowanie nadużyć.\\
+\\
+Dodatkowym celem było zapoznanie się za platformą Android oraz z metodyką projektowania systemów informatycznych w dziedzinie telemedycyny.
 \section {Opis wymagań}
+niezbędne połączenie z Internetem (pakiet danych)
 \subsection {Funkcje systemu z punktu widzenia użytkownika}
 \subsection {Przepływy informacyjne doprowadzone do i wyprowadzane z systemu}
 \subsection {Sygnalizowane specjalne wymagania i ograniczenia}
@@ -200,6 +231,18 @@ Aplikacja jest skonstruowana tak, by automatyzować pewne procesy. W szczególno
 \end{enumerate}
 \newpage
 \section{Bibliografia}
+Przy realizacji naszego projektu bardzo pomocne okazały się materiały dostarczone przez platformę IEEE.
+\cite{2009UltraDeponti}
+\cite{2010ComputingEttinger}
+\cite{2011IEEEIntGoldman}
+\cite{2011IEEERadioMitchell}
+\cite{2009IEEEEngineeringSposaro}
+\cite{2011DroidColunas}
+\cite{2010IEEEEMBCDoukas}
+\cite{2010IEEEEMBCSposaro}
+\cite{2009IEEEBIBEWang}
+\cite{2010NISSYang}
+Jako, że był to nasz pierwszy projekt napisany na platformę Android musieliśmy nauczyć się programowania pod ten system. W tym celu sięgnęliśmy po doskonały podręcznik @quotedblleft{}Android 2. Tworzenie aplikacji@quotedblright{} \cite{2010AndroidHashimi}
 
 \bibliographystyle{plain}
 \bibliography{bibliography}
