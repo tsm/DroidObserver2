@@ -150,10 +150,22 @@ Dla potrzeb serwera wymagany jest serwer wspierający standard PHP 4 oraz baza d
 
 \section {Analiza systemu– diagramy UML}
 \subsection {Diagram przypadków użycia systemu}
+\newpage
 \subsection {Diagram klas systemu}
+  \begin{figure}[h]
+    \includegraphics[scale=0.4]{class_diagram.png}
+    \caption{Diagram klas systemu}
+  \end{figure}
+Na rysunku przedstawiony został diagram klas systemu. Poszczególne kolory klas oznaczają:
+\begin{itemize}
+\item zielony - aktywność startowa (główna aktywność uruchamiana wraz ze startem aplikacji)
+\item błękitny - usługi: nie mają interfejsu, działają w tle
+\item pomarańczowy - zwykłe aktywności, posiadają interfejs
+\item szary - dialog, wyświetla małe szare okienko z informacją
+\item granatowy - aktywność preferencji
+\end{itemize}
 \subsection {Diagram sekwencji}
 \subsection {Diagram najważniejszego stanu systemu}
-\subsection {Diagram Komunikacji systemu}
 \subsection {Diagram Komponentów systemu}
 
 \section {Opis zmian wprowadzonych w zrealizowanym Systemie }
