@@ -1,0 +1,55 @@
+W celu oddania projektu nale¿y:
+
+1) Dostarczenie raportu do podzadania A (min 10 str.) (musi zawieraæ tabelkê z wk³adem poszczególnych cz³onków grupy)
+2) Dostarczenie materia³ów dla podzadania B - przygotowaæ p³ytkê cd/dvd zawieraj¹c¹ nastêpuj¹ce elementy:
+a) Dla projektu, gdy przedmiotem jest aplikacja:
+i) wirtualn¹ wersjê aplikacji zawieraj¹c¹ wszystkie komponenty skonfigurowane i gotowe do uruchomienia. Nale¿y wykorzystaæ 
+
+oprogramowanie VMWare Player lub Virtual PC
+ii) dodatkowo now¹ finaln¹ wersjê dokumentacji wraz z wnioskami
+iii) dokumentacja projektu powinna byæ zgodna z wytycznymi otrzymanymi prêdzej (punkty dokumentacji)
+iv) +++++
+v) kody Ÿród³owe aplikacji na p³ytce w osobnym folderze
+vi) instrukcja instalacji
+vii) filmy prezentuj¹ce poszczególne funkcjonalnoœci aplikacji
+viii) dok³adny podzia³ zadañ / kto za co by³ odpowiedzialny
+ix) rejestracja pracy na stronie http://www.pbf.pl/innowacje/index.php (jedna osoba odpowiedzialna na okreœlenie parametrów 
+
+finansowych)
+
+
+Za³¹cznik 1 Schemat dokumentacji aplikacji
+
+
+Proszê o przygotowanie opisu dla prac programistycznych wg wzoru:
+
+1. Sformu³owanie zadania projektowego
+1.1 Obszar i przedmiot projektowania
+1.1.1. Dziedzina problemu
+1.1.2. Obszar modelowania
+1.1.3. Zakres odpowiedzialnoœci systemu
+1.2. Zwiêz³a nazwa problemu
+1.3. Cele do osi¹gniêcia
+1.3.1. Cele rezultatu
+1.3.2. Cele projektu
+
+2. Opis wymagañ
+2.1. Funkcje systemu z punktu widzenia u¿ytkownika
+2.2. Przep³ywy informacyjne doprowadzone do i wyprowadzane z systemu
+2.3. Sygnalizowane specjalne wymagania i ograniczenia
+
+3. Analiza systemu– diagramy UML
+3.1. Diagram przypadków u¿ycia systemu.
+3.2. Diagram klas systemu.
+3.3. Diagram sekwencji
+3.4. Diagram najwa¿niejszego stanu systemu
+3.5. Diagram Komunikacji systemu
+3.6. Diagram Komponentów systemu
+
+4. Opis zmian wprowadzonych w zrealizowanym Systemie (punkt realizowany na koñcu projektu)
+4.1. Zmiany na etapie projektowania klas
+4.2. Zmiany w funkcjonowaniu systemu
+
+5. Instrukcja obs³ugi Systemu (punkt realizowany na koñcu projektu)(póŸniej)
+
+6. Bibliografia
