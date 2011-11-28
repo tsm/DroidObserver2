@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Czas wygenerowania: 08 Lis 2011, 13:03
+-- Czas wygenerowania: 28 Lis 2011, 22:52
 -- Wersja serwera: 5.0.84
 -- Wersja PHP: 5.2.17
 
@@ -27,16 +27,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 CREATE TABLE IF NOT EXISTS `files` (
   `id` int(11) NOT NULL auto_increment,
-  `patient_id` int(11) NOT NULL,
+  `login` varchar(20) NOT NULL,
   `filename` varchar(30) NOT NULL,
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Zrzut danych tabeli `files`
---
-
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=107 ;
 
 -- --------------------------------------------------------
 
@@ -46,17 +41,27 @@ CREATE TABLE IF NOT EXISTS `files` (
 
 CREATE TABLE IF NOT EXISTS `locations` (
   `id` int(11) NOT NULL auto_increment,
-  `patient_id` int(11) NOT NULL,
+  `login` varchar(20) NOT NULL,
   `latitude` varchar(20) NOT NULL,
   `longitude` varchar(20) NOT NULL,
   `date` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `trace` varchar(30) NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=620 ;
+
+-- --------------------------------------------------------
 
 --
--- Zrzut danych tabeli `locations`
+-- Struktura tabeli dla  `news`
 --
 
+CREATE TABLE IF NOT EXISTS `news` (
+  `id` int(11) NOT NULL auto_increment,
+  `date` timestamp NOT NULL default CURRENT_TIMESTAMP,
+  `title` text character set utf8 collate utf8_polish_ci,
+  `content` text character set utf8 collate utf8_polish_ci NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=55 ;
 
 -- --------------------------------------------------------
 
@@ -65,17 +70,13 @@ CREATE TABLE IF NOT EXISTS `locations` (
 --
 
 CREATE TABLE IF NOT EXISTS `patients` (
-  `id` int(11) NOT NULL auto_increment,
+  `login` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL,
   `mobile` varchar(13) default NULL,
   `name` varchar(30) NOT NULL,
   `surname` varchar(30) default NULL,
   `disease` varchar(50) default NULL,
-  `last_ip` varchar(50) default NULL,
   `email` varchar(50) default NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Zrzut danych tabeli `patients`
---
-
+  `last_ip` varchar(50) default NULL,
+  PRIMARY KEY  (`login`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

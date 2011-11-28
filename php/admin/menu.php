@@ -1,5 +1,5 @@
             <?php
-			if($_SESSION['UserID']=='administrator'){
+			if($_SESSION['AdminID']=='administrator'){
 			?>
 			<ul id="menu">
               <li><a href="admin.php?page=news"  <?php if ($page==news) print 'class="current"' ?>>Aktualności</a></li>
