@@ -104,9 +104,7 @@ W zakres odpowiedzialności realizowanego systemu wchodzą następujące obszary
 \item Zdalne wykonanie zdjęcia i przesłanie na serwer.
 \item Udostępnienie interfejsu dla opiekuna/pacjenta w celu dostępu do zebranych informacji.
 \end{itemize}
-
 Dodatkowo realizowane są następujące obszary aktywności:
-W zakres odpowiedzialności realizowanego systemu wchodzą następujące obszary aktywności:
 \begin{itemize}
 \item System newsów w celu informowania opiekunów/pacjentów o aktualnościach i zmianach w działaniu systemu.
 \item Czerwony przycisk pomocy umożliwiający nawiązanie błyskawicznego kontaktu z numerem alarmowym.
@@ -115,16 +113,40 @@ W zakres odpowiedzialności realizowanego systemu wchodzą następujące obszary
 
 
 \subsection {Zwięzła nazwa problemu}
-Projekt zakłada stworzenie aplikacji na system Android wspomagającą opiekę nad starszymi ludźmi i chorymi na alzheimera oraz inne dysfunkcje doprowadzające do demencji, potrafiącą zdalnie określić położenie pacjenta (dzięki nadajnikowi GPS w telefonie) oraz wykonać zdjęcie aparatem. System zarządzany jest z poziomu przeglądarki internetowej lekarza (administratora), który mógłby mieć pod opieką więcej niż jednego pacjenta.
+Aplikacja na system Android wspomagająca opiekę nad ludźmi dotkniętymi demencją, potrafiąca zdalnie określić położenie pacjenta (dzięki nadajnikowi GPS w telefonie) oraz wykonać zdjęcie aparatem. System zarządzany jest z poziomu przeglądarki internetowej lekarza (administratora), który może mieć pod opieką więcej niż jednego pacjenta.
 \subsection {Cele do osiągnięcia}
 Celem projektu jest stworzenie systemu wspomagającego opiekę nad ludźmi dotkniętymi demencją poprzez monitorowanie na żądanie obecnego położenia geograficznego pacjenta oraz możliwość wykonania zdjęcia. System powinien być jak najbardziej niezawodny w zróżnicowanych warunkach. Ze względu na to iż pacjentami w większości będą osoby starsze bez zbytniego obycia w technologiach mobilnych system powinien mieć niezwykle prosty oraz ograniczony do minimum interfejs użytkownika, a większość czynności powinna być wykonywana automatycznie. Jako, że w systemie przechowywane są prywatne dane pacjentów powinien zapewniać bezpieczeństwo tych danych i zminimalizowanie nadużyć.\\
 \\
 Dodatkowym celem było zapoznanie się za platformą Android oraz z metodyką projektowania systemów informatycznych w dziedzinie telemedycyny.
 \section {Opis wymagań}
-niezbędne połączenie z Internetem (pakiet danych)
 \subsection {Funkcje systemu z punktu widzenia użytkownika}
+Aplikacja webowa:
+\begin{enumerate}
+  \item Przegląd aktualności (nie wymaga logowania)
+  \item Informacje o pacjencie
+  \item Mapy współrzędnych GPS
+  \item Przegląd nadesłanych zdjęć
+\end{enumerate}
+Aplikacja kliencka:
+\begin{enumerate}
+\item Konfiguracja
+\item Czerwony przycisk telefonu alarmowego
+\item Wysłanie zdjęcia
+\item Wysłanie współrzędnych GPS
+\item Informowanie o wysyłaniu danych
+\end{enumerate}
+\newpage
 \subsection {Przepływy informacyjne doprowadzone do i wyprowadzane z systemu}
+Przepływ informacji przedstawia poniższy diagram:\\
+  \begin{figure}[h]
+    \includegraphics[scale=0.5]{data_flow.png}
+    \caption{Przepływ informacji}
+  \end{figure}
+\\Przy czym należy pamiętać, iż komendy wydawać można także z telefonu Opiekuna (nie zostały one umieszczone na diagramie aby nie pogorszyć jego czytelności).
 \subsection {Sygnalizowane specjalne wymagania i ograniczenia}
+Zanim w ogóle rozpocznie się korzystanie z systemu należy podjąć kroki prawne regulujące zgodę pacjenta (bądź w przypadku niesamodzielności podmiot odpowiedzialny) na przetwarzanie jego prywatnych danych w szczególności danych osobowych oraz położenia geograficznego. Aplikacja kliencka napisana została w Android API 8, a więc powinna poprawnie funkcjonować na urządzeniach działających pod kontrolą systemu operacyjnego Android 2.2 bądź kompatybilnych nowszych. Niezbędne do wysyłania informacji jest połączenie z Internetem, zalecamy wykupienie miesięcznego pakietu danych z nielimitowanym transferem (prędkość przesyłania danych nie jest specjalnie istotna), w przypadku chwilowego braku połączenia internetowego aplikacja stara się kolekcjonować dana w celu wznowienia ich wysłania kiedy będzie to możliwe. Urządzenie musi posiadać sprawny moduł GPS, najlepiej z opcją A-GPS pozwalającą na szybsze odnajdywanie pozycji satelitarnej.\\
+\\
+Dla potrzeb serwera wymagany jest serwer wspierający standard PHP 4 oraz baza danych MySQL bądź PostgreSQL. W celu dostępu do serwisu wystarczy dowolna przeglądarka internetowa, zalecamy użycie najnowszej wersji Chrome.
 
 \section {Analiza systemu– diagramy UML}
 \subsection {Diagram przypadków użycia systemu}

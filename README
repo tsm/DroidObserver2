@@ -23,20 +23,20 @@ Za³¹cznik 1 Schemat dokumentacji aplikacji
 
 Proszê o przygotowanie opisu dla prac programistycznych wg wzoru:
 
-1. Sformu³owanie zadania projektowego
-1.1 Obszar i przedmiot projektowania
-1.1.1. Dziedzina problemu
-1.1.2. Obszar modelowania
-1.1.3. Zakres odpowiedzialnoœci systemu
-1.2. Zwiêz³a nazwa problemu
-1.3. Cele do osi¹gniêcia
-1.3.1. Cele rezultatu
-1.3.2. Cele projektu
++1. Sformu³owanie zadania projektowego
++1.1 Obszar i przedmiot projektowania
++1.1.1. Dziedzina problemu
++1.1.2. Obszar modelowania
++1.1.3. Zakres odpowiedzialnoœci systemu
++1.2. Zwiêz³a nazwa problemu
++1.3. Cele do osi¹gniêcia
+DEL:P 1.3.1. Cele rezultatu
+DEL 1.3.2. Cele projektu
 
-2. Opis wymagañ
-2.1. Funkcje systemu z punktu widzenia u¿ytkownika
-2.2. Przep³ywy informacyjne doprowadzone do i wyprowadzane z systemu
-2.3. Sygnalizowane specjalne wymagania i ograniczenia
++2. Opis wymagañ
++2.1. Funkcje systemu z punktu widzenia u¿ytkownika
++2.2. Przep³ywy informacyjne doprowadzone do i wyprowadzane z systemu
++2.3. Sygnalizowane specjalne wymagania i ograniczenia
 
 3. Analiza systemu– diagramy UML
 3.1. Diagram przypadków u¿ycia systemu.
@@ -52,4 +52,4 @@ Proszê o przygotowanie opisu dla prac programistycznych wg wzoru:
 
 5. Instrukcja obs³ugi Systemu (punkt realizowany na koñcu projektu)(póŸniej)
 
-6. Bibliografia
++6. Bibliografia
