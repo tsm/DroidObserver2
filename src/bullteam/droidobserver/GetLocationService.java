@@ -36,6 +36,13 @@ import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
+/**
+ * Us³uga pobieraj¹ca i wysy³aj¹ca lokalizacjê GPS. O swoim dzia³aniu informuje w obszarze powiadomieñ
+ * 
+ * @author Tsm
+ *
+ */
+
 public class GetLocationService extends Service {
 	private NotificationManager notificationMgr;
 	private LocationManager locMgr;
@@ -51,9 +58,11 @@ public class GetLocationService extends Service {
 	private long update_time = 1000 * 30 * 1;
 
 	HttpClient client = new DefaultHttpClient();
-	HttpPost post;// = new
-					// HttpPost("http://student.agh.edu.pl/~tsm/droidobserver/sendgps.php");
+	HttpPost post;
 	
+	/**
+	 * Uruchamiana za pierwszym odpaleniem uslugi. Inicjuje nasluchiwacza, adres serwera i watek oraz wysyla powiadomienie.
+	 */
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -63,12 +72,8 @@ public class GetLocationService extends Service {
 
 		prefs = getSharedPreferences(
 				"bullteam.droidobserver_preferences", 0);
-		String serverAddress = prefs
-				.getString(
-						this.getResources().getString(
-								R.string.serverAddressOption), "");
-		update_time = Long.parseLong(prefs
-				.getString("update_time_option", "30")) * 1000;
+		String serverAddress = prefs.getString(this.getResources().getString(R.string.serverAddressOption), "");
+		update_time = Long.parseLong(prefs.getString("update_time_option", "30")) * 1000; //pobierz interwal lub 30 jesli nie jest ustawiony
 		post = new HttpPost(serverAddress + "sendgps.php");
 		Log.d("GetLocationService", serverAddress + "sendgps.php");
 		locMgr = (LocationManager) this
@@ -113,7 +118,6 @@ public class GetLocationService extends Service {
 
 			@Override
 			public void handleMessage(Message msg) {
-				// TODO Auto-generated method stub
 				super.handleMessage(msg);
 				if (currentBestLocation != null){
 					sendGPS(currentBestLocation);
@@ -134,7 +138,6 @@ public class GetLocationService extends Service {
 						handler.sendEmptyMessage(0);
 
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						isActive=false;
 						
 					}
@@ -145,7 +148,9 @@ public class GetLocationService extends Service {
 		});
 		thr.start();
 	}
-
+    /**
+     * Sprzata za soba.
+     */
 	public void onDestroy() {
 		displayNotificationMessage("zatrzymanie uslugi wysylanie lokalizacji GPS");
 		locMgr.removeUpdates(locListener);
@@ -155,10 +160,11 @@ public class GetLocationService extends Service {
 	}
 
 	
-	
+	/**
+	 * Wywolywana przy kazdym uruchomieniu uslugi, inicjuje nowa trase.
+	 */
 	@Override
 	public void onStart(Intent intent, int startId) {
-		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
 		String currentDateTimeString = DateFormat.getDateInstance().format(
 				new Date());
@@ -172,6 +178,9 @@ public class GetLocationService extends Service {
 		return null;
 	}
 
+	/**
+	 * Wysyla SMS z aktualnymi wspolrzednymi pacjenta.
+	 */
 	public void sendSMS(){
 		String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
 		String message=currentDateTimeString+" Obecne polozenie pacjenta: szerokosc "+currentBestLocation.getLatitude()+" dlugosc "+currentBestLocation.getLongitude();
@@ -185,6 +194,10 @@ public class GetLocationService extends Service {
 		if(!started) this.stopSelf();
 	}
 	
+	/**
+	 * Wysyla lokalizacje na serwer.
+	 * @param location - podana lokalizacja do wyslania
+	 */
 	public void sendGPS(Location location) {
 		SharedPreferences prefs = getSharedPreferences(
 				"bullteam.droidobserver_preferences", 0);
@@ -210,7 +223,6 @@ public class GetLocationService extends Service {
 		try {
 			post.setEntity(new UrlEncodedFormEntity(pairs));
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			Log.d("error", "unsupprotedEncoding");
 			e.printStackTrace();
 		}
@@ -235,10 +247,13 @@ public class GetLocationService extends Service {
 			e.printStackTrace();
 		}
 		Log.d("GetLocationService - response", textResult);
-		// if (!textResult.equals("ok"))
-		Toast.makeText(getBaseContext(), textResult, Toast.LENGTH_SHORT).show();
+		//if (!textResult.contains("ok")) Toast.makeText(getBaseContext(), textResult, Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * Zajmuje sie wysylaniem powiadomien na ekran glowny urzadzenia
+	 * @param message wiadomosc do wyslania
+	 */
 	private void displayNotificationMessage(String message) {
 		Notification notification = new Notification(
 				R.drawable.ic_droidobserver, message,
