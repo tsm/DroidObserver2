@@ -5,10 +5,10 @@
   function connect2db() //potrzebne do zalogowania do bazy danych
   {
     global $baza;
-	global $login;
+	global $logindb;
 	global $haslo;
 	global $database_name;
-    mysql_connect($baza, $login, $haslo) or die ("Nie można się połączyć z MySQL!");
+    mysql_connect($baza, $logindb, $haslo) or die ("Nie można się połączyć z MySQL!");
     mysql_select_db($database_name) or die("Nie można się połączyć z bazą danych!");
   }
   

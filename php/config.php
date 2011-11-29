@@ -1,7 +1,7 @@
 <?php
 
    $baza = "mysql.agh.edu.pl:3306";
-   $login = "login";
+   $logindb = "login";
    $haslo = "haslo";
    $database_name = "nazwa_bazy_danych";
    

@@ -38,18 +38,18 @@ DEL 1.3.2. Cele projektu
 +2.2. Przep³ywy informacyjne doprowadzone do i wyprowadzane z systemu
 +2.3. Sygnalizowane specjalne wymagania i ograniczenia
 
-3. Analiza systemu– diagramy UML
-3.1. Diagram przypadków u¿ycia systemu.
-3.2. Diagram klas systemu.
-3.3. Diagram sekwencji
-3.4. Diagram najwa¿niejszego stanu systemu
-3.5. Diagram Komunikacji systemu
-3.6. Diagram Komponentów systemu
++3. Analiza systemu– diagramy UML
++3.1. Diagram przypadków u¿ycia systemu.
++3.2. Diagram klas systemu.
++3.3. Diagram sekwencji
++3.4. Diagram najwa¿niejszego stanu systemu
++3.5. Diagram Komunikacji systemu
++3.6. Diagram Komponentów systemu
 
-4. Opis zmian wprowadzonych w zrealizowanym Systemie (punkt realizowany na koñcu projektu)
-4.1. Zmiany na etapie projektowania klas
-4.2. Zmiany w funkcjonowaniu systemu
+DEL 4. Opis zmian wprowadzonych w zrealizowanym Systemie (punkt realizowany na koñcu projektu)
+DEL 4.1. Zmiany na etapie projektowania klas
+DEL 4.2. Zmiany w funkcjonowaniu systemu
 
-5. Instrukcja obs³ugi Systemu (punkt realizowany na koñcu projektu)(póŸniej)
++5. Instrukcja obs³ugi Systemu (punkt realizowany na koñcu projektu)(póŸniej)
 
 +6. Bibliografia
