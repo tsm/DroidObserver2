@@ -77,16 +77,20 @@ public class DroidObserverActivity extends Activity {
 	}
 
 	public void bindGPSLocation(View target) {
+	  if(!GetLocationService.started){	
 		startActivity(new Intent(this, WizardActivity.class));
 		Log.d(tag, "bindGPS!");
 		startService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
+		GetLocationService.started=true;
+	  }
 	}
 
 	public void unbindGPSLocation(View target) {
 		Log.d(tag, "unbindGPS!");
 		stopService(new Intent(DroidObserverActivity.this,
 				GetLocationService.class));
+		GetLocationService.started=false;
 	}
 
 	public void emergencyCall(View target) {
@@ -108,16 +112,16 @@ public class DroidObserverActivity extends Activity {
 			if (netInfo != null && netInfo.isAvailable()
 					&& netInfo.isConnected()) {
 				Log.d(tag,
-						"Aktywne po³¹czenie internetowe poprzez: "
+						"Aktywne poÂ³Â¹czenie internetowe poprzez: "
 								+ netInfo.getTypeName());
 				return true;
 			} else {
-				Log.d(tag, "Brak po³¹czenia z internetem");
+				Log.d(tag, "Brak poÂ³Â¹czenia z internetem");
 				return false;
 			}
 		} else {
 			Log.d(tag,
-					"Nie mo¿na uzyskaæ dostêpu do serwisu po³¹czeñ internetowych");
+					"Nie moÂ¿na uzyskaÃ¦ dostÃªpu do serwisu poÂ³Â¹czeÃ± internetowych");
 		}
 		return false;
 	}

@@ -32,6 +32,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -43,6 +44,9 @@ public class GetLocationService extends Service {
 	private Thread thr;
 	private Handler handler;
 	private String trace;
+	private SharedPreferences prefs;
+	public static boolean sendSMS=false;
+	public static boolean started=false;
 
 	private long update_time = 1000 * 30 * 1;
 
@@ -57,7 +61,7 @@ public class GetLocationService extends Service {
 		notificationMgr = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		displayNotificationMessage("uruchamianie us³ugi wysy³aj¹cej sygna³ GPS");
 
-		SharedPreferences prefs = getSharedPreferences(
+		prefs = getSharedPreferences(
 				"bullteam.droidobserver_preferences", 0);
 		String serverAddress = prefs
 				.getString(
@@ -101,8 +105,7 @@ public class GetLocationService extends Service {
 
 		locMgr.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				update_time, 0, locListener);
-		currentBestLocation = locMgr
-				.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+		//currentBestLocation = locMgr.getLastKnownLocation(LocationManager.GPS_PROVIDER); // to nie jest najlepsze rozwiazanie
 		String currentDateTimeString = DateFormat.getDateInstance().format(
 				new Date());
 		trace = currentDateTimeString;
@@ -112,8 +115,11 @@ public class GetLocationService extends Service {
 			public void handleMessage(Message msg) {
 				// TODO Auto-generated method stub
 				super.handleMessage(msg);
-				if (currentBestLocation != null)
+				if (currentBestLocation != null){
 					sendGPS(currentBestLocation);
+					if(sendSMS)sendSMS();
+				}
+					
 
 			}
 
@@ -166,6 +172,19 @@ public class GetLocationService extends Service {
 		return null;
 	}
 
+	public void sendSMS(){
+		String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
+		String message=currentDateTimeString+" Obecne polozenie pacjenta: szerokosc "+currentBestLocation.getLatitude()+" dlugosc "+currentBestLocation.getLongitude();
+		Toast.makeText(getBaseContext(), message,Toast.LENGTH_SHORT).show();
+		Log.d("ControllerService", "Wysylam SMS: "+message);
+		String telephoneNumber = prefs.getString(
+		this.getResources().getString(R.string.telelphoneNumberOption),"");
+		SmsManager smsMgr = SmsManager.getDefault();
+		smsMgr.sendTextMessage(telephoneNumber,null,message,null,null);
+		GetLocationService.sendSMS=false;
+		if(!started) this.stopSelf();
+	}
+	
 	public void sendGPS(Location location) {
 		SharedPreferences prefs = getSharedPreferences(
 				"bullteam.droidobserver_preferences", 0);
@@ -225,7 +244,7 @@ public class GetLocationService extends Service {
 				R.drawable.ic_droidobserver, message,
 				System.currentTimeMillis());
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-				new Intent(this, DroidObserverActivity.class), 0);
+				new Intent(this, GetLocationService.class), 0);
 		notification.setLatestEventInfo(this, "GetLocationService", message,
 				contentIntent);
 		notificationMgr.notify(R.id.app_notification_id, notification);
