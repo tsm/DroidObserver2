@@ -20,4 +20,4 @@
 ## output
 *.out
 *.dvi
-*.pdf
+/doc/*.pdf
