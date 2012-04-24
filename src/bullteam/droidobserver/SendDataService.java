@@ -77,7 +77,7 @@ public class SendDataService extends Service {
 	 */
 	class SendData implements Runnable {
 		boolean isActive = true;
-		int delay = 60; // czestotliwosc wysy³ania zdjec w sek
+		int delay = 30; // czestotliwosc wysy³ania zdjec w sek
 
 		public void deactivate() {
 			isActive = false;
@@ -221,7 +221,9 @@ public class SendDataService extends Service {
 			outputStream.close();
 			Log.d(tag, fileToSend.getName() + " -> status: " + textResult);
 			// Usuwanie wys³anego pliku
-			fileToSend.delete();
+			if (textResult.contains("ok")) {
+				fileToSend.delete();
+			}
 		} catch (Exception ex) {
 			Log.d(tag, "B³¹d :" + ex.getMessage());
 		}
